@@ -1,13 +1,17 @@
 package projeto.tcc.eventos;
 
+import projeto.tcc.dominio.Usuario;
+
 public class UsuarioCadastrado {
 	
 	private int id;
-	private String motivo;
+	private String comentario;
+	private Usuario usuario;
 	
-	public UsuarioCadastrado(int id, String motivo) {
+	public UsuarioCadastrado(int id, String comentario, Usuario usuario) {
 		this.id = id;
-		this.motivo = motivo;
+		this.comentario = comentario;
+		this.usuario = usuario;
 	}
 
 	public int getId() {
@@ -18,12 +22,25 @@ public class UsuarioCadastrado {
 		this.id = id;
 	}
 
-	public String getMotivo() {
-		return motivo;
+	public String getComentario() {
+		return comentario;
 	}
 
-	public void setMotivo(String motivo) {
-		this.motivo = motivo;
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public void Processar() {
+		usuario.cuidarCadastro(this);
+		
 	}
 	
 
