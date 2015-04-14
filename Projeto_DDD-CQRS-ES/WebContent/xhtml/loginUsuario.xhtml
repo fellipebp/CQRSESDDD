@@ -4,7 +4,13 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-	<title>Hello JSF!</title>
+	<title>Login</title>
 </h:head>
-<h:body> #{hello.message} </h:body>
+<h:body> 
+	<h:form>
+		<h:inputText value="algumBean.login"/>
+		<h:inputText value="algumBean.senha"/>
+		<h:outputLink value="xhtml/criarUsuario.xhtml">Ainda não se cadastrou? Clique aqui</h:outputLink>
+	</h:form>
+</h:body>
 </html>
