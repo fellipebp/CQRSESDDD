@@ -2,7 +2,8 @@ package projeto.tcc.dominio;
 
 import java.io.Serializable;
 
-import projeto.tcc.eventos.UsuarioCadastradoEvento;
+import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.eventos.usuario.UsuarioLogadoEvento;
 
 
 public class Usuario implements Serializable {
@@ -53,12 +54,20 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public void cuidarCadastro(UsuarioCadastradoEvento uc) {
-		this.login = uc.getUsuario().getLogin();
-		this.senha = uc.getUsuario().getSenha();
+	public void cuidarCadastro(UsuarioCadastradoEvento ucv) {
+		this.login = ucv.getUsuario().getLogin();
+		this.senha = ucv.getUsuario().getSenha();
+		//ucv.getComentario()
 		System.out.println(login+" ,"+senha);
 	}
 	
+	
+	public void logar(UsuarioLogadoEvento ulv) {
+		this.login = ulv.getUsuario().getLogin();
+		this.senha = ulv.getUsuario().getSenha();
+		//ulv.getDtLogin();
+		System.out.println(login+" ,"+senha);
+	}
 		
 
 }

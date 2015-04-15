@@ -1,5 +1,7 @@
 package projeto.tcc.dominio;
 
+import projeto.tcc.eventos.musica.MusicaTocadaEvento;
+
 
 public class Musica {
 	
@@ -26,6 +28,9 @@ public class Musica {
 		this.conteudo = conteudo;
 	}
 	
+	public void tocar(MusicaTocadaEvento musicaTocadaEvento){
+		//reproduzir bytes
+		//musicaTocadaEvento.getMusica();
+	}
 	
-
 }

@@ -1,4 +1,4 @@
-package projeto.tcc.eventos;
+package projeto.tcc.eventos.usuario;
 
 public class CarregarUsuarioEvento {
 

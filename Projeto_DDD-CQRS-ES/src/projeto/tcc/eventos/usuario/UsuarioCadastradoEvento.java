@@ -1,8 +1,9 @@
-package projeto.tcc.eventos;
+package projeto.tcc.eventos.usuario;
 
 import java.io.Serializable;
 
 import projeto.tcc.dominio.Usuario;
+import projeto.tcc.eventos.Evento;
 
 public class UsuarioCadastradoEvento extends Evento implements Serializable {
 	
@@ -18,6 +19,11 @@ public class UsuarioCadastradoEvento extends Evento implements Serializable {
 		this.id = id;
 		this.comentario = comentario;
 		this.usuario = usuario;
+	}
+	
+	public void Processar() {
+		usuario.cuidarCadastro(this);
+		
 	}
 
 	public int getId() {
@@ -44,10 +50,6 @@ public class UsuarioCadastradoEvento extends Evento implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public void Processar() {
-		usuario.cuidarCadastro(this);
-		
-	}
 	
 
 }

@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import projeto.tcc.eventos.Evento;
-import projeto.tcc.eventos.UsuarioCadastradoEvento;
+import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
 
 import com.mysql.jdbc.PreparedStatement;
 

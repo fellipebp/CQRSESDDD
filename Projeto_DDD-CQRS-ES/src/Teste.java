@@ -1,6 +1,6 @@
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.eventos.EventoProcessador;
-import projeto.tcc.eventos.UsuarioCadastradoEvento;
+import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.jdbc.Conexao;
 
 
