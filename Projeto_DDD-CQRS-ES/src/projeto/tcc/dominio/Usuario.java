@@ -1,10 +1,16 @@
 package projeto.tcc.dominio;
 
-import projeto.tcc.eventos.UsuarioCadastrado;
+import java.io.Serializable;
+
+import projeto.tcc.eventos.UsuarioCadastradoEvento;
 
 
-public class Usuario {
+public class Usuario implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String login;
 	private String senha;
 	
@@ -28,7 +34,7 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public void cuidarCadastro(UsuarioCadastrado uc) {
+	public void cuidarCadastro(UsuarioCadastradoEvento uc) {
 		this.login = uc.getUsuario().getLogin();
 		this.senha = uc.getUsuario().getSenha();
 		System.out.println(login+" ,"+senha);

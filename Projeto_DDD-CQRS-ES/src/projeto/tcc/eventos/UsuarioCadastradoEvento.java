@@ -1,14 +1,20 @@
 package projeto.tcc.eventos;
 
+import java.io.Serializable;
+
 import projeto.tcc.dominio.Usuario;
 
-public class UsuarioCadastrado {
+public class UsuarioCadastradoEvento extends Evento implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String comentario;
 	private Usuario usuario;
 	
-	public UsuarioCadastrado(int id, String comentario, Usuario usuario) {
+	public UsuarioCadastradoEvento(int id, String comentario, Usuario usuario) {
 		this.id = id;
 		this.comentario = comentario;
 		this.usuario = usuario;

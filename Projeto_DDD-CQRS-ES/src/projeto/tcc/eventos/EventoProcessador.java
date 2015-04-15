@@ -1,15 +1,17 @@
 package projeto.tcc.eventos;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import projeto.tcc.jdbc.Conexao;
 
 public class EventoProcessador {
 	
-	List<UsuarioCadastrado> log = new ArrayList<UsuarioCadastrado>();
+	private Conexao conexao = new Conexao();
 	
-	public void processar(UsuarioCadastrado e){
+	public void processar(Evento e) throws Exception{
 		e.Processar();
-		log.add(e);
+//		log.add(e); // AQUI VC SALVA NO BANCO AO INVES DE ADICIONAR NA LISTA
+		conexao.getConection();
+		conexao.writeJavaObject(e);
 	}
 
 }
