@@ -2,14 +2,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
+	<style>
+.grad {
+	background: -webkit-linear-gradient(left top, red, blue);
+	background: -o-linear-gradient(bottom right, red, blue);
+	background: -moz-linear-gradient(bottom right, red, blue);
+	background: linear-gradient(to bottom right, red, blue);
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+}
+
+.center {
+	width: 100px;
+	height: 100px;
+	background-color: red;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.alignLeft {
+    text-align: left;
+}
+</style>
 	<title>Login</title>
+
 </h:head>
-<h:body> 
+<h:body styleClass="grad">
 	<h:form>
-		<h:inputText value="algumBean.login"/>
-		<h:inputText value="algumBean.senha"/>
+		 <h1><h:outputText value="Bem vindo(a) ao serviço de música digital."/></h1>
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel value="Login:" for="login" />
+			<p:inputText id="login" value="#{loginUsuarioBean.usuario.login}"
+				required="true" />
+			<p:outputLabel value="Senha:" for="senha" />
+			<p:inputText id="senha" value="#{loginUsuarioBean.usuario.senha}"
+				required="true" />
+			<f:facet name="footer">
+				<p:commandButton action="#{loginUsuarioBean.logar()}" value="Logar"/>
+			</f:facet>
+		</h:panelGrid>
 		<h:outputLink value="xhtml/criarUsuario.xhtml">Ainda não se cadastrou? Clique aqui</h:outputLink>
 	</h:form>
 </h:body>
