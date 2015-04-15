@@ -2,9 +2,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+ 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Hello JSF!</title>
+	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
+	<title>Criar usuário</title>
 </h:head>
-<h:body> #{hello.message} </h:body>
+<h:body styleClass="grad2">
+	<h:form>
+		<h1>
+			<h:outputText value="Cadastre seu usuário, é grátis!" />
+		</h1>
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel value="Digite o seu nome completo:" for="nome" indicateRequired="true" styleClass="alignRight" />
+			<p:inputText id="nome" value="#{criarUsuarioBean.usuario.nome}" required="true" />
+			<p:outputLabel value="Digite o usuário:" for="login"  indicateRequired="true" styleClass="alignRight"/> 
+			<p:inputText id="login" value="#{criarUsuarioBean.usuario.login}" required="true" />
+			<p:outputLabel value="Digite a senha:" for="senha"  indicateRequired="true" styleClass="alignRight"/> 
+			<p:inputText id="senha" value="#{criarUsuarioBean.usuario.senha}" 	required="true" />
+			<f:facet name="footer">
+				<p:commandButton action="#{criarUsuarioBean.criarUsuario()}" value="Criar" />
+			</f:facet>
+		</h:panelGrid>
+		<h:outputLink value="loginUsuario.xhtml">Quer se logar? Clique aqui</h:outputLink>
+	</h:form>
+</h:body>
 </html>

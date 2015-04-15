@@ -1,0 +1,41 @@
+.grad1 {
+	background: -webkit-linear-gradient(left top, red, blue);
+	background: -o-linear-gradient(bottom right, red, blue);
+	background: -moz-linear-gradient(bottom right, red, blue);
+	background: linear-gradient(to bottom right, red, blue);
+}
+
+.grad2 {
+	background: -webkit-linear-gradient(left top, blue, red);
+	background: -o-linear-gradient(bottom right, blue, red);
+	background: -moz-linear-gradient(bottom right, blue, red);
+	background: linear-gradient(to bottom right, blue, red);
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+}
+
+.center {
+	width: 100px;
+	height: 100px;
+	background-color: red;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.alignLeft {
+    text-align: left;
+}
+
+.alignRight {
+    text-align: right;
+}

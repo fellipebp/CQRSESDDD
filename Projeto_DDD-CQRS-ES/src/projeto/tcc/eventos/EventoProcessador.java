@@ -3,7 +3,7 @@ package projeto.tcc.eventos;
 
 import projeto.tcc.jdbc.Conexao;
 
-public class EventoProcessador {
+public class EventoProcessador  {
 	
 	private Conexao conexao = new Conexao();
 	
