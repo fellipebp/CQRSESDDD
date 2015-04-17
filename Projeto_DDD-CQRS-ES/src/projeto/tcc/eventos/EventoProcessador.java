@@ -1,7 +1,7 @@
 package projeto.tcc.eventos;
 
 
-import projeto.tcc.jdbc.Conexao;
+import projeto.tcc.infraestrutura.Conexao;
 
 public class EventoProcessador  {
 	

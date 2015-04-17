@@ -33,8 +33,7 @@ public class LoginUsuarioBean implements Serializable {
 	}
 	
 	public void logar(ActionEvent actionEvent){
-		//FIXME A principio nenhuma entidade loga, devemos chamar um serviço 
-		//que deverá produzir um evento, não?
+		//chamar ServicoUsuario
 	}
 
 }

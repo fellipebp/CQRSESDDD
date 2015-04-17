@@ -1,4 +1,4 @@
-package projeto.tcc.jdbc;
+package projeto.tcc.infraestrutura;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
