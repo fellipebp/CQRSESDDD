@@ -15,10 +15,10 @@
 		</h1>
 		<h:panelGrid columns="2" cellpadding="5">
 			<p:outputLabel value="Login:" for="login" indicateRequired="true" />
-			<p:inputText id="login" value="#{loginUsuarioBean.usuario.login}"
+			<p:inputText id="login" value="#{loginUsuarioBean.login}"
 				required="true" />
 			<p:outputLabel value="Senha:" for="senha" indicateRequired="true" />
-			<p:inputText id="senha" value="#{loginUsuarioBean.usuario.senha}"
+			<p:inputText id="senha" value="#{loginUsuarioBean.senha}"
 				required="true" />
 			<f:facet name="footer">
 				<p:commandButton action="#{loginUsuarioBean.logar()}" value="Logar" />

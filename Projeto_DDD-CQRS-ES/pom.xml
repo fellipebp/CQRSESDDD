@@ -58,5 +58,15 @@
 			<artifactId>primefaces</artifactId>
 			<version>5.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<version>1.2</version>
+		</dependency>
+
 	</dependencies>
+
+
+
 </project>

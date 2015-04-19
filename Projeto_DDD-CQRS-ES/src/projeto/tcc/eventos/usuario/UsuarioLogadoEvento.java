@@ -14,6 +14,14 @@ public class UsuarioLogadoEvento  extends Evento implements Serializable{
 	
 	private Usuario usuario;
 	private Date dtLogin;
+	
+	public UsuarioLogadoEvento() {
+	}
+	
+	public UsuarioLogadoEvento(Usuario usuario, Date dtLogin){
+		this.usuario = usuario;
+		this.dtLogin = dtLogin;
+	}
 
 	@Override
 	public void Processar() {

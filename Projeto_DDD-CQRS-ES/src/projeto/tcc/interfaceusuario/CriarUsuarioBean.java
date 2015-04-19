@@ -31,7 +31,6 @@ public class CriarUsuarioBean implements Serializable{
 	}
 	
 	public void criarUsuario(ActionEvent actionEvent){
-		//FIXME chamar serviço?
 	}
 		
 }
