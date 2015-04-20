@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
 import projeto.tcc.interfaceusuario.servico.ServicoUsuarioFacade;
@@ -23,8 +22,9 @@ public class LoginUsuarioBean implements Serializable {
 	private String senha;
 	
 	
-	public void logar(ActionEvent actionEvent){
+	public String logar(){
 		servicoUsuarioFacade.logar(getLogin(), getSenha());
+		 return "ouvirMusica.xhtml?faces-redirect=true";
 	}
 
 

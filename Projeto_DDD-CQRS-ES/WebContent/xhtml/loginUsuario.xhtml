@@ -20,9 +20,9 @@
 			<p:outputLabel value="Senha:" for="senha" indicateRequired="true" />
 			<p:inputText id="senha" value="#{loginUsuarioBean.senha}"
 				required="true" />
-			<f:facet name="footer">
-				<p:commandButton action="#{loginUsuarioBean.logar()}" value="Logar" />
-			</f:facet>
+<!-- 		 	<f:facet name="footer"> -->
+				<p:commandButton action="#{loginUsuarioBean.logar()}" value="Logar"  />
+<!-- 			</f:facet> -->
 		</h:panelGrid>
 		<h:outputLink value="xhtml/criarUsuario.xhtml">Ainda não se cadastrou? Clique aqui</h:outputLink>
 		<br />
