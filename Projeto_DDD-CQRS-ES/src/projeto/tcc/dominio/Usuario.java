@@ -12,6 +12,7 @@ public class Usuario implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String login;
 	private String senha;
 	private String nome;
@@ -57,8 +58,8 @@ public class Usuario implements Serializable {
 	public void cuidarCadastro(UsuarioCadastradoEvento ucv) {
 		this.login = ucv.getUsuario().getLogin();
 		this.senha = ucv.getUsuario().getSenha();
+		 
 		//ucv.getComentario()
-		System.out.println(login+" ,"+senha);
 	}
 	
 	
@@ -67,6 +68,14 @@ public class Usuario implements Serializable {
 		this.senha = ulv.getUsuario().getSenha();
 		//ulv.getDtLogin();
 		System.out.println(login+" ,"+senha);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 		
 

@@ -13,7 +13,6 @@ public class ServicoUsuarioImpl implements ServicoUsuario {
 	public void logar(Usuario usuario) {
 		try {
 			UsuarioLogadoEvento usuarioLogadoEvento = new UsuarioLogadoEvento(usuario, new Date());
-			usuarioLogadoEvento.Processar();
 			new EventoProcessador().processar(usuarioLogadoEvento);
 		} catch (Exception e) {
 			e.printStackTrace();

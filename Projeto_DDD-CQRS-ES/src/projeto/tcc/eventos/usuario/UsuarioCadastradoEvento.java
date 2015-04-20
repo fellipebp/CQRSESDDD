@@ -11,12 +11,12 @@ public class UsuarioCadastradoEvento extends Evento implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private int idAgregado;
 	private String comentario;
 	private Usuario usuario;
 	
-	public UsuarioCadastradoEvento(int id, String comentario, Usuario usuario) {
-		this.id = id;
+	public UsuarioCadastradoEvento(int idAgregado, String comentario, Usuario usuario) {
+		this.idAgregado = idAgregado;
 		this.comentario = comentario;
 		this.usuario = usuario;
 	}
@@ -27,11 +27,11 @@ public class UsuarioCadastradoEvento extends Evento implements Serializable {
 	}
 
 	public int getId() {
-		return id;
+		return idAgregado;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.idAgregado = id;
 	}
 
 	public String getComentario() {

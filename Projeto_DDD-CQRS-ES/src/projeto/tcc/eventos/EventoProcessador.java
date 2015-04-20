@@ -9,7 +9,6 @@ public class EventoProcessador  {
 	
 	public void processar(Evento e) throws Exception{
 		e.Processar();
-//		log.add(e); // AQUI VC SALVA NO BANCO AO INVES DE ADICIONAR NA LISTA
 		conexao.getConection();
 		conexao.writeJavaObject(e);
 	}

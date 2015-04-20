@@ -48,20 +48,20 @@ public class Conexao {
 		
 	}
 	
-	public void writeJavaObject(Evento object) throws Exception {
-	    PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement("insert into eventstore(id_event_store,versao,dados_evento) values(?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
+	public void writeJavaObject(Evento evento) throws Exception {
+	    PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement("insert into eventstore(aggregate_id,versao,evento) values(?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
 
 	    // set input parameters
 	    ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(object);
+        oos.writeObject(evento);
         oos.flush();
         oos.close();
         bos.close();
-        byte[] data = bos.toByteArray();
-	    pstmt.setInt(1, 1);
-	    pstmt.setInt(2, 1);
-	    pstmt.setObject(3, data);
+        byte[] dadosEvento = bos.toByteArray();
+	    pstmt.setInt(1, evento.getIdAgregado());
+	    pstmt.setInt(2, evento.getVersao());
+	    pstmt.setObject(3, dadosEvento);
 	    pstmt.executeUpdate();
 
 	    // get the generated key for the id
