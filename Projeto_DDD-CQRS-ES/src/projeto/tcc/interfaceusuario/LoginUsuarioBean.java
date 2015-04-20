@@ -2,13 +2,11 @@ package projeto.tcc.interfaceusuario;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
-import projeto.tcc.dominio.Usuario;
 import projeto.tcc.interfaceusuario.servico.ServicoUsuarioFacade;
 
 @ManagedBean
