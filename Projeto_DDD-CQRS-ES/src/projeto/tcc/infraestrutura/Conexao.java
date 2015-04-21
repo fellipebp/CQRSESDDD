@@ -13,12 +13,12 @@ import projeto.tcc.eventos.Evento;
 import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
 
 import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 
 public class Conexao {
 
 	Connection connection;
 	String query = "select * from aggregates where aggregate_id = ?";
+
 
 	public void getConection() {
 		try {
@@ -32,6 +32,7 @@ public class Conexao {
 		try {
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/eventsource", "root", "123");
+
 
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
@@ -104,6 +105,7 @@ public class Conexao {
 		// get the generated key for the id
 		rs.close();
 		pstmt1.close();
+
 		System.out.println("writeJavaObject: done serializing: ");
 	}
 
