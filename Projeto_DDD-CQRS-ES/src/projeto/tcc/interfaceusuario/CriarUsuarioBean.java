@@ -36,7 +36,7 @@ public class CriarUsuarioBean implements Serializable{
 	public String criarUsuario() throws Exception{
 		
 		//eu sei que ta errado a ordem, só testando
-		usuarioEvento = new UsuarioCadastradoEvento(1, "teste", usuario);
+		usuarioEvento = new UsuarioCadastradoEvento("teste", usuario);
 		eP.processar(usuarioEvento);
 		
 		return null;

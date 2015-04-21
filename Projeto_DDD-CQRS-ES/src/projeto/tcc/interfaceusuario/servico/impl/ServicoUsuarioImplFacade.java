@@ -19,6 +19,6 @@ public class ServicoUsuarioImplFacade  implements ServicoUsuarioFacade, Serializ
 
 	@Override
 	public void logar(String login, String senha) {
-		servicoUsuario.logar(new Usuario(login, senha));
+		servicoUsuario.logar(new Usuario(1,login, senha));
 	}
 }

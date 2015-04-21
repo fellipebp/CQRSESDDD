@@ -15,23 +15,15 @@ public class UsuarioCadastradoEvento extends Evento implements Serializable {
 	private String comentario;
 	private Usuario usuario;
 	
-	public UsuarioCadastradoEvento(int idAgregado, String comentario, Usuario usuario) {
-		this.idAgregado = idAgregado;
+	public UsuarioCadastradoEvento(String comentario, Usuario usuario) {
 		this.comentario = comentario;
 		this.usuario = usuario;
+		this.idAgregado = usuario.getId();
 	}
 	
 	public void Processar() {
 		usuario.cuidarCadastro(this);
 		
-	}
-
-	public int getId() {
-		return idAgregado;
-	}
-
-	public void setId(int id) {
-		this.idAgregado = id;
 	}
 
 	public String getComentario() {
@@ -48,6 +40,14 @@ public class UsuarioCadastradoEvento extends Evento implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public int getIdAgregado() {
+		return this.idAgregado;
+	}
+
+	public void setIdAgregado(int idAgregado) {
+		this.idAgregado = idAgregado;
 	}
 
 	

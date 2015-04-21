@@ -18,9 +18,10 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String CPF;
 	
-	public Usuario(String login, String senha) {
+	public Usuario(int id, String login, String senha) {
 		this.login = login;
 		this.senha = senha;
+		this.id = id;
 	}
 	
 	public Usuario() {
