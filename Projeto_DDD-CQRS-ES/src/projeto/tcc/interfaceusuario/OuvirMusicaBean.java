@@ -1,34 +1,17 @@
 package projeto.tcc.interfaceusuario;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
-import projeto.tcc.aplicacao.ServicoMusica;
-import projeto.tcc.dominio.Musica;
-import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
-import projeto.tcc.interfaceusuario.servico.impl.ServicoMusicaFacadeImpl;
 
 @ManagedBean
 @ViewScoped
 public class OuvirMusicaBean implements Serializable {
 
 	private static final long serialVersionUID = -6673863557198240345L;
-	//@Inject 
-	//private ServicoMusicaFacade  servicoMusicaFacade;
-	private ServicoMusicaFacadeImpl servicoMusicaFacade = new ServicoMusicaFacadeImpl();
-	private List<Musica> listaMusicas;
-	
-	@PostConstruct
-	public void init(){
-		listarMusicas();
-	}
-	
+
 	public void listarMusicas() {
-		listaMusicas = servicoMusicaFacade.listarTodasMusicas();
 	}
 	
 	public void listarFavoritos() {
@@ -41,13 +24,4 @@ public class OuvirMusicaBean implements Serializable {
 	public void sair(){
 		
 	}
-
-	public List<Musica> getListaMusicas() {
-		return listaMusicas;
-	}
-
-	public void setListaMusicas(List<Musica> listaMusicas) {
-		this.listaMusicas = listaMusicas;
-	}
-
 }
