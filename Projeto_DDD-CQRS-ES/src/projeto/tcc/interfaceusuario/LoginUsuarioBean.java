@@ -2,14 +2,14 @@ package projeto.tcc.interfaceusuario;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import projeto.tcc.interfaceusuario.servico.ServicoUsuarioFacade;
 
 @Named
-@ViewScoped
+@ApplicationScoped
 public class LoginUsuarioBean implements Serializable {
 	
 	/**
@@ -18,6 +18,7 @@ public class LoginUsuarioBean implements Serializable {
 	private static final long serialVersionUID = -7918764410608856865L;
 	@Inject
 	private ServicoUsuarioFacade servicoUsuarioFacade;
+//	private ServicoUsuarioImplFacade servicoUsuarioImplFacade = new ServicoUsuarioImplFacade();
 	private String login;
 	private String senha;
 	
