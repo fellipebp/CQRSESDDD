@@ -125,7 +125,7 @@ public class Conexao {
 		rs.close();
 		pstmt.close();
 		System.out.println(object.getComentario());
-		System.out.println("Deserialization Successful."
+		System.out.println("Deserialization Successful." 
 				+ "\nDeserialized Class: " + className);
 		return object;
 	}

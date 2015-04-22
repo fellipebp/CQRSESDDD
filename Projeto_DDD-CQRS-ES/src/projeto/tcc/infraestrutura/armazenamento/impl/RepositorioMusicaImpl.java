@@ -41,5 +41,20 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 		}
 		return musicas;
 	}
-	
+
+	@Override
+	public Musica recuperaMusicaPeloNome(String nome) {
+		URL resource = this.getClass().getClassLoader().getResource("projeto/tcc/dominio/music/"+nome);
+		Musica musica = null;
+		try {
+			File arquivoMusica = new File(resource.toURI());
+			musica = new Musica();
+			musica.setNome(arquivoMusica.getName());
+			musica.setConteudo(Files.readAllBytes(Paths.get(arquivoMusica.getAbsolutePath())));
+		} catch (IOException | URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return musica;
+	}
+
 }

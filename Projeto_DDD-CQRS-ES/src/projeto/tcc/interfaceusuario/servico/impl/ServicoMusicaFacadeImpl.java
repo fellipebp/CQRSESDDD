@@ -21,6 +21,10 @@ public class ServicoMusicaFacadeImpl implements ServicoMusicaFacade, Serializabl
 	public List<Musica> listarTodasMusicas() {
 		return servicoMusica.listarTodasMusicas();
 	}
+	@Override
+	public Musica carregaMusicaPorNome(String nome) {
+		return servicoMusica.carregaMusicaPorNome(nome);
+	}
 
 
 }

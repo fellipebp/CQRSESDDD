@@ -1,10 +1,16 @@
 package projeto.tcc.dominio;
 
+import java.io.Serializable;
+
 import projeto.tcc.eventos.musica.MusicaTocadaEvento;
 
 
-public class Musica {
+public class Musica implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1151302597338295392L;
 	private String nome;
 	private Long duracao;
 	private byte[] conteudo;
@@ -32,5 +38,6 @@ public class Musica {
 		//reproduzir bytes
 		//musicaTocadaEvento.getMusica();
 	}
+	
 	
 }
