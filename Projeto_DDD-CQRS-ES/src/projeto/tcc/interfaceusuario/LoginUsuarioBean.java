@@ -2,15 +2,13 @@ package projeto.tcc.interfaceusuario;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import projeto.tcc.aplicacao.impl.ServicoUsuarioImpl;
 import projeto.tcc.interfaceusuario.servico.ServicoUsuarioFacade;
-import projeto.tcc.interfaceusuario.servico.impl.ServicoUsuarioImplFacade;
 
-@ManagedBean
+@Named
 @ViewScoped
 public class LoginUsuarioBean implements Serializable {
 	
