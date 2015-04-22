@@ -2,6 +2,8 @@ package projeto.tcc.dominio;
 
 import java.io.Serializable;
 
+import org.apache.catalina.connector.Request;
+
 import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.eventos.usuario.UsuarioLogadoEvento;
 

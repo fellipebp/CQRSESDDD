@@ -20,7 +20,6 @@ public class LoginUsuarioBean implements Serializable {
 	private static final long serialVersionUID = -7918764410608856865L;
 	@Inject
 	private ServicoUsuarioFacade servicoUsuarioFacade;
-//	private ServicoUsuarioImplFacade servicoUsuarioImplFacade = new ServicoUsuarioImplFacade();
 	private String login;
 	private String senha;
 	
