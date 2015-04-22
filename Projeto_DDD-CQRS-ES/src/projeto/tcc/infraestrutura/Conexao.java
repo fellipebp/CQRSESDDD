@@ -31,7 +31,7 @@ public class Conexao {
 
 		try {
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/eventsource", "root", "123");
+					"jdbc:mysql://localhost:3306/eventsource", "root", "mysql");
 
 
 		} catch (SQLException e) {
