@@ -3,48 +3,51 @@ package projeto.tcc.interfaceusuario;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 
-import projeto.tcc.dominio.Usuario;
-import projeto.tcc.eventos.EventoProcessador;
-import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
-import projeto.tcc.interfaceusuario.servico.ServicoUsuarioFacade;
+import projeto.tcc.aplicacao.ServicoUsuario;
+import projeto.tcc.comandos.CadastrarUsuarioComando;
 
 @ManagedBean
 @ViewScoped
 public class CriarUsuarioBean implements Serializable{
 	
-	@Inject
-	private ServicoUsuarioFacade servicoUsuarioFacade;
 	private static final long serialVersionUID = 5029033187840615480L;
-	private Usuario usuario;
-	private UsuarioCadastradoEvento usuarioEvento;
-	private EventoProcessador eP;
+	private String login;
+	private String senha;
+	@Inject
+	ServicoUsuario servicoUsuario;
 	
-	@PostConstruct 
-	public void init() {	
-		usuario = new Usuario();
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 	
 	public String criarUsuario() throws Exception{
 		
 		UUID idOne = UUID.randomUUID();
-		usuarioEvento = new UsuarioCadastradoEvento("teste", usuario);
-		eP.processar(usuarioEvento);
-		
+
+		servicoUsuario.cadastrarUsuario(new CadastrarUsuarioComando(idOne, login, senha));
 		return null;
 		
+	}
+
+
+	public String getLogin() {
+		return login;
+	}
+
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 		
 }

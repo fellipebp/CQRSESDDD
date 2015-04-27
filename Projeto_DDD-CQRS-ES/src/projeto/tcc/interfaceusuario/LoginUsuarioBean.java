@@ -1,12 +1,14 @@
 package projeto.tcc.interfaceusuario;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import projeto.tcc.interfaceusuario.servico.ServicoUsuarioFacade;
+import projeto.tcc.aplicacao.ServicoUsuario;
+import projeto.tcc.comandos.FazerLoginComando;
 
 @Named
 @ApplicationScoped
@@ -17,13 +19,13 @@ public class LoginUsuarioBean implements Serializable {
 	 */
 	private static final long serialVersionUID = -7918764410608856865L;
 	@Inject
-	private ServicoUsuarioFacade servicoUsuarioFacade;
+	private ServicoUsuario servicoUsuario;
 //	private ServicoUsuarioImplFacade servicoUsuarioImplFacade = new ServicoUsuarioImplFacade();
 	private String login;
 	private String senha;
 	
 	public String logar(){
-		servicoUsuarioFacade.logar(getLogin(), getSenha());
+		servicoUsuario.logarUsuario(new FazerLoginComando(login,senha)); 
 		 return "ouvirMusica.xhtml?faces-redirect=true";
 	}
 

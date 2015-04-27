@@ -11,15 +11,6 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Usuario usuario = new Usuario(1, "Murilo", "123");
-		UsuarioCadastradoEvento usuarioEvento = new UsuarioCadastradoEvento("teste", usuario);
-		EventoProcessador ep = new EventoProcessador();
-		try {
-			ep.processar(usuarioEvento);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 }

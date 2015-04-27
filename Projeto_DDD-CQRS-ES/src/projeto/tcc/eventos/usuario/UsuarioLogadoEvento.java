@@ -1,16 +1,14 @@
 package projeto.tcc.eventos.usuario;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.eventos.Evento;
 
-public class UsuarioLogadoEvento  extends Evento implements Serializable{
+public class UsuarioLogadoEvento implements Evento {
 	
 	
 
-	private static final long serialVersionUID = 1L;
 	
 	private Usuario usuario;
 	private Date dtLogin;
@@ -23,11 +21,11 @@ public class UsuarioLogadoEvento  extends Evento implements Serializable{
 		this.dtLogin = dtLogin;
 	}
 
-	@Override
-	public void Processar() {
-		usuario.logar(this);
-		
-	}
+//	@Override
+//	public void Processar() {
+//		usuario.logar(this);
+//		
+//	}
 
 	public Usuario getUsuario() {
 		return usuario;
