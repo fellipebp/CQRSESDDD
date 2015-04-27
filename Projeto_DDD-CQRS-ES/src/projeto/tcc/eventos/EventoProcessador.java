@@ -9,7 +9,7 @@ public class EventoProcessador  {
 	
 	public void processar(Evento e) throws Exception{
 		conexao.getConection();
-		conexao.writeJavaObject(e);
+		conexao.salvarEvento(e);
 	}
 
 }

@@ -1,7 +1,6 @@
 package projeto.tcc.interfaceusuario;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
