@@ -13,6 +13,8 @@
 		<h1>
 			<h:outputText value="Cadastre seu usuário, é grátis!" />
 		</h1>
+		<h:messages errorStyle="color: red" infoStyle="color: green" layout="table" showSummary="true" showDetail="false" globalOnly="true"/> 
+		<h:message id="messageGenerica" />    
 		<h:panelGrid columns="2" cellpadding="5">
 			<p:outputLabel value="Digite o seu nome completo:" for="nome" indicateRequired="true" styleClass="alignRight" />
 			<p:inputText id="nome" value="#{criarUsuarioBean.usuario.nome}" required="true" />

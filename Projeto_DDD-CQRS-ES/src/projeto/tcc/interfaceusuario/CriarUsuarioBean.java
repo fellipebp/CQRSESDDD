@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import projeto.tcc.dominio.Usuario;
@@ -27,6 +29,7 @@ public class CriarUsuarioBean implements Serializable{
 	@PostConstruct 
 	public void init() {	
 		usuario = new Usuario();
+		eP = new EventoProcessador();
 	}
 
 	public Usuario getUsuario() {
@@ -38,12 +41,12 @@ public class CriarUsuarioBean implements Serializable{
 	}
 	
 	public String criarUsuario() throws Exception{
-		
 		UUID idOne = UUID.randomUUID();
 		usuarioEvento = new UsuarioCadastradoEvento("teste", usuario);
 		eP.processar(usuarioEvento);
-		
-		return null;
+		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário cadastrado com sucesso", null);
+		FacesContext.getCurrentInstance().addMessage("messageGenerica", facesMessage);
+		return "criarUsuario.xhtml?faces-redirect=true";
 		
 	}
 		
