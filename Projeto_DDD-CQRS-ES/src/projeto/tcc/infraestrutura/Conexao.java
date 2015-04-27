@@ -91,11 +91,9 @@ public class Conexao {
 		oos.close();
 		bos.close();
 		byte[] dadosEvento = bos.toByteArray();
-		pstmt1.setInt(1, evento.getIdAgregado());
 		pstmt1.setInt(2, 1);
 		pstmt1.setObject(3, dadosEvento);
 		if(pstmt2 != null){
-		pstmt2.setInt(1, evento.getIdAgregado());
 		pstmt2.setString(2, null);
 		pstmt2.setInt(3, 1);
 		pstmt2.executeUpdate();
@@ -124,8 +122,7 @@ public class Conexao {
 		String className = object.getClass().getName();
 		rs.close();
 		pstmt.close();
-		System.out.println(object.getComentario());
-		System.out.println("Deserialization Successful."
+		System.out.println("Deserialization Successful." 
 				+ "\nDeserialized Class: " + className);
 		return object;
 	}

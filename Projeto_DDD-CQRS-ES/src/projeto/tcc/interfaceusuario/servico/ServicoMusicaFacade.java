@@ -8,4 +8,6 @@ public interface ServicoMusicaFacade {
 	
 	List<Musica> listarTodasMusicas();
 
+	Musica carregaMusicaPorNome(String nome);
+
 }

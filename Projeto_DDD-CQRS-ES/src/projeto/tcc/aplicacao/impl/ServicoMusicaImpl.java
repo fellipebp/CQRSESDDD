@@ -22,4 +22,8 @@ public class ServicoMusicaImpl implements ServicoMusica, Serializable {
 		return repositorioMusica.listarTodasMusicas();
 	}
 
+	public Musica carregaMusicaPorNome(String nome) {
+		return repositorioMusica.recuperaMusicaPeloNome(nome);
+	}
+
 }

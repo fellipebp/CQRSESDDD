@@ -8,4 +8,5 @@ public interface RepositorioMusica {
 	
 	 List<Musica> listarTodasMusicas();
 
+	 Musica recuperaMusicaPeloNome(String nome);
 }

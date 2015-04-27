@@ -1,54 +1,59 @@
 package projeto.tcc.eventos.usuario;
 
 import java.io.Serializable;
+import java.util.UUID;
 
-import projeto.tcc.dominio.Usuario;
 import projeto.tcc.eventos.Evento;
 
-public class UsuarioCadastradoEvento extends Evento implements Serializable {
+public class UsuarioCadastradoEvento implements Evento, Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int idAgregado;
-	private String comentario;
-	private Usuario usuario;
+	private UUID usuarioUID;
+	private String login;
+	private String senha;
 	
-	public UsuarioCadastradoEvento(String comentario, Usuario usuario) {
-		this.comentario = comentario;
-		this.usuario = usuario;
-		this.idAgregado = usuario.getId();
+	public UsuarioCadastradoEvento(UUID usuarioUID, String login, String senha) {
+		this.usuarioUID = usuarioUID;
+		this.login = login;
+		this.senha = senha;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public UUID getUsuarioUID() {
+		return usuarioUID;
+	}
+
+	public void setUsuarioUID(UUID usuarioUID) {
+		this.usuarioUID = usuarioUID;
 	}
 	
-	public void Processar() {
-		usuario.cuidarCadastro(this);
-		
-	}
+//	public void Processar() {
+//		usuario.cuidarCadastro(this);
+//		
+//	}
 
-	public String getComentario() {
-		return comentario;
-	}
 
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
-	public int getIdAgregado() {
-		return this.idAgregado;
-	}
-
-	public void setIdAgregado(int idAgregado) {
-		this.idAgregado = idAgregado;
-	}
 
 	
 

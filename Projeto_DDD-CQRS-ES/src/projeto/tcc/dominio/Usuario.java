@@ -2,8 +2,11 @@ package projeto.tcc.dominio;
 
 import java.io.Serializable;
 
-import org.apache.catalina.connector.Request;
+import org.jboss.weld.exceptions.IllegalArgumentException;
 
+import projeto.tcc.comandos.CadastrarUsuarioComando;
+import projeto.tcc.comandos.FazerLoginComando;
+import projeto.tcc.eventos.Evento;
 import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.eventos.usuario.UsuarioLogadoEvento;
 
@@ -20,16 +23,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String CPF;
 	
-	public Usuario(int id, String login, String senha) {
-		this.login = login;
-		this.senha = senha;
-		this.id = id;
-	}
-	
-	public Usuario() {
-	}
-	
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -58,19 +52,21 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public void cuidarCadastro(UsuarioCadastradoEvento ucv) {
-		this.login = ucv.getUsuario().getLogin();
-		this.senha = ucv.getUsuario().getSenha();
-		 
-		//ucv.getComentario()
+	public Evento cuidarCadastro(CadastrarUsuarioComando usuario) {
+
+		return new UsuarioCadastradoEvento(usuario.aggregateId(),usuario.getLogin(),usuario.getSenha());
+		
+		
+		
 	}
 	
 	
-	public void logar(UsuarioLogadoEvento ulv) {
-		this.login = ulv.getUsuario().getLogin();
-		this.senha = ulv.getUsuario().getSenha();
-		//ulv.getDtLogin();
-		System.out.println(login+" ,"+senha);
+	public Evento logar(FazerLoginComando login) {
+		
+		if(login.aggregateId().equals("buscar id login"))		
+		return new UsuarioLogadoEvento();
+		else
+			throw new IllegalArgumentException("Login errado");
 	}
 
 	public int getId() {
