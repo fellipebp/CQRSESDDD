@@ -2,22 +2,22 @@ package projeto.tcc.comandos;
 
 import java.util.UUID;
 
+import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
+
 public class FazerLoginComando implements Comando {
 	
 	private UUID usuarioUID;
 	private String login;
 	private String senha;
 	
-	public FazerLoginComando(String login, String senha) {
-		this.login = login;
-		this.senha = senha;
-		
+	public FazerLoginComando(FazerLoginDTO fazerLoginDTO) {
+		this.login = fazerLoginDTO.getLogin();
+		this.senha = fazerLoginDTO.getSenha();
 	}
 	
 
 	@Override
 	public UUID aggregateId() {
-		// TODO Auto-generated method stub
 		return usuarioUID;
 	}
 

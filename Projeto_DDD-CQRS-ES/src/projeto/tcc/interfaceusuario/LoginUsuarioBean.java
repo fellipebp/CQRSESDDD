@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import projeto.tcc.aplicacao.ServicoUsuario;
 import projeto.tcc.comandos.FazerLoginComando;
+import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 
 @Named
 @ApplicationScoped
@@ -21,34 +22,25 @@ public class LoginUsuarioBean implements Serializable {
 	@Inject
 	private ServicoUsuario servicoUsuario;
 //	private ServicoUsuarioImplFacade servicoUsuarioImplFacade = new ServicoUsuarioImplFacade();
-	private String login;
-	private String senha;
+	@Inject
+	private FazerLoginDTO fazerLoginDTO;
+	
 	
 	public String logar(){
-		servicoUsuario.logarUsuario(new FazerLoginComando(login,senha)); 
+		servicoUsuario.logarUsuario(new FazerLoginComando(fazerLoginDTO)); 
 		 return "ouvirMusica.xhtml?faces-redirect=true";
 	}
 
 
-	public String getLogin() {
-		return login;
+	public FazerLoginDTO getFazerLoginDTO() {
+		return fazerLoginDTO;
 	}
 
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setFazerLoginDTO(FazerLoginDTO fazerLoginDTO) {
+		this.fazerLoginDTO = fazerLoginDTO;
 	}
 
 
-
-	public String getSenha() {
-		return senha;
-	}
-
-
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
 
 }

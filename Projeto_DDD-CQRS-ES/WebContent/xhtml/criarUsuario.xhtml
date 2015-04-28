@@ -17,11 +17,13 @@
 		<h:message id="messageGenerica" />    
 		<h:panelGrid columns="2" cellpadding="5">
 			<p:outputLabel value="Digite o seu nome completo:" for="nome" indicateRequired="true" styleClass="alignRight" />
-			<p:inputText id="nome" value="#{criarUsuarioBean.usuario.nome}" required="true" />
+			<p:inputText id="nome" value="#{criarUsuarioBean.usuarioDTO.nome}" required="true" />
+			<p:outputLabel value="Digite o CPF" for="cpf"  indicateRequired="true" styleClass="alignRight"/> 
+			<p:inputText id="cpf" value="#{criarUsuarioBean.usuarioDTO.cpf}" 	required="true" />
 			<p:outputLabel value="Digite o usuário:" for="login"  indicateRequired="true" styleClass="alignRight"/> 
-			<p:inputText id="login" value="#{criarUsuarioBean.usuario.login}" required="true" />
+			<p:inputText id="login" value="#{criarUsuarioBean.usuarioDTO.login}" required="true" />
 			<p:outputLabel value="Digite a senha:" for="senha"  indicateRequired="true" styleClass="alignRight"/> 
-			<p:inputText id="senha" value="#{criarUsuarioBean.usuario.senha}" 	required="true" />
+			<p:inputText id="senha" value="#{criarUsuarioBean.usuarioDTO.senha}" 	required="true" />
 			<f:facet name="footer">
 				<p:commandButton action="#{criarUsuarioBean.criarUsuario()}" value="Criar" />
 			</f:facet>
