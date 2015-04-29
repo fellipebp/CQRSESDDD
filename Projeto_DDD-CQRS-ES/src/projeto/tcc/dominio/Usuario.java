@@ -3,6 +3,8 @@ package projeto.tcc.dominio;
 import java.io.Serializable;
 
 
+import com.mysql.jdbc.StringUtils;
+
 import projeto.tcc.comandos.CadastrarUsuarioComando;
 import projeto.tcc.comandos.FazerLoginComando;
 import projeto.tcc.eventos.Evento;
@@ -51,11 +53,12 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 	public Evento cuidarCadastro(CadastrarUsuarioComando usuario) {
+		if (StringUtils.isNullOrEmpty(usuario.getCpf()) || StringUtils.isNullOrEmpty(usuario.getNome())
+				|| StringUtils.isNullOrEmpty(usuario.getLogin()) || !StringUtils.isNullOrEmpty(usuario.getSenha())) {
+			//throw new erro. Nao pode ser gerado o evento pois nao atendeu a regra de negocio
+		}
 
 		return new UsuarioCadastradoEvento(usuario.aggregateId(),usuario.getLogin(),usuario.getSenha());
-		
-		
-		
 	}
 	
 	

@@ -2,23 +2,28 @@ package projeto.tcc.comandos;
 
 import java.util.UUID;
 
+import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
+
 public class CadastrarUsuarioComando implements Comando {
 
 	
 	private UUID usuarioUID;
 	private String login;
 	private String senha;
+	private String cpf;
+	private String nome;
 	
-	public CadastrarUsuarioComando(UUID usuarioUID , String login, String senha) {
+	public CadastrarUsuarioComando(UUID usuarioUID , CriarUsuarioDTO usuarioDTO) {
 		this.usuarioUID = usuarioUID;
-		this.login = login;
-		this.senha = senha;
+		this.login = usuarioDTO.getLogin();
+		this.senha = usuarioDTO.getSenha();
+		this.cpf =usuarioDTO.getCpf();
+		this.nome = usuarioDTO.getNome();
 	}
 	
 	@Override
 	public UUID aggregateId() {
-		// TODO Auto-generated method stub
-		return null;
+		return getUsuarioUID();
 	}
 
 	public UUID getUsuarioUID() {
@@ -43,6 +48,22 @@ public class CadastrarUsuarioComando implements Comando {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }
