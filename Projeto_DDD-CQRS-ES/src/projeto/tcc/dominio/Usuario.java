@@ -2,13 +2,11 @@ package projeto.tcc.dominio;
 
 import java.io.Serializable;
 
-import org.jboss.weld.exceptions.IllegalArgumentException;
 
 import projeto.tcc.comandos.CadastrarUsuarioComando;
 import projeto.tcc.comandos.FazerLoginComando;
 import projeto.tcc.eventos.Evento;
 import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
-import projeto.tcc.eventos.usuario.UsuarioLogadoEvento;
 
 
 public class Usuario implements Serializable {
@@ -63,10 +61,11 @@ public class Usuario implements Serializable {
 	
 	public Evento logar(FazerLoginComando login) {
 		
-		if(login.aggregateId().equals("buscar id login"))		
-		return new UsuarioLogadoEvento();
-		else
-			throw new IllegalArgumentException("Login errado");
+
+		//retorna evento
+		
+		return null;
+		
 	}
 
 	public int getId() {
