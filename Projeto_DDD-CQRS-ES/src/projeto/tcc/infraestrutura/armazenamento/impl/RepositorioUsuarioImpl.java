@@ -17,7 +17,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 	
 	
 	public void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception{
-		conexao.getConection();
+		conexao.getConectionEventSource();
 		conexao.salvarEvento(e);
 	}
 
