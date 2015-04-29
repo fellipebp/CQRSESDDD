@@ -48,39 +48,16 @@ public class Conexao {
 
 	}
 
-	public void writeJavaObject(Evento evento) throws Exception {
+	public void salvarEvento(Evento evento) throws Exception {
 
-		PreparedStatement pstmt3 = null;
 		PreparedStatement pstmt1 = null;
-		PreparedStatement pstmt2 = null;
-		pstmt3 = (PreparedStatement) connection
-				.prepareStatement(query);
-		pstmt3.setInt(1,1);
-		
-		ResultSet rs = pstmt3.executeQuery();
 		
 		
-		// Se ja existe um agregado com aquele id, entao vc apenas registra o evento apontando para ele
-		if(rs.next()){
-			pstmt1 = (PreparedStatement) connection
-					.prepareStatement(
-							"insert into eventstore(aggregate_id,version,evento) values(?,?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS);
-		}
-		
-		
-		//se ainda nao existe um agregado correspondente ao id, voce insere na tabela de agregados e registra o evento
-		else{
-			 pstmt2 = (PreparedStatement) connection
-					.prepareStatement(
-							"insert into aggregates(aggregate_id,type,version) values(?,?,?)",
-							PreparedStatement.RETURN_GENERATED_KEYS);
+	
 			 pstmt1 = (PreparedStatement) connection
 					.prepareStatement(
-							"insert into eventstore(aggregate_id,version,evento) values(?,?,?)",
+							"insert into eventstore(aggregate_id,evento) values(?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS);
-		}
-
 		
 
 		// set input parameters
@@ -91,17 +68,11 @@ public class Conexao {
 		oos.close();
 		bos.close();
 		byte[] dadosEvento = bos.toByteArray();
-		pstmt1.setInt(2, 1);
-		pstmt1.setObject(3, dadosEvento);
-		if(pstmt2 != null){
-		pstmt2.setString(2, null);
-		pstmt2.setInt(3, 1);
-		pstmt2.executeUpdate();
-		}
+		pstmt1.setInt(1, 1);
+		pstmt1.setObject(2, dadosEvento);
 		pstmt1.executeUpdate();
 
 		// get the generated key for the id
-		rs.close();
 		pstmt1.close();
 
 		System.out.println("writeJavaObject: done serializing: ");
