@@ -31,7 +31,7 @@ public class Conexao {
 
 		try {
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/eventsource", "root", "mysql");
+					"jdbc:mysql://localhost:3306/eventsource", "root", "123");
 
 
 		} catch (SQLException e) {
@@ -56,7 +56,7 @@ public class Conexao {
 	
 			 pstmt1 = (PreparedStatement) connection
 					.prepareStatement(
-							"insert into eventstore(aggregate_id,evento) values(?,?)",
+							"insert into eventstore(agregateid,events) values(?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS);
 		
 
@@ -68,7 +68,7 @@ public class Conexao {
 		oos.close();
 		bos.close();
 		byte[] dadosEvento = bos.toByteArray();
-		pstmt1.setInt(1, 1);
+		pstmt1.setString(1, evento.getAggregateId().toString());
 		pstmt1.setObject(2, dadosEvento);
 		pstmt1.executeUpdate();
 

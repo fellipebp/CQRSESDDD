@@ -1,6 +1,7 @@
 package projeto.tcc.eventos.usuario;
 
 import java.util.Date;
+import java.util.UUID;
 
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.eventos.Evento;
@@ -9,14 +10,15 @@ public class UsuarioLogadoEvento implements Evento {
 	
 	
 
-	
+	private UUID aggregateId;
 	private Usuario usuario;
 	private Date dtLogin;
 	
 	public UsuarioLogadoEvento() {
 	}
 	
-	public UsuarioLogadoEvento(Usuario usuario, Date dtLogin){
+	public UsuarioLogadoEvento(UUID aggregateId, Usuario usuario, Date dtLogin){
+		this.aggregateId = aggregateId;
 		this.usuario = usuario;
 		this.dtLogin = dtLogin;
 	}
@@ -42,6 +44,16 @@ public class UsuarioLogadoEvento implements Evento {
 	public void setDtLogin(Date dtLogin) {
 		this.dtLogin = dtLogin;
 	}
+
+	public UUID getAggregateId() {
+		return aggregateId;
+	}
+
+	public void setAggregateId(UUID aggregateId) {
+		this.aggregateId = aggregateId;
+	}
+
+
 	
 
 }

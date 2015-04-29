@@ -19,7 +19,12 @@ public class ServicoUsuarioImpl implements ServicoUsuario {
 	@Override
 	public void cadastrarUsuario(CadastrarUsuarioComando cadastrarUsuarioComando) {
 		usuario = new Usuario();
-		usuario.cuidarCadastro(cadastrarUsuarioComando);
+		try {
+			usuario.cuidarCadastro(cadastrarUsuarioComando);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

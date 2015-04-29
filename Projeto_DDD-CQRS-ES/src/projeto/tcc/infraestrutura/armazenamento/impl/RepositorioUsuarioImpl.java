@@ -1,20 +1,25 @@
 package projeto.tcc.infraestrutura.armazenamento.impl;
 
-import java.io.Serializable;
 
 import projeto.tcc.dominio.Usuario;
+import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.armazenamento.RepositorioUsuario;
 
-public class RepositorioUsuarioImpl implements RepositorioUsuario, Serializable {
+public class RepositorioUsuarioImpl implements RepositorioUsuario{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4819344487521447994L;
-
+	private Conexao conexao = new Conexao();
+	
 	@Override
 	public Usuario getUsuario(String id) {
 		return null;
 	}
+	
+	
+	public void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception{
+		conexao.getConection();
+		conexao.salvarEvento(e);
+	}
+
 
 }

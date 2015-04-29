@@ -11,12 +11,12 @@ public class UsuarioCadastradoEvento implements Evento, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private UUID usuarioUID;
+	private UUID aggregateId;
 	private String login;
 	private String senha;
 	
-	public UsuarioCadastradoEvento(UUID usuarioUID, String login, String senha) {
-		this.usuarioUID = usuarioUID;
+	public UsuarioCadastradoEvento(UUID aggregateId, String login, String senha) {
+		this.aggregateId = aggregateId;
 		this.login = login;
 		this.senha = senha;
 	}
@@ -37,14 +37,15 @@ public class UsuarioCadastradoEvento implements Evento, Serializable {
 		this.senha = senha;
 	}
 
-	public UUID getUsuarioUID() {
-		return usuarioUID;
+	public UUID getAggregateId() {
+		return aggregateId;
 	}
 
-	public void setUsuarioUID(UUID usuarioUID) {
-		this.usuarioUID = usuarioUID;
+	public void setAggregateId(UUID aggregateId) {
+		this.aggregateId = aggregateId;
 	}
-	
+
+
 //	public void Processar() {
 //		usuario.cuidarCadastro(this);
 //		
