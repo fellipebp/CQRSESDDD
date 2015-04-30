@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import projeto.tcc.eventos.Evento;
-import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -25,7 +24,7 @@ public class Conexao {
 		carregaDriver();
 		try {
 			connection = DriverManager.getConnection(EVENTSOURCE, "root",
-					"mysql");
+					"123");
 
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");

@@ -3,6 +3,7 @@ package projeto.tcc.interfaceusuario;
 import java.io.Serializable;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,7 +12,7 @@ import projeto.tcc.comandos.FazerLoginComando;
 import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 
 @Named
-@ApplicationScoped
+@SessionScoped
 public class LoginUsuarioBean implements Serializable {
 	
 	/**
@@ -21,7 +22,7 @@ public class LoginUsuarioBean implements Serializable {
 	@Inject
 	private ServicoUsuario servicoUsuario;
 //	private ServicoUsuarioImplFacade servicoUsuarioImplFacade = new ServicoUsuarioImplFacade();
-	@Inject
+//	@Inject
 	private FazerLoginDTO fazerLoginDTO;
 	
 	
