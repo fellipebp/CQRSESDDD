@@ -1,10 +1,10 @@
-package projeto.tcc.eventos.usuario;
+package projeto.tcc.dominio.eventos.usuario;
 
 import java.util.Date;
 import java.util.UUID;
 
 import projeto.tcc.dominio.Usuario;
-import projeto.tcc.eventos.Evento;
+import projeto.tcc.dominio.eventos.Evento;
 
 public class UsuarioLogadoEvento implements Evento {
 	

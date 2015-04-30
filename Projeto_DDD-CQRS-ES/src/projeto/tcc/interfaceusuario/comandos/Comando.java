@@ -1,4 +1,4 @@
-package projeto.tcc.comandos;
+package projeto.tcc.interfaceusuario.comandos;
 
 import java.util.UUID;
 

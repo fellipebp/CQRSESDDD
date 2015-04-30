@@ -2,7 +2,7 @@ package projeto.tcc.infraestrutura.armazenamento.impl;
 
 
 import projeto.tcc.dominio.Usuario;
-import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.armazenamento.RepositorioUsuario;
 

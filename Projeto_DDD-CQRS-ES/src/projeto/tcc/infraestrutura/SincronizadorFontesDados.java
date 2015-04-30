@@ -1,9 +1,10 @@
 package projeto.tcc.infraestrutura;
 
-import projeto.tcc.eventos.Evento;
-import projeto.tcc.eventos.usuario.CarregarUsuarioEvento;
-import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
-import projeto.tcc.eventos.usuario.UsuarioLogadoEvento;
+import projeto.tcc.dominio.eventos.Evento;
+import projeto.tcc.dominio.eventos.usuario.CarregarUsuarioEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
+
 
 public class SincronizadorFontesDados implements Runnable {
 	private Evento evento;

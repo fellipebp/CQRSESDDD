@@ -1,7 +1,7 @@
 package projeto.tcc.aplicacao;
 
-import projeto.tcc.comandos.CadastrarUsuarioComando;
-import projeto.tcc.comandos.FazerLoginComando;
+import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 public interface ServicoUsuario {
 

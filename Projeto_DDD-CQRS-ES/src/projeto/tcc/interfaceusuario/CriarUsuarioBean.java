@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import projeto.tcc.aplicacao.ServicoUsuario;
-import projeto.tcc.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
 
 @Named

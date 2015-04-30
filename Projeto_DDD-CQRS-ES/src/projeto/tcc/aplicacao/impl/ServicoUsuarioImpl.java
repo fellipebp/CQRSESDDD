@@ -3,9 +3,9 @@ package projeto.tcc.aplicacao.impl;
 import java.io.Serializable;
 
 import projeto.tcc.aplicacao.ServicoUsuario;
-import projeto.tcc.comandos.CadastrarUsuarioComando;
-import projeto.tcc.comandos.FazerLoginComando;
 import projeto.tcc.dominio.Usuario;
+import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 public class ServicoUsuarioImpl implements ServicoUsuario, Serializable {
 

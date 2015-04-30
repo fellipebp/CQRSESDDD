@@ -3,9 +3,9 @@ package test;
 import java.util.UUID;
 
 import projeto.tcc.aplicacao.impl.ServicoUsuarioImpl;
-import projeto.tcc.comandos.CadastrarUsuarioComando;
-import projeto.tcc.eventos.Evento;
+import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.infraestrutura.Conexao;
+import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
 
 

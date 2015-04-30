@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import projeto.tcc.aplicacao.ServicoUsuario;
-import projeto.tcc.comandos.FazerLoginComando;
+import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 
 @Named

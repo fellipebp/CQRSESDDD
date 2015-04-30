@@ -9,7 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import projeto.tcc.eventos.Evento;
+import projeto.tcc.dominio.eventos.Evento;
+
 
 import com.mysql.jdbc.PreparedStatement;
 

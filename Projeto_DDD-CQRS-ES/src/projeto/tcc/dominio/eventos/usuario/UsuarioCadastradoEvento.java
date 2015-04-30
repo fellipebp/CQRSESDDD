@@ -1,9 +1,10 @@
-package projeto.tcc.eventos.usuario;
+package projeto.tcc.dominio.eventos.usuario;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-import projeto.tcc.eventos.Evento;
+import projeto.tcc.dominio.eventos.Evento;
+
 
 public class UsuarioCadastradoEvento implements Evento, Serializable {
 	

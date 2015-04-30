@@ -1,4 +1,4 @@
-package projeto.tcc.eventos;
+package projeto.tcc.dominio.eventos;
 
 import java.util.UUID;
 

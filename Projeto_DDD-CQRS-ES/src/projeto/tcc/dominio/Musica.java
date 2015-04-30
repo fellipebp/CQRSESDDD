@@ -2,7 +2,8 @@ package projeto.tcc.dominio;
 
 import java.io.Serializable;
 
-import projeto.tcc.eventos.musica.MusicaTocadaEvento;
+import projeto.tcc.dominio.eventos.musica.MusicaTocadaEvento;
+
 
 
 public class Musica implements Serializable {

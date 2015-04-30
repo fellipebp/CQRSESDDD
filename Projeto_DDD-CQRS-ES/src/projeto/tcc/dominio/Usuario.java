@@ -2,12 +2,12 @@ package projeto.tcc.dominio;
 
 import java.io.Serializable;
 
-import projeto.tcc.comandos.CadastrarUsuarioComando;
-import projeto.tcc.comandos.FazerLoginComando;
-import projeto.tcc.eventos.Evento;
-import projeto.tcc.eventos.EventoProcessador;
-import projeto.tcc.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.Evento;
+import projeto.tcc.dominio.eventos.EventoProcessador;
+import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.armazenamento.impl.RepositorioUsuarioImpl;
+import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 
 public class Usuario implements Serializable {
