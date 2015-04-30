@@ -24,8 +24,8 @@ public class Conexao {
 	public void getConectionEventSource() {
 		carregaDriver();
 		try {
-			connection = DriverManager
-					.getConnection(EVENTSOURCE, "root", "123");
+			connection = DriverManager.getConnection(EVENTSOURCE, "root",
+					"mysql");
 
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
@@ -48,14 +48,13 @@ public class Conexao {
 	public void getConectionReader() {
 		carregaDriver();
 		try {
-			connection = DriverManager
-					.getConnection(BASELEITURA, "root", "123");
+			connection = DriverManager.getConnection(BASELEITURA, "root",
+					"mysql");
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
 			return;
 		}
-
 		verificaConexao();
 
 	}
@@ -70,48 +69,71 @@ public class Conexao {
 		}
 	}
 
-	public void salvarEvento(Evento evento) throws Exception {
+	public void salvarEvento(Evento evento) {
+		getConectionEventSource();
+		try {
+			PreparedStatement pstmt1 = null;
+			pstmt1 = (PreparedStatement) connection.prepareStatement(
+					"insert into eventstore(agregateid,events) values(?,?)",
+					PreparedStatement.RETURN_GENERATED_KEYS);
 
-		PreparedStatement pstmt1 = null;
-		pstmt1 = (PreparedStatement) connection.prepareStatement(
-				"insert into eventstore(agregateid,events) values(?,?)",
-				PreparedStatement.RETURN_GENERATED_KEYS);
-
-		// set input parameters
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(bos);
-		oos.writeObject(evento);
-		oos.flush();
-		oos.close();
-		bos.close();
-		byte[] dadosEvento = bos.toByteArray();
-		pstmt1.setString(1, evento.getAggregateId().toString());
-		pstmt1.setObject(2, dadosEvento);
-		pstmt1.executeUpdate();
-
-		// get the generated key for the id
-		pstmt1.close();
-
-		System.out.println("writeJavaObject: done serializing: ");
+			// set input parameters
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
+			oos.writeObject(evento);
+			oos.flush();
+			oos.close();
+			bos.close();
+			byte[] dadosEvento = bos.toByteArray();
+			pstmt1.setString(1, evento.getAggregateId().toString());
+			pstmt1.setObject(2, dadosEvento);
+			pstmt1.executeUpdate();
+			// get the generated key for the id
+			pstmt1.close();
+			System.out.println("writeJavaObject: done serializing: ");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}finally{
+			fechaConexao();
+		}
+		
+		//new SincronizadorFontesDados(evento).run();
 	}
 
-	public Evento recuperaEvento(long id) throws Exception {
-		PreparedStatement pstmt = (PreparedStatement) connection
-				.prepareStatement("select dados_evento from eventstore where id_event_store = ?");
-		pstmt.setLong(1, id);
-		ResultSet rs = pstmt.executeQuery();
-		rs.next();
-		byte[] buf = rs.getBytes("dados_evento");
-		ObjectInputStream objectIn = null;
-		if (buf != null)
-			objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
-		UsuarioCadastradoEvento evento = (UsuarioCadastradoEvento) objectIn.readObject();
-		String className = evento.getClass().getName();
-		rs.close();
-		pstmt.close();
-		System.out.println("Deserialization Successful."
-				+ "\nDeserialized Class: " + className);
-		return evento;
+	public Evento recuperaEvento(String id) {
+		getConectionEventSource();
+		try {
+			PreparedStatement pstmt =  (PreparedStatement)connection.prepareStatement("select events from eventstore where agregateid = ?");
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			byte[] buf = rs.getBytes("events");
+			ObjectInputStream objectIn = null;
+			if (buf != null){
+				objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+			}
+			Evento evento = (Evento) objectIn.readObject();
+			String className = evento.getClass().getName();
+			rs.close();
+			pstmt.close();
+			System.out.println("Deserialization Successful."+ "\nDeserialized Class: " + className);
+			return evento;
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}finally{
+			fechaConexao();
+		}
+		return null;
+	}
+
+	private void fechaConexao() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
