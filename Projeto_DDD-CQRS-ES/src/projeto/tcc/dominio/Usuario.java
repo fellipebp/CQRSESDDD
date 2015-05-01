@@ -1,10 +1,12 @@
 package projeto.tcc.dominio;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
 import projeto.tcc.infraestrutura.armazenamento.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
@@ -21,7 +23,34 @@ public class Usuario implements Serializable {
 	private String senha;
 	private String nome;
 	private String CPF;
+	private String email;
+	private Date dataNascimento;
+	private String sexo;
 	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 
 	public String getNome() {
 		return nome;
@@ -63,12 +92,13 @@ public class Usuario implements Serializable {
 	}
 	
 	
-	public Evento logar(FazerLoginComando login) {
-		
-
-		//retorna evento
-		
-		return null;
+	public void logar(FazerLoginComando comandoLogin) throws Exception {
+		Usuario usuarioBase = new RepositorioUsuarioImpl().getUsuarioPorLogin(comandoLogin.getLogin());
+		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
+			new EventoProcessador().processar(new UsuarioLogadoEvento(comandoLogin.getLoginID(), usuarioBase,new Date()));
+			return;
+		}
+		throw new RuntimeException("Usuário ou senha inválidos");
 		
 	}
 

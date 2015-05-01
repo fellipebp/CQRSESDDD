@@ -18,10 +18,10 @@ public class Conexao {
 
 	private static final String EVENTSOURCE = "jdbc:mysql://localhost:3306/eventsource";
 	private static final String BASELEITURA = "jdbc:mysql://localhost:3306/baseleitura";
-	private Connection connection;
+	private static Connection connection;
 	String query = "select * from aggregates where aggregate_id = ?";
 
-	public void getConectionEventSource() {
+	public static Connection getConectionEventSource() {
 		carregaDriver();
 		try {
 			connection = DriverManager.getConnection(EVENTSOURCE, "root",
@@ -30,14 +30,15 @@ public class Conexao {
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
-			return;
+			return null;
 		}
 
 		verificaConexao();
+		return connection;
 
 	}
 
-	private void verificaConexao() {
+	private static void verificaConexao() {
 		if (connection != null) {
 			System.out.println("You made it, take control your database now!");
 		} else {
@@ -45,7 +46,7 @@ public class Conexao {
 		}
 	}
 
-	public void getConectionReader() {
+	public static Connection getConectionReader() {
 		carregaDriver();
 		try {
 			connection = DriverManager.getConnection(BASELEITURA, "root",
@@ -53,13 +54,13 @@ public class Conexao {
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
-			return;
+			return null;
 		}
 		verificaConexao();
-
+		return connection;
 	}
 
-	private void carregaDriver() {
+	private static void carregaDriver() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -69,7 +70,7 @@ public class Conexao {
 		}
 	}
 
-	public void salvarEvento(Evento evento) {
+	public static void salvarEvento(Evento evento) {
 		getConectionEventSource();
 		try {
 			PreparedStatement pstmt1 = null;
@@ -101,7 +102,7 @@ public class Conexao {
 		//new SincronizadorFontesDados(evento).run();
 	}
 
-	public Evento recuperaEvento(String id) {
+	public static Evento recuperaEvento(String id) {
 		getConectionEventSource();
 		try {
 			PreparedStatement pstmt =  (PreparedStatement)connection.prepareStatement("select events from eventstore where agregateid = ?");
@@ -128,7 +129,7 @@ public class Conexao {
 		return null;
 	}
 
-	private void fechaConexao() {
+	private static void fechaConexao() {
 		try {
 			connection.close();
 		} catch (SQLException e) {

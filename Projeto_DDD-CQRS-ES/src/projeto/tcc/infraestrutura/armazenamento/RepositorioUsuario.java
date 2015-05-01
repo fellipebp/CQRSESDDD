@@ -7,6 +7,10 @@ public interface RepositorioUsuario {
 	
 	Usuario getUsuario(String id); 
 	
+	Usuario getUsuarioPorCPF(String CPF); 
+	
+	Usuario getUsuarioPorLogin(String login); 
+	
 	void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception;
 
 }

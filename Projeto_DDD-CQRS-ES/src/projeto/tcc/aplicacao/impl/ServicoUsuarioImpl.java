@@ -17,9 +17,12 @@ public class ServicoUsuarioImpl implements ServicoUsuario, Serializable {
 
 	@Override
 	public void logarUsuario(FazerLoginComando fazerLoginComando) {
-	
 		usuario = new Usuario();
-		usuario.logar(fazerLoginComando);
+		try {
+			usuario.logar(fazerLoginComando);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -28,7 +31,6 @@ public class ServicoUsuarioImpl implements ServicoUsuario, Serializable {
 		try {
 			usuario.cuidarCadastro(cadastrarUsuarioComando);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
