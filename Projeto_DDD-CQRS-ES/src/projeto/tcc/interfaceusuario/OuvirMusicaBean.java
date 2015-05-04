@@ -4,16 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Named;
 
-import projeto.tcc.aplicacao.ServicoMusica;
 import projeto.tcc.dominio.Musica;
-import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
 import projeto.tcc.interfaceusuario.servico.impl.ServicoMusicaFacadeImpl;
 
-@ManagedBean
-@ViewScoped
+@Named
+@ConversationScoped
 public class OuvirMusicaBean implements Serializable {
 
 	private static final long serialVersionUID = -6673863557198240345L;
