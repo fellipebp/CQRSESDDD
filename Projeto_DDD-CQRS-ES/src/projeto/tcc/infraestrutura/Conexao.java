@@ -25,7 +25,7 @@ public class Conexao {
 		carregaDriver();
 		try {
 			connection = DriverManager.getConnection(EVENTSOURCE, "root",
-					"mysql");
+					"123");
 
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
@@ -50,7 +50,7 @@ public class Conexao {
 		carregaDriver();
 		try {
 			connection = DriverManager.getConnection(BASELEITURA, "root",
-					"mysql");
+					"123");
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();

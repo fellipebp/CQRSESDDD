@@ -81,13 +81,13 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 	public void cuidarCadastro(CadastrarUsuarioComando usuario) throws Exception {
-//		if (StringUtils.isNullOrEmpty(usuario.getCpf()) || StringUtils.isNullOrEmpty(usuario.getNome())
-//				|| StringUtils.isNullOrEmpty(usuario.getLogin()) || !StringUtils.isNullOrEmpty(usuario.getSenha())) {
-//			//throw new erro. Nao pode ser gerado o evento pois nao atendeu a regra de negocio
-//		}
-		
+
+		Usuario usuarioBase = new RepositorioUsuarioImpl().getUsuarioPorCPF(usuario.getCpf());
+		if(usuarioBase != null){
+			throw new RuntimeException("Já existe um usuário com esse cpf");
+		}
+			
 		new EventoProcessador().processar((new UsuarioCadastradoEvento(usuario.aggregateId(),usuario.getLogin(),usuario.getSenha())));
-//		new RepositorioUsuarioImpl().processarUsuarioCadastradoEvento((new UsuarioCadastradoEvento(usuario.aggregateId(),usuario.getLogin(),usuario.getSenha())));
 	}
 	
 	

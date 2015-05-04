@@ -3,7 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
- 	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
 	<title>Criar usuário</title>
@@ -13,19 +13,30 @@
 		<h1>
 			<h:outputText value="Cadastre seu usuário, é grátis!" />
 		</h1>
-		<h:messages errorStyle="color: red" infoStyle="color: green" layout="table" showSummary="true" showDetail="false" globalOnly="true"/> 
-		<h:message id="messageGenerica" />    
+						<p:messages/>
+
 		<h:panelGrid columns="2" cellpadding="5">
-			<p:outputLabel value="Digite o seu nome completo:" for="nome" indicateRequired="true" styleClass="alignRight" />
-			<p:inputText id="nome" value="#{criarUsuarioBean.usuarioDTO.nome}" required="true" />
-			<p:outputLabel value="Digite o CPF" for="cpf"  indicateRequired="true" styleClass="alignRight"/> 
-			<p:inputText id="cpf" value="#{criarUsuarioBean.usuarioDTO.cpf}" 	required="true" />
-			<p:outputLabel value="Digite o usuário:" for="login"  indicateRequired="true" styleClass="alignRight"/> 
-			<p:inputText id="login" value="#{criarUsuarioBean.usuarioDTO.login}" required="true" />
-			<p:outputLabel value="Digite a senha:" for="senha"  indicateRequired="true" styleClass="alignRight"/> 
-			<p:inputText id="senha" value="#{criarUsuarioBean.usuarioDTO.senha}" 	required="true" />
+			<p:outputLabel value="Digite o seu nome completo:" for="nome"
+				indicateRequired="true" styleClass="alignRight" />
+			<p:inputText id="nome" value="#{criarUsuarioBean.usuarioDTO.nome}"
+				required="true" />
+			<p:outputLabel value="Digite o CPF: " for="cpf" indicateRequired="true"
+				styleClass="alignRight" />
+			<p:inputMask id="cpf"
+				value="#{criarUsuarioBean.usuarioDTO.cpf}"
+				mask="999.999.999-99"
+				requiredMessage="Campo cpf não preenchido" required="true"/>
+			<p:outputLabel value="Digite o usuário:" for="login"
+				indicateRequired="true" styleClass="alignRight" />
+			<p:inputText id="login" value="#{criarUsuarioBean.usuarioDTO.login}"
+				required="true" />
+			<p:outputLabel value="Digite a senha:" for="senha"
+				indicateRequired="true" styleClass="alignRight" />
+			<p:password id="senha" value="#{criarUsuarioBean.usuarioDTO.senha}"
+				required="true" requiredMessage="Campo senha nao preenchido" />
 			<f:facet name="footer">
-				<p:commandButton action="#{criarUsuarioBean.criarUsuario()}" value="Criar" />
+				<p:commandButton action="#{criarUsuarioBean.criarUsuario()}"
+					value="Criar"  ajax="false"/>
 			</f:facet>
 		</h:panelGrid>
 		<h:outputLink value="loginUsuario.xhtml">Quer se logar? Clique aqui</h:outputLink>

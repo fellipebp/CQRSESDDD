@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -35,7 +37,8 @@ public class CriarUsuarioBean implements Serializable{
 	public String criarUsuario() throws Exception{
 		UUID idOne = UUID.randomUUID();
 		servicoUsuario.cadastrarUsuario(new CadastrarUsuarioComando(idOne,usuarioDTO));
-		return null;
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario cadastrado com sucesso"));
+		return "loginUsuario.xhtml";
 		
 	}
 
