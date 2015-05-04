@@ -25,7 +25,7 @@ public class Conexao {
 		carregaDriver();
 		try {
 			connection = DriverManager.getConnection(EVENTSOURCE, "root",
-					"123");
+					"mysql");
 
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");

@@ -16,12 +16,12 @@ public class ServicoUsuarioImpl implements ServicoUsuario, Serializable {
 	private Usuario usuario;
 
 	@Override
-	public void logarUsuario(FazerLoginComando fazerLoginComando) {
+	public void logarUsuario(FazerLoginComando fazerLoginComando) throws Exception{
 		usuario = new Usuario();
 		try {
 			usuario.logar(fazerLoginComando);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 

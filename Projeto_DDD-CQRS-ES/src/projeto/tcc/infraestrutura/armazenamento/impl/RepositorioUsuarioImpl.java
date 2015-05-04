@@ -69,7 +69,8 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 				usuario.setLogin(login);
 				usuario.setNome(rs.getString("nome"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setSenha(rs.getString("sexo"));
+				usuario.setSexo(rs.getString("sexo"));
+				usuario.setAggregateID(rs.getString("aggregateID"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

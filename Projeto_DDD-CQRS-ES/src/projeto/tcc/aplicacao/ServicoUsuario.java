@@ -5,7 +5,7 @@ import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 public interface ServicoUsuario {
 
-	public void logarUsuario(FazerLoginComando fazerLoginComando);
+	public void logarUsuario(FazerLoginComando fazerLoginComando)  throws Exception;
 	public void cadastrarUsuario(CadastrarUsuarioComando cadastrarUsuarioComando);
 
 }

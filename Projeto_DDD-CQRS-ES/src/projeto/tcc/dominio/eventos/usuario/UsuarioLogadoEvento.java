@@ -1,15 +1,20 @@
 package projeto.tcc.dominio.eventos.usuario;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 
-public class UsuarioLogadoEvento implements Evento {
+public class UsuarioLogadoEvento implements Evento, Serializable{
 	
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7012748516611245990L;
 	private UUID aggregateId;
 	private Usuario usuario;
 	private Date dtLogin;

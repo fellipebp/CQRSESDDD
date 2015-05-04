@@ -2,8 +2,8 @@ package projeto.tcc.dominio;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
-import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
@@ -26,7 +26,7 @@ public class Usuario implements Serializable {
 	private String email;
 	private Date dataNascimento;
 	private String sexo;
-	
+	private String aggregateID;
 
 	public String getEmail() {
 		return email;
@@ -86,7 +86,6 @@ public class Usuario implements Serializable {
 //			//throw new erro. Nao pode ser gerado o evento pois nao atendeu a regra de negocio
 //		}
 		
-		
 		new EventoProcessador().processar((new UsuarioCadastradoEvento(usuario.aggregateId(),usuario.getLogin(),usuario.getSenha())));
 //		new RepositorioUsuarioImpl().processarUsuarioCadastradoEvento((new UsuarioCadastradoEvento(usuario.aggregateId(),usuario.getLogin(),usuario.getSenha())));
 	}
@@ -95,9 +94,10 @@ public class Usuario implements Serializable {
 	public void logar(FazerLoginComando comandoLogin) throws Exception {
 		Usuario usuarioBase = new RepositorioUsuarioImpl().getUsuarioPorLogin(comandoLogin.getLogin());
 		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
-			new EventoProcessador().processar(new UsuarioLogadoEvento(comandoLogin.getLoginID(), usuarioBase,new Date()));
+			new EventoProcessador().processar(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase,new Date()));
 			return;
 		}
+		//TODO criar exceção especifica
 		throw new RuntimeException("Usuário ou senha inválidos");
 		
 	}
@@ -108,6 +108,14 @@ public class Usuario implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getAggregateID() {
+		return aggregateID;
+	}
+
+	public void setAggregateID(String aggregateID) {
+		this.aggregateID = aggregateID;
 	}
 		
 
