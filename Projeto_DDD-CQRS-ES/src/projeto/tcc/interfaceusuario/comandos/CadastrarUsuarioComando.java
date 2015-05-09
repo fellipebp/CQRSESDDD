@@ -21,14 +21,6 @@ public class CadastrarUsuarioComando implements Comando {
 		this.nome = usuarioDTO.getNome();
 	}
 	
-//	public CadastrarUsuarioComando(UUID usuarioUID , String login, String senha) {
-//		this.usuarioUID = usuarioUID;
-//		this.login = login;
-//		this.senha = senha;
-//	}
-	
-	
-	
 	
 	@Override
 	public UUID aggregateId() {

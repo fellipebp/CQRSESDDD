@@ -1,9 +1,15 @@
 package projeto.tcc.dominio;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
@@ -12,11 +18,14 @@ import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 
-public class Usuario implements Serializable {
+public class Usuario  implements Serializable {
 	
 	/**
 	 * 
 	 */
+	private static final Logger LOGGER = Logger.getLogger(Usuario.class.getName());
+
+	
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String login;
@@ -27,6 +36,8 @@ public class Usuario implements Serializable {
 	private Date dataNascimento;
 	private String sexo;
 	private String aggregateID;
+	
+	//private listaEventos (mudancas)
 
 	public String getEmail() {
 		return email;
@@ -118,5 +129,47 @@ public class Usuario implements Serializable {
 		this.aggregateID = aggregateID;
 	}
 		
+	
+	public void aplicaMudanca(UsuarioLogadoEvento usuarioLogadoEvento){
+		 Usuario usuario = usuarioLogadoEvento.getUsuario();
+		 this.setCPF(usuario.getCPF());
+		 this.setDataNascimento(usuario.getDataNascimento());
+		 this.setEmail(usuario.getEmail());
+		 this.setId(usuario.getId());
+		 this.setLogin(usuario.getLogin());
+		 this.setNome(usuario.getNome());
+		 this.setSenha(usuario.getSenha());
+		 this.setSexo(usuario.getSexo());
+		
+	}
+	
+	public void aplicaMudanca(UsuarioCadastradoEvento usuarioCadastradoEvento){
+		System.out.println("aaaa");
+//		 Usuario usuario = usuarioCadastradoEvento.get....;
+//		 this.setLogin(usuario.getLogin());
+//		 this.setSenha(usuario.getSenha());
+		
+	}
+	
+
+	public void constroiEntidade(List<Evento> history) 	{
+		Method method;
+		try {
+			for (Evento evento : history) {
+				method = this.getClass().getMethod("aplicaMudanca", evento.getClass());
+				method.invoke(this, evento);
+			}
+		} catch (SecurityException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		} catch (NoSuchMethodException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		} catch (IllegalAccessException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		} catch (IllegalArgumentException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		} catch (InvocationTargetException e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		}
+	}
 
 }

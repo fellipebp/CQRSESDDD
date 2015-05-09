@@ -33,7 +33,6 @@ public class SincronizadorFontesDados implements Runnable {
 				//faz o cast e chama tratador dessa classe
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
