@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import projeto.tcc.dominio.eventos.Evento;
 
@@ -20,6 +22,7 @@ public class Conexao {
 	private static final String BASELEITURA = "jdbc:mysql://localhost:3306/baseleitura";
 	private static Connection connection;
 	String query = "select * from aggregates where aggregate_id = ?";
+	
 
 	public static Connection getConectionEventSource() {
 		carregaDriver();
@@ -99,7 +102,8 @@ public class Conexao {
 			fechaConexao();
 		}
 		
-		//new SincronizadorFontesDados(evento).run();
+		//Publicador.adicionaEvento(evento);
+		
 	}
 
 	public static Evento recuperaEvento(String id) {
@@ -122,7 +126,6 @@ public class Conexao {
 			return evento;
 		} catch (Exception e) {
 			e.printStackTrace();
-			
 		}finally{
 			fechaConexao();
 		}
