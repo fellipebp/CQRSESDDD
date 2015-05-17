@@ -4,12 +4,13 @@ package projeto.tcc.infraestrutura.armazenamento.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.PreparedStatement;
-
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
+import projeto.tcc.infraestrutura.EventStore;
 import projeto.tcc.infraestrutura.armazenamento.RepositorioUsuario;
+
+import com.mysql.jdbc.PreparedStatement;
 
 public class RepositorioUsuarioImpl implements RepositorioUsuario{
 
@@ -21,7 +22,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 	
 	
 	public void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception{
-		Conexao.salvarEvento(e);
+		EventStore.salvarEvento(e);
 	}
 
 

@@ -10,7 +10,7 @@ import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
-import projeto.tcc.infraestrutura.Conexao;
+import projeto.tcc.infraestrutura.EventStore;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
 
@@ -48,7 +48,7 @@ public class Test {
 		criarUsuarioDTO.setSenha("abcd");
 		new ServicoUsuarioImpl().cadastrarUsuario(new CadastrarUsuarioComando(idOne,criarUsuarioDTO));
 		try {
-			Evento evento = new Conexao().recuperaEvento(idOne.toString());
+			Evento evento = new EventStore().recuperaEvento(idOne.toString());
 			System.out.println(evento.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
