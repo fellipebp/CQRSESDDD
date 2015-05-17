@@ -12,7 +12,7 @@ import projeto.tcc.dominio.eventos.Evento;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class EventStore {
+public class Armazenador {
 	
 	private static Connection connection;
 
@@ -42,7 +42,11 @@ public class EventStore {
 			e.printStackTrace();
 			return;
 		}finally{
-			fechaConexao();
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		//Publicador.adicionaEvento(evento);
@@ -70,18 +74,16 @@ public class EventStore {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			fechaConexao();
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
 	
-	private static void fechaConexao() {
-		try {
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	
 	

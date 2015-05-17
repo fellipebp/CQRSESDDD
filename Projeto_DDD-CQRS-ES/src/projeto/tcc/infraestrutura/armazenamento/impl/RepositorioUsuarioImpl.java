@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.EventStore;
+import projeto.tcc.infraestrutura.Armazenador;
 import projeto.tcc.infraestrutura.armazenamento.RepositorioUsuario;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -22,7 +22,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 	
 	
 	public void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception{
-		EventStore.salvarEvento(e);
+		Armazenador.salvarEvento(e);
 	}
 
 
