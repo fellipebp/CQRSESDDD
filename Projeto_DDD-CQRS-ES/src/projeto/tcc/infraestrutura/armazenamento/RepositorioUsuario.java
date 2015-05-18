@@ -9,7 +9,9 @@ public interface RepositorioUsuario {
 	
 	Usuario getUsuarioPorCPF(String CPF); 
 	
-	Usuario getUsuarioPorLogin(String login); 
+	Usuario getUsuarioPorAggregateID(String aggregateID);
+	
+	String existeUsuarioComEsseLogin(String login); 
 	
 	void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception;
 

@@ -3,11 +3,14 @@ package projeto.tcc.dominio;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.text.MaskFormatter;
 
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.EventoProcessador;
@@ -74,9 +77,21 @@ public class Usuario  implements Serializable {
 	public String getCPF() {
 		return CPF;
 	}
+	
+	public String getCPFFormatado() {
+		MaskFormatter mask;
+		try {
+			mask = new MaskFormatter("###.###.###-##");
+			mask.setValueContainsLiteralCharacters(false);
+			return mask.valueToString(CPF);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 
 	public void setCPF(String cPF) {
-		CPF = cPF;
+		CPF = cPF.replaceAll("[.-]", "");;
 	}
 
 	public String getLogin() {
@@ -91,19 +106,27 @@ public class Usuario  implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public void cuidarCadastro(CadastrarUsuarioComando usuario) throws Exception {
-
-		Usuario usuarioBase = new RepositorioUsuarioImpl().getUsuarioPorCPF(usuario.getCpf());
-		if(usuarioBase != null){
+	public void criarCadastro(CadastrarUsuarioComando usuarioComando) throws Exception {
+		Usuario usuario = new RepositorioUsuarioImpl().getUsuarioPorCPF(usuarioComando.getCpf());
+		if(usuario != null){
+			//TODO criar exceção especifica
 			throw new RuntimeException("Já existe um usuário com esse cpf");
 		}
-			
-		new EventoProcessador().processar((new UsuarioCadastradoEvento(usuario.aggregateId(),usuario.getLogin(),usuario.getSenha())));
+		usuario = new Usuario();
+		usuario.setLogin(usuarioComando.getLogin());
+		usuario.setSenha(usuarioComando.getSenha());
+		usuario.setNome(usuarioComando.getNome());
+		usuario.setCPF( usuarioComando.getCpf());
+		usuario.setEmail( usuarioComando.getEmail());
+//		usuario.setAggregateID(usuarioComando.aggregateId().toString());
+		new EventoProcessador().processar((new UsuarioCadastradoEvento(usuarioComando.aggregateId(), usuario)));
 	}
 	
 	
 	public void logar(FazerLoginComando comandoLogin) throws Exception {
-		Usuario usuarioBase = new RepositorioUsuarioImpl().getUsuarioPorLogin(comandoLogin.getLogin());
+		RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
+		String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(comandoLogin.getLogin());
+		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(aggregateID);
 		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
 			new EventoProcessador().processar(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase,new Date()));
 			return;
@@ -144,32 +167,19 @@ public class Usuario  implements Serializable {
 	}
 	
 	public void aplicaMudanca(UsuarioCadastradoEvento usuarioCadastradoEvento){
-		System.out.println("aaaa");
-//		 Usuario usuario = usuarioCadastradoEvento.get....;
-//		 this.setLogin(usuario.getLogin());
-//		 this.setSenha(usuario.getSenha());
-		
-	}
-	
-
-	public void constroiEntidade(List<Evento> history) 	{
-		Method method;
 		try {
-			for (Evento evento : history) {
-				method = this.getClass().getMethod("aplicaMudanca", evento.getClass());
-				method.invoke(this, evento);
-			}
-		} catch (SecurityException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-		} catch (NoSuchMethodException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-		} catch (IllegalAccessException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-		} catch (IllegalArgumentException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-		} catch (InvocationTargetException e) {
+			this.setLogin(usuarioCadastradoEvento.getLogin());
+			this.setSenha(usuarioCadastradoEvento.getSenha());
+			this.setNome(usuarioCadastradoEvento.getNome());
+			this.setCPF(usuarioCadastradoEvento.getCPF());
+			this.setEmail(usuarioCadastradoEvento.getEmail());
+			this.setAggregateID(usuarioCadastradoEvento.getAggregateId().toString());
+		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
+	
+
+
 
 }

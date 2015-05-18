@@ -26,6 +26,10 @@
 				value="#{criarUsuarioBean.usuarioDTO.cpf}"
 				mask="999.999.999-99"
 				requiredMessage="Campo cpf não preenchido" required="true"/>
+			<p:outputLabel value="Digite o seu e-mail:" for="email"
+				indicateRequired="true" styleClass="alignRight" />
+			<p:inputText id="email" value="#{criarUsuarioBean.usuarioDTO.email}"
+				required="true" />
 			<p:outputLabel value="Digite o usuário:" for="login"
 				indicateRequired="true" styleClass="alignRight" />
 			<p:inputText id="login" value="#{criarUsuarioBean.usuarioDTO.login}"

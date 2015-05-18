@@ -6,13 +6,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import projeto.tcc.dominio.eventos.Evento;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class Armazenador {
+public class ArmazenadorEventos {
 	
 	private static Connection connection;
 
@@ -42,43 +43,40 @@ public class Armazenador {
 			e.printStackTrace();
 			return;
 		}finally{
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			Conexao.fechaConexao();
 		}
 		
-		//Publicador.adicionaEvento(evento);
+		new Publicador().adicionaEvento(evento);
 		
 	}
 
-	public static Evento recuperaEvento(String id) {
+	public static List<Evento> recuperaEventos(String id) {
+		List<Evento> eventos = new ArrayList<>();
+		Evento evento = null;
+		ObjectInputStream objectIn = null;
 		connection = Conexao.getConectionEventSource();
 		try {
-			PreparedStatement pstmt =  (PreparedStatement)connection.prepareStatement("select events from eventstore where agregateid = ?");
+			PreparedStatement pstmt = (PreparedStatement) connection
+					.prepareStatement("select events from eventstore where agregateid = ?");
 			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
-			byte[] buf = rs.getBytes("events");
-			ObjectInputStream objectIn = null;
-			if (buf != null){
-				objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+
+			while (rs.next()) {
+				byte[] buf = rs.getBytes("events");
+				if (buf != null) {
+					objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+					evento = (Evento) objectIn.readObject();
+					System.out.println("Deserialization Successful."+ "\nDeserialized Class: "+ evento.getClass().getName());	
+					eventos.add(evento);
+				}
+				
 			}
-			Evento evento = (Evento) objectIn.readObject();
-			String className = evento.getClass().getName();
-			rs.close();
-			pstmt.close();
-			System.out.println("Deserialization Successful."+ "\nDeserialized Class: " + className);
-			return evento;
+			
+			return eventos;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			Conexao.fechaConexao();
 		}
 		return null;
 	}

@@ -20,7 +20,7 @@
 				value="#{loginUsuarioBean.fazerLoginDTO.login}"
 				requiredMessage="É necessário preencher o login." required="true" />
 			<p:outputLabel value="Senha:" for="senha" indicateRequired="true" />
-			<p:inputText id="senha"
+			<p:password id="senha"
 				value="#{loginUsuarioBean.fazerLoginDTO.senha}"
 				requiredMessage="É necessário preencher a senha." required="true" />
 			<!-- 		 	<f:facet name="footer"> -->
@@ -28,7 +28,7 @@
 				ajax="false" />
 			<!-- 			</f:facet> -->
 		</h:panelGrid>
-		<h:outputLink value="criarUsuario.xhtml">Ainda não se cadastrou? Clique aqui</h:outputLink>
+		<h:outputLink value="xhtml/criarUsuario.xhtml">Ainda não se cadastrou? Clique aqui</h:outputLink>
 		<br />
 	</h:form>
 </h:body>

@@ -12,13 +12,15 @@ public class CadastrarUsuarioComando implements Comando {
 	private String senha;
 	private String cpf;
 	private String nome;
+	private String email;
 	
 	public CadastrarUsuarioComando(UUID usuarioUID , CriarUsuarioDTO usuarioDTO) {
 		this.usuarioUID = usuarioUID;
 		this.login = usuarioDTO.getLogin();
 		this.senha = usuarioDTO.getSenha();
-		this.cpf =usuarioDTO.getCpf();
+		this.setCpf(usuarioDTO.getCpf());
 		this.nome = usuarioDTO.getNome();
+		this.email = usuarioDTO.getEmail();
 	}
 	
 	
@@ -56,7 +58,7 @@ public class CadastrarUsuarioComando implements Comando {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.cpf = cpf.replaceAll("[.-]", "");
 	}
 
 	public String getNome() {
@@ -65,6 +67,16 @@ public class CadastrarUsuarioComando implements Comando {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

@@ -22,7 +22,7 @@ public class CriarUsuarioBean implements Serializable{
 	@Inject
 	private CriarUsuarioDTO usuarioDTO;
 	
-	@Inject	ServicoUsuario servicoUsuario;
+	@Inject	private ServicoUsuario servicoUsuario;
 	
 	
 	private String login;

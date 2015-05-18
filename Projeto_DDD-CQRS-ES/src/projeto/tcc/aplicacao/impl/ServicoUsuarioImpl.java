@@ -29,7 +29,7 @@ public class ServicoUsuarioImpl implements ServicoUsuario, Serializable {
 	public void cadastrarUsuario(CadastrarUsuarioComando cadastrarUsuarioComando) {
 		usuario = new Usuario();
 		try {
-			usuario.cuidarCadastro(cadastrarUsuarioComando);
+			usuario.criarCadastro(cadastrarUsuarioComando);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
