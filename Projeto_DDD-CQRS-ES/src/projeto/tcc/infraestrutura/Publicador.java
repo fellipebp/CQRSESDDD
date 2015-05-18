@@ -20,7 +20,7 @@ public class Publicador {
 	private Calendar dataUltimaPublicacao;
 	
 	@Inject
-	private ManipuladorEventos manipuladorEventos= new UsuarioCadastradoManipulador();
+	private ManipuladorEventos manipuladorEventos;
 
 	
 	public Publicador() {
