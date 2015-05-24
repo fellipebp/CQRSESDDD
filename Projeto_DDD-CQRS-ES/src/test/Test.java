@@ -10,7 +10,6 @@ import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
-import projeto.tcc.infraestrutura.Armazenador;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
 
@@ -27,15 +26,15 @@ public class Test {
 	
 	private static void teste2(){
 		UUID idOne = UUID.randomUUID();
-		Evento evento = new UsuarioCadastradoEvento(idOne, "aa", "bb");
+//		Evento evento = new UsuarioCadastradoEvento(idOne, "aa", "bb");
 		Usuario usuario = new Usuario();
 		usuario.setLogin("aa");
 		usuario.setSenha("bb");
 		Evento evento2 = new UsuarioLogadoEvento(idOne, usuario, new Date());
 		List<Evento> aaa = new ArrayList<>();
-		aaa.add(evento);
+//		aaa.add(evento);
 		aaa.add(evento2);
-		new Usuario().constroiEntidade(aaa);
+//		new Usuario().constroiEntidade(aaa);
 	}
 
 	private static void teste1() {
@@ -48,8 +47,8 @@ public class Test {
 		criarUsuarioDTO.setSenha("abcd");
 		new ServicoUsuarioImpl().cadastrarUsuario(new CadastrarUsuarioComando(idOne,criarUsuarioDTO));
 		try {
-			Evento evento = new Armazenador().recuperaEvento(idOne.toString());
-			System.out.println(evento.toString());
+//			Evento evento = new Armazenador().recuperaEvento(idOne.toString());
+//			System.out.println(evento.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

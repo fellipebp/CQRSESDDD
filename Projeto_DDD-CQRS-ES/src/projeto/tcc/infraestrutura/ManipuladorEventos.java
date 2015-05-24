@@ -10,10 +10,10 @@ public class ManipuladorEventos {
 	public void trata(Evento evento){
 		
 		if(evento instanceof UsuarioCadastradoEvento){
-			new UsuarioCadastradoManipulador(evento);
+			new UsuarioCadastradoManipulador((UsuarioCadastradoEvento)evento);
 		}
 		else if(evento instanceof UsuarioLogadoEvento){
-			new UsuarioLogadoManipulador(evento);
+			new UsuarioLogadoManipulador((UsuarioLogadoEvento)evento);
 		}
 		
 		

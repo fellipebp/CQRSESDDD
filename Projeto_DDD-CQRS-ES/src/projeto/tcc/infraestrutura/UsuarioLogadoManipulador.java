@@ -1,22 +1,18 @@
 package projeto.tcc.infraestrutura;
 
-import java.sql.Connection;
-
 import projeto.tcc.dominio.eventos.Evento;
-import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
-
-import com.mysql.jdbc.PreparedStatement;
+import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
 
 public class UsuarioLogadoManipulador {
 
 	private Evento evento;
 	
 	
-	public UsuarioLogadoManipulador(Evento evento) {
-		this.setEvento(evento);
+	public UsuarioLogadoManipulador(UsuarioLogadoEvento evento) {
+		trata(evento);
 	}
 	
-	public void trata(UsuarioCadastradoEvento evento) {
+	public void trata(UsuarioLogadoEvento evento) {
 		System.out.println("oi");
 	
 	}

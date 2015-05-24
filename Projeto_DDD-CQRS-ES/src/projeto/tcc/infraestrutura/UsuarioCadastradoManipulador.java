@@ -2,23 +2,20 @@ package projeto.tcc.infraestrutura;
 
 import java.sql.Connection;
 
-import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 
 import com.mysql.jdbc.PreparedStatement;
 
 public class UsuarioCadastradoManipulador {
 
-	private Evento evento;
 	
 	
-	public UsuarioCadastradoManipulador(Evento evento) {
-		this.setEvento(evento);
+	public UsuarioCadastradoManipulador(UsuarioCadastradoEvento evento) {
+		trata(evento);
 	}
 	
 	public void trata(UsuarioCadastradoEvento evento) {
-		UsuarioCadastradoEvento usuarioCadastradoEvento =  evento;
-		insereViews(usuarioCadastradoEvento);
+		insereViews(evento);
 	
 	}
 
@@ -46,12 +43,5 @@ public class UsuarioCadastradoManipulador {
 		}
 	}
 
-	public Evento getEvento() {
-		return evento;
-	}
-
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
 
 }

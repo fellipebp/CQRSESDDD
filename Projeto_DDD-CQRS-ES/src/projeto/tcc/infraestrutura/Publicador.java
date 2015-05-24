@@ -8,12 +8,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 
 import projeto.tcc.dominio.eventos.Evento;
 
 
+@ApplicationScoped
 public class Publicador {
 
 	private static Queue<Evento> filaEventos;
@@ -25,7 +25,7 @@ public class Publicador {
 		init();
 	}
 	
-//	@PostConstruct
+	@PostConstruct
 	public void init(){
 		dataUltimaPublicacao = Calendar.getInstance();
 		filaEventos = new LinkedList<>();
