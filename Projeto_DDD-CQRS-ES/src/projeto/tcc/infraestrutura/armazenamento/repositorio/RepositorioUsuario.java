@@ -1,4 +1,4 @@
-package projeto.tcc.infraestrutura.armazenamento;
+package projeto.tcc.infraestrutura.armazenamento.repositorio;
 
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;

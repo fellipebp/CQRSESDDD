@@ -1,4 +1,4 @@
-package projeto.tcc.infraestrutura.armazenamento.impl;
+package projeto.tcc.infraestrutura.armazenamento.repositorio.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import projeto.tcc.dominio.Musica;
-import projeto.tcc.infraestrutura.armazenamento.RepositorioMusica;
+import projeto.tcc.infraestrutura.armazenamento.repositorio.RepositorioMusica;
 
 public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 

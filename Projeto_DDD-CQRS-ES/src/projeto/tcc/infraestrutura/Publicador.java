@@ -13,7 +13,6 @@ import javax.inject.Inject;
 
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.infraestrutura.manipuladoreventos.ManipuladorEventos;
-import projeto.tcc.infraestrutura.manipuladoreventos.UsuarioCadastradoManipulador;
 
 @ApplicationScoped
 public class Publicador {

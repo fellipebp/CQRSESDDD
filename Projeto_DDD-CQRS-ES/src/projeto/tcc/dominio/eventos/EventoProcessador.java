@@ -1,7 +1,7 @@
 package projeto.tcc.dominio.eventos;
 
 
-import projeto.tcc.infraestrutura.ArmazenadorEventos;
+import projeto.tcc.infraestrutura.armazenamento.ArmazenadorEventos;
 
 public class EventoProcessador  {
 	

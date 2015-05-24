@@ -1,4 +1,4 @@
-package projeto.tcc.infraestrutura.armazenamento.impl;
+package projeto.tcc.infraestrutura.armazenamento.repositorio.impl;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,8 +13,8 @@ import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.ArmazenadorEventos;
-import projeto.tcc.infraestrutura.armazenamento.RepositorioUsuario;
+import projeto.tcc.infraestrutura.armazenamento.ArmazenadorEventos;
+import projeto.tcc.infraestrutura.armazenamento.repositorio.RepositorioUsuario;
 
 import com.mysql.jdbc.PreparedStatement;
 

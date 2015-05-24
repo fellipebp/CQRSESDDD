@@ -1,4 +1,4 @@
-package projeto.tcc.infraestrutura;
+package projeto.tcc.infraestrutura.armazenamento;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import projeto.tcc.dominio.eventos.Evento;
+import projeto.tcc.infraestrutura.Conexao;
+import projeto.tcc.infraestrutura.Publicador;
 
 import com.mysql.jdbc.PreparedStatement;
 

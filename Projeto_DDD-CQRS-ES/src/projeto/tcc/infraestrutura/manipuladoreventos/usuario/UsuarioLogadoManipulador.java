@@ -1,4 +1,4 @@
-package projeto.tcc.infraestrutura;
+package projeto.tcc.infraestrutura.manipuladoreventos.usuario;
 
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;

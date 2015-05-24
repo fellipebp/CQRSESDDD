@@ -3,7 +3,8 @@ package projeto.tcc.infraestrutura.manipuladoreventos;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
-import projeto.tcc.infraestrutura.UsuarioLogadoManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioCadastradoManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioLogadoManipulador;
 
 public class ManipuladorEventos {
 	

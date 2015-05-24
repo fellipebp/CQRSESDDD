@@ -1,4 +1,4 @@
-package projeto.tcc.infraestrutura.armazenamento;
+package projeto.tcc.infraestrutura.armazenamento.repositorio;
 
 import java.util.List;
 
