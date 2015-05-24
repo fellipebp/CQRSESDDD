@@ -13,14 +13,12 @@ import javax.inject.Singleton;
 
 import projeto.tcc.dominio.eventos.Evento;
 
-//@Singleton
+
 public class Publicador {
 
 	private static Queue<Evento> filaEventos;
 	private Calendar dataUltimaPublicacao;
-	
-	//@Inject
-	private ManipuladorEventos manipuladorEventos= new UsuarioCadastradoManipulador();
+	private ManipuladorEventos manipuladorEventos= new ManipuladorEventos();
 
 	
 	public Publicador() {

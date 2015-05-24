@@ -7,11 +7,17 @@ import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class UsuarioCadastradoManipulador implements ManipuladorEventos{
+public class UsuarioCadastradoManipulador {
 
-	@Override
-	public void trata(Evento evento) {
-		UsuarioCadastradoEvento usuarioCadastradoEvento = (UsuarioCadastradoEvento) evento;
+	private Evento evento;
+	
+	
+	public UsuarioCadastradoManipulador(Evento evento) {
+		this.setEvento(evento);
+	}
+	
+	public void trata(UsuarioCadastradoEvento evento) {
+		UsuarioCadastradoEvento usuarioCadastradoEvento =  evento;
 		insereViews(usuarioCadastradoEvento);
 	
 	}
@@ -38,6 +44,14 @@ public class UsuarioCadastradoManipulador implements ManipuladorEventos{
 		}finally{
 			Conexao.fechaConexao();
 		}
+	}
+
+	public Evento getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
 	}
 
 }
