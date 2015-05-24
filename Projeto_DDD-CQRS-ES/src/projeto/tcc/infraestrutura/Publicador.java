@@ -12,6 +12,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import projeto.tcc.dominio.eventos.Evento;
+import projeto.tcc.infraestrutura.manipuladoreventos.ManipuladorEventos;
+import projeto.tcc.infraestrutura.manipuladoreventos.UsuarioCadastradoManipulador;
 
 @ApplicationScoped
 public class Publicador {
@@ -19,8 +21,8 @@ public class Publicador {
 	private static Queue<Evento> filaEventos;
 	private Calendar dataUltimaPublicacao;
 	
-	@Inject
-	private ManipuladorEventos manipuladorEventos;
+	
+	private ManipuladorEventos manipuladorEventos = new UsuarioCadastradoManipulador();
 
 	
 	public Publicador() {

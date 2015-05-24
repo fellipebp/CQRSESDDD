@@ -3,11 +3,11 @@ package projeto.tcc.aplicacao.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import projeto.tcc.aplicacao.ServicoMusica;
+import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.dominio.Musica;
 import projeto.tcc.infraestrutura.armazenamento.impl.RepositorioMusicaImpl;
 
-public class ServicoMusicaImpl implements ServicoMusica, Serializable {
+public class ServicoMusicaLeituraImpl implements ServicoMusicaLeitura, Serializable {
 
 	/**
 	 * 

@@ -2,17 +2,18 @@ package projeto.tcc.aplicacao.impl;
 
 import java.io.Serializable;
 
-import projeto.tcc.aplicacao.ServicoUsuario;
+import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
-public class ServicoUsuarioImpl implements ServicoUsuario, Serializable {
-
+public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Serializable{
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7673302045438349809L;
 	private Usuario usuario;
 
 	@Override
@@ -35,4 +36,5 @@ public class ServicoUsuarioImpl implements ServicoUsuario, Serializable {
 		}
 		
 	}
+
 }

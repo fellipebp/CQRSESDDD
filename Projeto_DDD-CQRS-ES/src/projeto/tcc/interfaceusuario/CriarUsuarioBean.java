@@ -10,7 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import projeto.tcc.aplicacao.ServicoUsuario;
+import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
+import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
 
@@ -22,7 +23,7 @@ public class CriarUsuarioBean implements Serializable{
 	@Inject
 	private CriarUsuarioDTO usuarioDTO;
 	
-	@Inject	private ServicoUsuario servicoUsuario;
+	@Inject	private ServicoUsuarioEscrita servicoUsuarioEscrita;
 	
 	
 	private String login;
@@ -36,7 +37,7 @@ public class CriarUsuarioBean implements Serializable{
 	
 	public String criarUsuario() throws Exception{
 		UUID idOne = UUID.randomUUID();
-		servicoUsuario.cadastrarUsuario(new CadastrarUsuarioComando(idOne,usuarioDTO));
+		servicoUsuarioEscrita.cadastrarUsuario(new CadastrarUsuarioComando(idOne,usuarioDTO));
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario cadastrado com sucesso"));
 		return "loginUsuario.xhtml";
 		

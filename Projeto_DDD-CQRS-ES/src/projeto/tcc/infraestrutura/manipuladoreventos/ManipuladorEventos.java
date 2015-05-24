@@ -1,4 +1,4 @@
-package projeto.tcc.infraestrutura;
+package projeto.tcc.infraestrutura.manipuladoreventos;
 
 import projeto.tcc.dominio.eventos.Evento;
 

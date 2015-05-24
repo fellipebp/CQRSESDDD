@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import projeto.tcc.aplicacao.impl.ServicoUsuarioImpl;
+import projeto.tcc.aplicacao.impl.ServicoUsuarioLeituraImpl;
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
@@ -39,13 +39,13 @@ public class Test {
 
 	private static void teste1() {
 		//testando persistencia e recuperacao do dado
-		UUID idOne = UUID.randomUUID();
-		CriarUsuarioDTO criarUsuarioDTO = new CriarUsuarioDTO();
-		criarUsuarioDTO.setCpf("11111111");
-		criarUsuarioDTO.setLogin("aa");
-		criarUsuarioDTO.setNome("josé");
-		criarUsuarioDTO.setSenha("abcd");
-		new ServicoUsuarioImpl().cadastrarUsuario(new CadastrarUsuarioComando(idOne,criarUsuarioDTO));
+//		UUID idOne = UUID.randomUUID();
+//		CriarUsuarioDTO criarUsuarioDTO = new CriarUsuarioDTO();
+//		criarUsuarioDTO.setCpf("11111111");
+//		criarUsuarioDTO.setLogin("aa");
+//		criarUsuarioDTO.setNome("josé");
+//		criarUsuarioDTO.setSenha("abcd");
+//		new ServicoUsuarioLeituraImpl().cadastrarUsuario(new CadastrarUsuarioComando(idOne,criarUsuarioDTO));
 		try {
 //			Evento evento = new Armazenador().recuperaEvento(idOne.toString());
 //			System.out.println(evento.toString());

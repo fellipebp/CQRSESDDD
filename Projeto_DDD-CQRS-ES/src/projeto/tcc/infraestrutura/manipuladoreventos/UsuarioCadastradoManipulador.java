@@ -1,9 +1,10 @@
-package projeto.tcc.infraestrutura;
+package projeto.tcc.infraestrutura.manipuladoreventos;
 
 import java.sql.Connection;
 
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.infraestrutura.Conexao;
 
 import com.mysql.jdbc.PreparedStatement;
 

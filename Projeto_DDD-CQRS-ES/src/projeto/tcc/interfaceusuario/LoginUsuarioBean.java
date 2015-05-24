@@ -8,7 +8,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import projeto.tcc.aplicacao.ServicoUsuario;
+import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
+import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 
@@ -21,14 +22,14 @@ public class LoginUsuarioBean implements Serializable {
 	 */
 	private static final long serialVersionUID = -7918764410608856865L;
 	@Inject
-	private ServicoUsuario servicoUsuario;
+	private ServicoUsuarioEscrita servicoUsuarioEscrita;
 	@Inject
 	private FazerLoginDTO fazerLoginDTO;
 	
 	
 	public String logar(){
 		try {
-			servicoUsuario.logarUsuario(new FazerLoginComando(fazerLoginDTO));
+			servicoUsuarioEscrita.logarUsuario(new FazerLoginComando(fazerLoginDTO));
 			return "ouvirMusica.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
