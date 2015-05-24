@@ -2,18 +2,21 @@ package projeto.tcc.infraestrutura.manipuladoreventos;
 
 import java.sql.Connection;
 
-import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class UsuarioCadastradoManipulador implements ManipuladorEventos{
+public class UsuarioCadastradoManipulador {
 
-	@Override
-	public void trata(Evento evento) {
-		UsuarioCadastradoEvento usuarioCadastradoEvento = (UsuarioCadastradoEvento) evento;
-		insereViews(usuarioCadastradoEvento);
+	
+	
+	public UsuarioCadastradoManipulador(UsuarioCadastradoEvento evento) {
+		trata(evento);
+	}
+	
+	public void trata(UsuarioCadastradoEvento evento) {
+		insereViews(evento);
 	
 	}
 
@@ -40,5 +43,6 @@ public class UsuarioCadastradoManipulador implements ManipuladorEventos{
 			Conexao.fechaConexao();
 		}
 	}
+
 
 }
