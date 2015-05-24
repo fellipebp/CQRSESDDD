@@ -20,9 +20,7 @@ public class Publicador {
 
 	private static Queue<Evento> filaEventos;
 	private Calendar dataUltimaPublicacao;
-	
-	
-	private ManipuladorEventos manipuladorEventos = new UsuarioCadastradoManipulador();
+	private ManipuladorEventos manipuladorEventos= new ManipuladorEventos();
 
 	
 	public Publicador() {
