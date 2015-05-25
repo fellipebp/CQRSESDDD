@@ -28,7 +28,7 @@
 				<p:growl autoUpdate="true" />
 
 				<p:panelMenu>
-					<p:submenu label="Usuário - XXX">
+					<p:submenu label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
 						<p:menuitem value="Minhas músicas"
 							actionListener="#{ouvirMusicaBean.listarMusicas}"
 							icon="ui-icon-disk" />
@@ -38,7 +38,7 @@
 					</p:submenu>
 					<p:submenu label="Minha conta">
 						<p:menuitem value="Visualizar informações"
-							actionListener="#{ouvirMusicaBean.alterarSenha()}" ajax="false"
+							action="minhasInformacoes.xhtml"
 							icon="ui-icon-close" />
 						<p:menuitem value="Alterar senha"
 							actionListener="#{ouvirMusicaBean.alterarSenha}" ajax="false"

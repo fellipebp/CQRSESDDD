@@ -1,4 +1,4 @@
-package projeto.tcc.interfaceusuario;
+package projeto.tcc.interfaceusuario.controle;
 
 import java.io.Serializable;
 import java.util.UUID;
