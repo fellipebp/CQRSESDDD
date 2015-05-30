@@ -6,11 +6,11 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
-	<title>Criar usuário</title>
+	<title>Alterar dados</title>
 </h:head>
 <h:body styleClass="grad2">
 	<h:form>
-						<p:messages/>
+		<p:messages/>
 		<h:outputText value="Minhas Informações"/>
 		<h:panelGrid columns="2" cellpadding="5">
 		
@@ -38,10 +38,10 @@
 				required="true" requiredMessage="Campo senha nao preenchido" />
 			<f:facet name="footer">
 				<p:commandButton action="#{editarUsuarioBean.editarUsuario()}"
-					value="Criar"  ajax="false"/>
+					value="Salvar alterações"  ajax="false"/>
+				<p:commandButton value="Voltar" action="#{editarUsuarioBean.voltar()}" immediate="true" />
 			</f:facet>
 		</h:panelGrid>
-		<h:outputLink value="loginUsuario.xhtml">Quer se logar? Clique aqui</h:outputLink>
 	</h:form>
 </h:body>
 </html>

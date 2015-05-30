@@ -34,10 +34,15 @@ public class EditarUsuarioBean implements Serializable{
 	    }
 
 	
-	public String criarUsuario() throws Exception{
+	public String editarUsuario() throws Exception{
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario editado com sucesso"));
 		return "";
 		
 	}
+	
+	public String voltar(){
+		return "ouvirMusica.xhtml?faces-redirect=true";
+	}
+	
 		
 }
