@@ -48,7 +48,8 @@ public class ArmazenadorEventos {
 			Conexao.fechaConexao();
 		}
 		
-		new Publicador().adicionaEvento(evento);
+//		new Publicador().adicionaEvento(evento);
+		new Publicador(evento);
 		
 	}
 

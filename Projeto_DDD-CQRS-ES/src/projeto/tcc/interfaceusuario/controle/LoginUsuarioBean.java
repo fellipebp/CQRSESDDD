@@ -30,7 +30,8 @@ public class LoginUsuarioBean implements Serializable {
 	public String logar(){
 		try {
 			servicoUsuarioEscrita.logarUsuario(new FazerLoginComando(fazerLoginDTO));
-			return "ouvirMusica.xhtml?faces-redirect=true";
+			
+			return "app/ouvirMusica.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
