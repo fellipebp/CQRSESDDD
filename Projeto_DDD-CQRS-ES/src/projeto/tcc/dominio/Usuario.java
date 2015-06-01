@@ -176,6 +176,20 @@ public class Usuario  implements Serializable {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
+	
+	
+	public void aplicaMudanca(UsuarioEditadoEvento usuarioEditadoEvento){
+		try {
+			this.setLogin(usuarioEditadoEvento.getUsuario().getLogin());
+			this.setSenha(usuarioEditadoEvento.getUsuario().getSenha());
+			this.setNome(usuarioEditadoEvento.getUsuario().getNome());
+			this.setCPF(usuarioEditadoEvento.getUsuario().getCPF());
+			this.setEmail(usuarioEditadoEvento.getUsuario().getEmail());
+			this.setAggregateID(usuarioEditadoEvento.getAggregateId().toString());
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, e.getMessage());
+		}
+	}
 
 	public void editarInformacoes(EditarUsuarioComando editarUsuarioComando) throws Exception {
 		Usuario usuario = new Usuario();
