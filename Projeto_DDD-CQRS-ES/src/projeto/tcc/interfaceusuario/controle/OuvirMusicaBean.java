@@ -2,11 +2,17 @@ package projeto.tcc.interfaceusuario.controle;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
+import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
+import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
 import projeto.tcc.dominio.Musica;
 import projeto.tcc.interfaceusuario.servico.impl.ServicoMusicaFacadeImpl;
 
@@ -17,6 +23,7 @@ public class OuvirMusicaBean implements Serializable {
 	private static final long serialVersionUID = -6673863557198240345L;
 	//@Inject 
 	//private ServicoMusicaFacade  servicoMusicaFacade;
+	
 	private ServicoMusicaFacadeImpl servicoMusicaFacade = new ServicoMusicaFacadeImpl();
 	private List<Musica> listaMusicas;
 	
@@ -31,6 +38,7 @@ public class OuvirMusicaBean implements Serializable {
 	
 	public void listarFavoritos() {
 	}
+	
 	
 	public void alterarSenha(){
 		

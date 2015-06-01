@@ -5,6 +5,7 @@ import java.io.Serializable;
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.dominio.Usuario;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Serializable{
@@ -17,10 +18,10 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 	private Usuario usuario;
 
 	@Override
-	public void logarUsuario(FazerLoginComando fazerLoginComando) throws Exception{
+	public String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception{
 		usuario = new Usuario();
 		try {
-			usuario.logar(fazerLoginComando);
+			return usuario.logar(fazerLoginComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -35,6 +36,16 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public void editarInformacoesUsuario(EditarUsuarioComando editarUsuarioComando) {
+		usuario = new Usuario();
+		try {
+			usuario.editarInformacoes(editarUsuarioComando);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -7,6 +7,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
@@ -29,8 +31,9 @@ public class LoginUsuarioBean implements Serializable {
 	
 	public String logar(){
 		try {
-			servicoUsuarioEscrita.logarUsuario(new FazerLoginComando(fazerLoginDTO));
-			
+			String aggregateID = servicoUsuarioEscrita.logarUsuario(new FazerLoginComando(fazerLoginDTO));
+			HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+			request.getSession().setAttribute("aggregateID", aggregateID);
 			return "app/ouvirMusica.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();

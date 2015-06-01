@@ -3,6 +3,7 @@ package projeto.tcc;
 import java.io.IOException;
 
 import javax.enterprise.inject.Instance;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import projeto.tcc.interfaceusuario.controle.LoginUsuarioBean;
 
@@ -31,17 +33,13 @@ public class FiltroTeste implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        String url = request.getContextPath()+"/xhtml/loginUsuario.xhtml";
-//        HttpSession session = request.getSession(false);
+        Object aggregateID = request.getSession().getAttribute("aggregateID");
+        if (aggregateID == null) { 
+        	response.sendRedirect(request.getContextPath()+"/xhtml/loginUsuario.xhtml");
+        	return;
+        } 
+        chain.doFilter(req, res);
         
-        LoginUsuarioBean user;
-        user = userInstance.get();
-
-        if (user.getFazerLoginDTO().getLogin() == null) { // Do jeito que está, se não conseguir se logar, ele vai conseguir acessar paginas que nao deveria. Tem que pensar melhor aqui
-            response.sendRedirect(url);
-        } else {
-            chain.doFilter(req, res);
-        }
     }
 
     @Override

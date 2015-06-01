@@ -1,23 +1,21 @@
 package projeto.tcc.dominio;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.text.MaskFormatter;
 
-import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 
@@ -123,13 +121,13 @@ public class Usuario  implements Serializable {
 	}
 	
 	
-	public void logar(FazerLoginComando comandoLogin) throws Exception {
+	public String logar(FazerLoginComando comandoLogin) throws Exception {
 		RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
 		String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(comandoLogin.getLogin());
 		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(aggregateID);
 		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
 			new EventoProcessador().processar(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase,new Date()));
-			return;
+			return aggregateID;
 		}
 		//TODO criar exceção especifica
 		throw new RuntimeException("Usuário ou senha inválidos");
@@ -177,6 +175,18 @@ public class Usuario  implements Serializable {
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
+	}
+
+	public void editarInformacoes(EditarUsuarioComando editarUsuarioComando) throws Exception {
+		Usuario usuario = new Usuario();
+		usuario.setLogin(editarUsuarioComando.getLogin());
+		usuario.setSenha(editarUsuarioComando.getSenha());
+		usuario.setNome(editarUsuarioComando.getNome());
+		usuario.setCPF( editarUsuarioComando.getCpf());
+		usuario.setEmail( editarUsuarioComando.getEmail());
+//		usuario.setAggregateID(usuarioComando.aggregateId().toString());
+		new EventoProcessador().processar((new UsuarioEditadoEvento(editarUsuarioComando.aggregateId(), usuario)));
+		
 	}
 	
 

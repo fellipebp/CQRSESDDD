@@ -6,11 +6,13 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Músicas</title>
-	<h:outputScript library="js" name="jquery.min.js" />
-	<h:outputScript library="js" name="jquery.jplayer.min.js" />
-	<h:outputScript library="js" name="ouvirMusica.js" />
-	<h:outputStylesheet library="css" name="skin/pink.flag/css/jplayer.pink.flag.css" target="head" />
-	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
+	
+	<h:outputStylesheet  library="css" name="utilitarios.css" target="head" />
+	<h:outputStylesheet  library="css" name="skin/pink.flag/jplayer.pink.flag.css" target="head"/>
+    <h:outputScript  library="js" name="js/jquery.jplayer.min.js" target="head" />
+    <h:outputScript  library="js" name="js/jquery.min.js" target="head" />
+	<h:outputScript library="js" name="js/ouvirMusica.js" target="head"/>
+	
 	<style type="text/css">
 		a:visited {
 			color: black;
@@ -23,11 +25,12 @@
 </h:head>
 <h:body styleClass="grad2">
 	<h:form>
+	
 		<div style="overflow: hidden;">
 			<div style="width: 30%; float: left; height: 100vh;">
 				<p:growl autoUpdate="true" />
-
-				<p:panelMenu>
+				<p:panelMenu styleClass="grad2" >
+					
 					<p:submenu label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
 						<p:menuitem value="Minhas músicas"
 							actionListener="#{ouvirMusicaBean.listarMusicas}"
@@ -38,7 +41,7 @@
 					</p:submenu>
 					<p:submenu label="Minha conta">
 						<p:menuitem value="Visualizar informações"
-							action="minhasInformacoes.xhtml"
+							action="#{editarUsuarioBean.visualizarMinhasInformacoes()}"
 							icon="ui-icon-close" />
 						<p:menuitem value="Alterar senha"
 							actionListener="#{ouvirMusicaBean.alterarSenha}" ajax="false"
@@ -63,7 +66,6 @@
 					</p:submenu>
 				</p:panelMenu>
 			</div>
-			<br></br>
 				
 			<!-- 		<h3>MP3</h3> -->
 			<!-- 		<p:media  -->
@@ -72,10 +74,22 @@
 			<!-- 			<f:param name="autoPlay" value="false" /> -->
 			<!-- 		</p:media> -->
 			<div style="width: 70%; float: right">
+				<p:toolbar>
+				      <f:facet name="left">
+				      </f:facet>
+				      <f:facet name="right">
+				         <p:commandButton type="button" value="Sair" icon="ui-icon-document"  />
+				      </f:facet>
+			
+			 	 </p:toolbar>
 				<p:dataTable value="#{ouvirMusicaBean.listaMusicas}" var="musica">
 					<p:column><p:outputLabel  value="#{musica.nome}" onclick="tocarMusica(jQuery(this).text());"/></p:column>
 <!-- 					<p:column><p:outputLabel value="#{musica.duracao}"/></p:column> -->
 				</p:dataTable>
+				
+				
+				
+				
 <!-- 				<audio id="music" controls="controls" src="#{ouvirMusicaBean.listaMusicas}" />	 -->
 				<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 				<div id="jp_container_1" class="jp-audio" role="application"  aria-label="media player">
