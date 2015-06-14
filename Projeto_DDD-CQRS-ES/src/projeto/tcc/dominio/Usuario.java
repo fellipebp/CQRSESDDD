@@ -126,7 +126,7 @@ public class Usuario  implements Serializable {
 		String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(comandoLogin.getLogin());
 		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(aggregateID);
 		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
-			new EventoProcessador().processar(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase,new Date()));
+			new EventoProcessador().processar(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase.getLogin(), usuarioBase.getSenha(),new Date()));
 			return aggregateID;
 		}
 		//TODO criar exceção especifica
@@ -152,15 +152,9 @@ public class Usuario  implements Serializable {
 		
 	
 	public void aplicaMudanca(UsuarioLogadoEvento usuarioLogadoEvento){
-		 Usuario usuario = usuarioLogadoEvento.getUsuario();
-		 this.setCPF(usuario.getCPF());
-		 this.setDataNascimento(usuario.getDataNascimento());
-		 this.setEmail(usuario.getEmail());
-		 this.setId(usuario.getId());
-		 this.setLogin(usuario.getLogin());
-		 this.setNome(usuario.getNome());
-		 this.setSenha(usuario.getSenha());
-		 this.setSexo(usuario.getSexo());
+		 this.setAggregateID(usuarioLogadoEvento.getAggregateId().toString());
+		 this.setLogin(usuarioLogadoEvento.getLogin());
+		 this.setSenha(usuarioLogadoEvento.getSenha());
 		
 	}
 	

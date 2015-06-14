@@ -27,13 +27,13 @@ public class Test {
 	private static void teste2(){
 		UUID idOne = UUID.randomUUID();
 //		Evento evento = new UsuarioCadastradoEvento(idOne, "aa", "bb");
-		Usuario usuario = new Usuario();
-		usuario.setLogin("aa");
-		usuario.setSenha("bb");
-		Evento evento2 = new UsuarioLogadoEvento(idOne, usuario, new Date());
-		List<Evento> aaa = new ArrayList<>();
+//		Usuario usuario = new Usuario();
+//		usuario.setLogin("aa");
+//		usuario.setSenha("bb");
+//		Evento evento2 = new UsuarioLogadoEvento(idOne, usuario, new Date());
+//		List<Evento> aaa = new ArrayList<>();
 //		aaa.add(evento);
-		aaa.add(evento2);
+//		aaa.add(evento2);
 //		new Usuario().constroiEntidade(aaa);
 	}
 

@@ -16,15 +16,15 @@ public class UsuarioLogadoEvento implements Evento, Serializable{
 	 */
 	private static final long serialVersionUID = -7012748516611245990L;
 	private UUID aggregateId;
-	private Usuario usuario;
+	private String login;
+	private String senha;
 	private Date dtLogin;
 	
 	public UsuarioLogadoEvento() {
 	}
 	
-	public UsuarioLogadoEvento(UUID aggregateId, Usuario usuario, Date dtLogin){
+	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin){
 		this.aggregateId = aggregateId;
-		this.usuario = usuario;
 		this.dtLogin = dtLogin;
 	}
 
@@ -34,13 +34,6 @@ public class UsuarioLogadoEvento implements Evento, Serializable{
 //		
 //	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public Date getDtLogin() {
 		return dtLogin;
@@ -56,6 +49,22 @@ public class UsuarioLogadoEvento implements Evento, Serializable{
 
 	public void setAggregateId(UUID aggregateId) {
 		this.aggregateId = aggregateId;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 
