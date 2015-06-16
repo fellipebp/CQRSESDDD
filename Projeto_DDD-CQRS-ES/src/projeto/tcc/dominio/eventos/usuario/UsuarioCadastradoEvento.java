@@ -3,7 +3,7 @@ package projeto.tcc.dominio.eventos.usuario;
 import java.io.Serializable;
 import java.util.UUID;
 
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 
 

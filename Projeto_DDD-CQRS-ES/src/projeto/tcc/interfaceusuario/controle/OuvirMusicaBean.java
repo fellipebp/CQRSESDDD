@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
-import projeto.tcc.dominio.Musica;
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.servico.impl.ServicoMusicaFacadeImpl;
 
 @Named

@@ -2,7 +2,7 @@ package projeto.tcc.infraestrutura.armazenamento.repositorio;
 
 import java.util.List;
 
-import projeto.tcc.dominio.Musica;
+import projeto.tcc.dominio.entidades.musica.Musica;
 
 public interface RepositorioMusica {
 	

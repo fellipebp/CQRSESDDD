@@ -21,6 +21,8 @@ public class FazerLoginComando implements Comando {
 		return usuarioUID;
 	}
 
+	
+	//getters e setter omitidos
 
 	public UUID getLoginID() {
 		return usuarioUID;

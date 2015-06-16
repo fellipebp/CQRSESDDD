@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.EditarUsuarioDTO;
 

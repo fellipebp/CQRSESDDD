@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import projeto.tcc.dominio.Musica;
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.RepositorioMusica;
 
 public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {

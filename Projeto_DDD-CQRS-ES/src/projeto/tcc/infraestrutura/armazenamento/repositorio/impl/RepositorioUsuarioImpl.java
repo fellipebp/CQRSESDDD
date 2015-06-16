@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.RestauradorAtributosUsuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
@@ -81,13 +82,10 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 
 	@Override
 	public Usuario getUsuarioPorAggregateID(String aggregateID) {
-		Usuario usuario;
 		try {
 			List<Evento> eventos = ArmazenadorEventos.recuperaEventos(aggregateID);
 			if (!eventos.isEmpty()) {
-				usuario = new Usuario();
-				this.constroiEntidade(eventos, usuario);
-				return usuario;
+				return this.constroiEntidade(eventos);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,12 +93,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		return null;
 	}
 	
-	private void constroiEntidade(List<Evento> history, Usuario usuario) 	{
+	private Usuario constroiEntidade(List<Evento> history) 	{
 		Method method;
+		RestauradorAtributosUsuario restauradorAtributosUsuario = new RestauradorAtributosUsuario();
 		try {
 			for (Evento evento : history) {
-				method = usuario.getClass().getMethod("aplicaMudanca", evento.getClass());
-				method.invoke(usuario, evento);
+				method = restauradorAtributosUsuario.getClass().getMethod("aplicaMudanca", evento.getClass());
+				method.invoke(restauradorAtributosUsuario, evento);
 			}
 		} catch (SecurityException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
@@ -113,6 +112,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		} catch (InvocationTargetException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
+		return restauradorAtributosUsuario.getUsuario();
 	}
 
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import projeto.tcc.aplicacao.impl.ServicoUsuarioLeituraImpl;
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;

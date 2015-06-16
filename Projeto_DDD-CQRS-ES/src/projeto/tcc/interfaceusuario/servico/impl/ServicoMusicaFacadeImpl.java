@@ -5,7 +5,7 @@ import java.util.List;
 
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.impl.ServicoMusicaLeituraImpl;
-import projeto.tcc.dominio.Musica;
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
 
 public class ServicoMusicaFacadeImpl implements ServicoMusicaFacade, Serializable {

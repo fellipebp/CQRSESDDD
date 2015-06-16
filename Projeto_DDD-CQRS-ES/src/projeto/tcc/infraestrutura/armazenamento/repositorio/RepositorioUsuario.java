@@ -1,6 +1,6 @@
 package projeto.tcc.infraestrutura.armazenamento.repositorio;
 
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 
 public interface RepositorioUsuario {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,22 +19,18 @@ import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 @Named
 @SessionScoped
 public class LoginUsuarioBean implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -7918764410608856865L;
 	@Inject
 	private ServicoUsuarioEscrita servicoUsuarioEscrita;
 	@Inject
 	private FazerLoginDTO fazerLoginDTO;
 	
-	
 	public String logar(){
 		try {
-			String aggregateID = servicoUsuarioEscrita.logarUsuario(new FazerLoginComando(fazerLoginDTO));
-			HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-			request.getSession().setAttribute("aggregateID", aggregateID);
+			FazerLoginComando fazerLoginComando = new FazerLoginComando(fazerLoginDTO);
+			String aggregateID = servicoUsuarioEscrita.logarUsuario(fazerLoginComando);
+			salvaAggregateIDNaSessao(aggregateID);
 			return "app/ouvirMusica.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
@@ -42,6 +39,11 @@ public class LoginUsuarioBean implements Serializable {
 		return "";
 	}
 
+	private void salvaAggregateIDNaSessao(String aggregateID) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		HttpServletRequest request = (HttpServletRequest)externalContext.getRequest();
+		request.getSession().setAttribute("aggregateID", aggregateID);
+	}
 
 	public FazerLoginDTO getFazerLoginDTO() {
 		return fazerLoginDTO;

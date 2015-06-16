@@ -3,17 +3,13 @@ package projeto.tcc.aplicacao.impl;
 import java.io.Serializable;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Serializable{
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7673302045438349809L;
 	private Usuario usuario;
 
@@ -27,6 +23,8 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 		}
 	}
 
+	//outros métodos omitidos
+	
 	@Override
 	public void cadastrarUsuario(CadastrarUsuarioComando cadastrarUsuarioComando) {
 		usuario = new Usuario();

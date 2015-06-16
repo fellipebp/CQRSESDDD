@@ -1,4 +1,4 @@
-package projeto.tcc.dominio;
+package projeto.tcc.dominio.entidades.usuario;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -28,15 +28,15 @@ public class Usuario  implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private String login;
-	private String senha;
-	private String nome;
-	private String CPF;
-	private String email;
-	private Date dataNascimento;
-	private String sexo;
-	private String aggregateID;
+	protected int id;
+	protected String login;
+	protected String senha;
+	protected String nome;
+	protected String CPF;
+	protected String email;
+	protected Date dataNascimento;
+	protected String sexo;
+	protected String aggregateID;
 	
 	//private listaEventos (mudancas)
 
@@ -107,7 +107,6 @@ public class Usuario  implements Serializable {
 	public void criarCadastro(CadastrarUsuarioComando usuarioComando) throws Exception {
 		Usuario usuario = new RepositorioUsuarioImpl().getUsuarioPorCPF(usuarioComando.getCpf());
 		if(usuario != null){
-			//TODO criar exceção especifica
 			throw new RuntimeException("Já existe um usuário com esse cpf");
 		}
 		usuario = new Usuario();
@@ -116,7 +115,6 @@ public class Usuario  implements Serializable {
 		usuario.setNome(usuarioComando.getNome());
 		usuario.setCPF( usuarioComando.getCpf());
 		usuario.setEmail( usuarioComando.getEmail());
-//		usuario.setAggregateID(usuarioComando.aggregateId().toString());
 		new EventoProcessador().processar((new UsuarioCadastradoEvento(usuarioComando.aggregateId(), usuario)));
 	}
 	
@@ -150,40 +148,6 @@ public class Usuario  implements Serializable {
 		this.aggregateID = aggregateID;
 	}
 		
-	
-	public void aplicaMudanca(UsuarioLogadoEvento usuarioLogadoEvento){
-		 this.setAggregateID(usuarioLogadoEvento.getAggregateId().toString());
-		 this.setLogin(usuarioLogadoEvento.getLogin());
-		 this.setSenha(usuarioLogadoEvento.getSenha());
-		
-	}
-	
-	public void aplicaMudanca(UsuarioCadastradoEvento usuarioCadastradoEvento){
-		try {
-			this.setLogin(usuarioCadastradoEvento.getLogin());
-			this.setSenha(usuarioCadastradoEvento.getSenha());
-			this.setNome(usuarioCadastradoEvento.getNome());
-			this.setCPF(usuarioCadastradoEvento.getCPF());
-			this.setEmail(usuarioCadastradoEvento.getEmail());
-			this.setAggregateID(usuarioCadastradoEvento.getAggregateId().toString());
-		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-		}
-	}
-	
-	
-	public void aplicaMudanca(UsuarioEditadoEvento usuarioEditadoEvento){
-		try {
-			this.setLogin(usuarioEditadoEvento.getUsuario().getLogin());
-			this.setSenha(usuarioEditadoEvento.getUsuario().getSenha());
-			this.setNome(usuarioEditadoEvento.getUsuario().getNome());
-			this.setCPF(usuarioEditadoEvento.getUsuario().getCPF());
-			this.setEmail(usuarioEditadoEvento.getUsuario().getEmail());
-			this.setAggregateID(usuarioEditadoEvento.getAggregateId().toString());
-		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-		}
-	}
 
 	public void editarInformacoes(EditarUsuarioComando editarUsuarioComando) throws Exception {
 		Usuario usuario = new Usuario();

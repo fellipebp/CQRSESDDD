@@ -1,6 +1,6 @@
 package projeto.tcc.aplicacao;
 
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 
 
 public interface ServicoUsuarioLeitura {

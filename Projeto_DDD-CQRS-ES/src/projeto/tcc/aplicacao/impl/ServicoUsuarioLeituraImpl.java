@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
-import projeto.tcc.dominio.Usuario;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 
 public class ServicoUsuarioLeituraImpl implements ServicoUsuarioLeitura, Serializable {

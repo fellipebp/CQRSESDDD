@@ -3,7 +3,7 @@ package projeto.tcc.dominio.eventos.musica;
 
 import java.util.UUID;
 
-import projeto.tcc.dominio.Musica;
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class MusicaTocadaEvento implements Evento {
