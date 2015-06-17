@@ -1,6 +1,7 @@
 package projeto.tcc.interfaceusuario.controle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class OuvirMusicaBean implements Serializable {
 	
 	private ServicoMusicaFacadeImpl servicoMusicaFacade = new ServicoMusicaFacadeImpl();
 	private List<Musica> listaMusicas;
+	private List<String> musicas;
 	
 	@PostConstruct
 	public void init(){
@@ -34,6 +36,15 @@ public class OuvirMusicaBean implements Serializable {
 	
 	public void listarMusicas() {
 		listaMusicas = servicoMusicaFacade.listarTodasMusicas();
+
+	}
+	
+	public void listarMinhasMusicas(){
+		//temporario
+		musicas = new ArrayList<String>();
+		musicas.add("O Rappa   Me Deixa.mp3");
+		musicas.add("O Rappa   Minha Alma.mp3");
+		System.out.println("Whyyyyyyy");
 	}
 	
 	public void listarFavoritos() {
@@ -54,6 +65,14 @@ public class OuvirMusicaBean implements Serializable {
 
 	public void setListaMusicas(List<Musica> listaMusicas) {
 		this.listaMusicas = listaMusicas;
+	}
+
+	public List<String> getMusicas() {
+		return musicas;
+	}
+
+	public void setMusicas(List<String> musicas) {
+		this.musicas = musicas;
 	}
 
 }

@@ -5,39 +5,47 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Músicas</title>
+	<title>Música</title>
+	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
+	<h:outputStylesheet library="css" name="page-player.css" target="head" />
+	<script type="text/javascript" src="../../webjars/soundmanager2/2.97a.20131201-2/script/soundmanager2.js"></script>
+	<script type="text/javascript" src="../../resources/js/page-player.js"></script>
+		<script>
+		soundManager.setup({
+		  url: 'webjars/soundmanager2/2.97a.20131201-2/swf/',
+		  flashVersion: 9, // optional: shiny features (default = 8)
+		  // optional: ignore Flash where possible, use 100% HTML5 mode
+		  // preferFlash: false,
+		  onready: function() {
+		    // Ready to use; soundManager.createSound() etc. can now be called.
+			    
+		  }
+		});
+</script>
 	
-	<h:outputStylesheet  library="css" name="utilitarios.css" target="head" />
-	<h:outputStylesheet  library="css" name="skin/pink.flag/jplayer.pink.flag.css" target="head"/>
-    <h:outputScript  library="js" name="js/jquery.jplayer.min.js" target="head" />
-    <h:outputScript  library="js" name="js/jquery.min.js" target="head" />
-	<h:outputScript library="js" name="js/ouvirMusica.js" target="head"/>
-	
-	<style type="text/css">
-		a:visited {
-			color: black;
-		}
-		
-		a:hover {
-			font-weight: bold;
-		}
-	</style>
 </h:head>
 <h:body styleClass="grad2">
-	<h:form>
-	
+	<h:form id="menu">
+
 		<div style="overflow: hidden;">
 			<div style="width: 30%; float: left; height: 100vh;">
 				<p:growl autoUpdate="true" />
-				<p:panelMenu styleClass="grad2" >
-					
-					<p:submenu label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
+				<p:panelMenu styleClass="grad2" model="#{menuBean.model}">
+
+					<p:submenu
+						label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
 						<p:menuitem value="Minhas músicas"
 							actionListener="#{ouvirMusicaBean.listarMusicas}"
 							icon="ui-icon-disk" />
 						<p:menuitem value="Meus favoritos"
 							actionListener="#{ouvirMusicaBean.listarFavoritos}"
 							icon="ui-icon-arrowrefresh-1-w" />
+					</p:submenu>
+					<p:submenu label="Minhas músicas">
+						<p:menuitem value="Todas músicas"
+							actionListener="#{ouvirMusicaBean.listarMinhasMusicas()}"
+							update=":menu:listarMusicas">
+						</p:menuitem>
 					</p:submenu>
 					<p:submenu label="Minha conta">
 						<p:menuitem value="Visualizar informações"
@@ -66,71 +74,16 @@
 					</p:submenu>
 				</p:panelMenu>
 			</div>
-				
-			<!-- 		<h3>MP3</h3> -->
-			<!-- 		<p:media  -->
-			<!-- 			value="http://www.stephaniequinn.com/Music/Mozart%20-%20Presto.mp3" -->
-			<!-- 			width="200" height="20" player="quicktime"> -->
-			<!-- 			<f:param name="autoPlay" value="false" /> -->
-			<!-- 		</p:media> -->
-			<div style="width: 70%; float: right">
-				<p:toolbar>
-				      <f:facet name="left">
-				      </f:facet>
-				      <f:facet name="right">
-				         <p:commandButton type="button" value="Sair" icon="ui-icon-document"  />
-				      </f:facet>
-			
-			 	 </p:toolbar>
-				<p:dataTable value="#{ouvirMusicaBean.listaMusicas}" var="musica">
-					<p:column><p:outputLabel  value="#{musica.nome}" onclick="tocarMusica(jQuery(this).text());"/></p:column>
-<!-- 					<p:column><p:outputLabel value="#{musica.duracao}"/></p:column> -->
-				</p:dataTable>
-				
-				
-				
-				
-<!-- 				<audio id="music" controls="controls" src="#{ouvirMusicaBean.listaMusicas}" />	 -->
-				<div id="jquery_jplayer_1" class="jp-jplayer"></div>
-				<div id="jp_container_1" class="jp-audio" role="application"  aria-label="media player">
-					<div class="jp-type-single">
-						<div class="jp-gui jp-interface">
-							<div class="jp-volume-controls">
-								<button class="jp-mute" role="button" tabindex="0">mute</button>
-								<button class="jp-volume-max" role="button" tabindex="0">max
-									volume</button>
-								<div class="jp-volume-bar">
-									<div class="jp-volume-bar-value"></div>
-								</div>
-							</div>
-							<div class="jp-controls-holder">
-								<div class="jp-controls">
-									<button class="jp-play" role="button" tabindex="0">play</button>
-									<button class="jp-stop" role="button" tabindex="0">stop</button>
-								</div>
-								<div class="jp-progress">
-									<div class="jp-seek-bar">
-										<div class="jp-play-bar"></div>
-									</div>
-								</div>
-								<div class="jp-current-time" role="timer" aria-label="time">&#160;</div>
-								<div class="jp-duration" role="timer" aria-label="duration">&#160;</div>
-								<div class="jp-toggles">
-									<button class="jp-repeat" role="button" tabindex="0">repeat</button>
-								</div>
-							</div>
-						</div>
-						<div class="jp-details">
-							<div class="jp-title" aria-label="title">&#160;</div>
-						</div>
-						<div class="jp-no-solution">
-							<span>Update Required</span> To play the media you will need to
-							either update your browser to a recent version or update your <a
-								href="http://get.adobe.com/flashplayer/" target="_blank">Flash
-								plugin</a>.
-						</div>
-					</div>
+			<div>
+			<h:panelGroup id="listarMusicas">
+				<div id="lista" style="width: 50%;">
+					<p:dataList value="#{ouvirMusicaBean.musicas}" var="musica" id="musicas" rendered="#{ouvirMusicaBean.musicas != null}">
+						<li class="sm2_link" style="list-style: none">
+						<a	href="../../resources/music/#{musica}" style="text-decoration: none;"	class="sm2_link sm2_playing"><h:outputText value="#{musica}" /></a>
+						</li>
+					</p:dataList>
 				</div>
+			</h:panelGroup>
 			</div>
 		</div>
 	</h:form>

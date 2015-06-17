@@ -57,6 +57,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -74,6 +75,13 @@
 			<artifactId>mp3spi</artifactId>
 			<version>1.9.5-1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>soundmanager2</artifactId>
+			<version>2.97a.20131201-2</version>
+		</dependency>
+
 
 	</dependencies>
 </project>

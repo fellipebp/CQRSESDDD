@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
+	<h:outputStylesheet library="css" name="page-player.css" target="head" />
+	<script type="text/javascript" src="../webjars/soundmanager2/2.97a.20131201-2/script/soundmanager2.js"></script>
+	<script type="text/javascript" src="../resources/js/page-player.js"></script>
+	<script>
+		soundManager.setup({
+		  url: 'webjars/soundmanager2/2.97a.20131201-2/swf/',
+		  flashVersion: 9, // optional: shiny features (default = 8)
+		  // optional: ignore Flash where possible, use 100% HTML5 mode
+		  // preferFlash: false,
+		  onready: function() {
+		    // Ready to use; soundManager.createSound() etc. can now be called.
+			    
+		  }
+		});
+</script>
+	<title>Music Test</title>
+</h:head>
+<h:body styleClass="grad2">
+	<h:form>
+				
+				
+				<div id="lista" style="width: 50%;">
+				<p:dataList value="#{musicBean.musicas" var="musica" id="teste"  >
+				<li class="sm2_link" style="list-style: none">
+				<a href="../resources/music/#{musica}" style="text-decoration: none;" class="sm2_link sm2_playing"><h:outputText value="#{musica}" /></a>
+				</li>
+				</p:dataList>
+				</div>
+
+
+
+	</h:form>
+	
+</h:body>
+
+</html>
