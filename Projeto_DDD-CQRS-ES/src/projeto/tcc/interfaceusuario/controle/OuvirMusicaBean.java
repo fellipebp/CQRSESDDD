@@ -3,60 +3,65 @@ package projeto.tcc.interfaceusuario.controle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
-import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
-import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
-import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
-import projeto.tcc.interfaceusuario.servico.impl.ServicoMusicaFacadeImpl;
+import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
 
 @Named
-@ConversationScoped
+@ViewScoped
 public class OuvirMusicaBean implements Serializable {
 
 	private static final long serialVersionUID = -6673863557198240345L;
-	//@Inject 
-	//private ServicoMusicaFacade  servicoMusicaFacade;
-	
-	private ServicoMusicaFacadeImpl servicoMusicaFacade = new ServicoMusicaFacadeImpl();
+	@Inject
+	private ServicoMusicaFacade servicoMusicaFacade;
 	private List<Musica> listaMusicas;
 	private List<String> musicas;
-	
+	private boolean tocando;
+	private String nomeMusicaTemp;
+
 	@PostConstruct
-	public void init(){
-		listarMusicas();
+	public void init() {
+		tocando = false;
+		nomeMusicaTemp = "";
 	}
-	
+
 	public void listarMusicas() {
-		listaMusicas = servicoMusicaFacade.listarTodasMusicas();
+		this.listaMusicas = servicoMusicaFacade.listarTodasMusicas();
 
 	}
-	
-	public void listarMinhasMusicas(){
-		//temporario
+
+	public void listarMinhasMusicas() {
+		// temp
 		musicas = new ArrayList<String>();
-		musicas.add("O Rappa   Me Deixa.mp3");
-		musicas.add("O Rappa   Minha Alma.mp3");
-		System.out.println("Whyyyyyyy");
+		musicas.add("O Rappa Me Deixa.mp3");
+		musicas.add("O Rappa Minha Alma.mp3");
 	}
-	
+
 	public void listarFavoritos() {
 	}
-	
-	
-	public void alterarSenha(){
-		
+
+	public void alterarSenha() {
+
 	}
-	
-	public void sair(){
-		
+
+	public void sair() {
+
+	}
+
+	public void tocarMusica(Musica musica) {
+		if (musica.getNome().equals(nomeMusicaTemp) && tocando == true) {
+			System.out.println("musica pausada: " + musica.getNome());
+			this.tocando = false;
+		} else {
+			this.tocando = true;
+			System.out.println("musica tocando: " + musica.getNome());
+			this.nomeMusicaTemp = musica.getNome();
+		}
 	}
 
 	public List<Musica> getListaMusicas() {
@@ -65,14 +70,6 @@ public class OuvirMusicaBean implements Serializable {
 
 	public void setListaMusicas(List<Musica> listaMusicas) {
 		this.listaMusicas = listaMusicas;
-	}
-
-	public List<String> getMusicas() {
-		return musicas;
-	}
-
-	public void setMusicas(List<String> musicas) {
-		this.musicas = musicas;
 	}
 
 }

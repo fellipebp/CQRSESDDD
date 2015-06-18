@@ -30,7 +30,7 @@
 		<div style="overflow: hidden;">
 			<div style="width: 30%; float: left; height: 100vh;">
 				<p:growl autoUpdate="true" />
-				<p:panelMenu styleClass="grad2" model="#{menuBean.model}">
+				<p:panelMenu styleClass="grad2" >
 
 					<p:submenu
 						label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
@@ -41,9 +41,9 @@
 							actionListener="#{ouvirMusicaBean.listarFavoritos}"
 							icon="ui-icon-arrowrefresh-1-w" />
 					</p:submenu>
-					<p:submenu label="Minhas músicas">
-						<p:menuitem value="Todas músicas"
-							actionListener="#{ouvirMusicaBean.listarMinhasMusicas()}"
+					<p:submenu label="Buscar músicas">
+						<p:menuitem value="Listar músicas"
+							actionListener="#{ouvirMusicaBean.listarMusicas}"
 							update=":menu:listarMusicas">
 						</p:menuitem>
 					</p:submenu>
@@ -77,10 +77,13 @@
 			<div>
 			<h:panelGroup id="listarMusicas">
 				<div id="lista" style="width: 50%;">
-					<p:dataList value="#{ouvirMusicaBean.musicas}" var="musica" id="musicas" rendered="#{ouvirMusicaBean.musicas != null}">
+					<p:dataList value="#{ouvirMusicaBean.listaMusicas}" varStatus="loop" var="musica" id="musicas" rendered="#{ouvirMusicaBean.listaMusicas != null}">
 						<li class="sm2_link" style="list-style: none">
-						<a	href="../../resources/music/#{musica}" style="text-decoration: none;"	class="sm2_link sm2_playing"><h:outputText value="#{musica}" /></a>
+						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:musicas:#{loop.index}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">
+							<h:outputText value="#{musica.nome}" />
+						</a>	
 						</li>
+						<p:commandButton id="fakeButton" actionListener="#{ouvirMusicaBean.tocarMusica(musica)}" style="display:none"/>
 					</p:dataList>
 				</div>
 			</h:panelGroup>
