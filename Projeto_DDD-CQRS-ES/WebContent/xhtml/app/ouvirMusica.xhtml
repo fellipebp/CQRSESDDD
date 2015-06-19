@@ -41,12 +41,14 @@
 							actionListener="#{ouvirMusicaBean.listarFavoritos}"
 							icon="ui-icon-arrowrefresh-1-w" />
 					</p:submenu>
-					<p:submenu label="Buscar músicas">
-						<p:menuitem value="Listar músicas"
+				</p:panelMenu>
+					<p:menu style="width:441.313px" >
+					<p:menuitem value="Buscar músicas"
 							actionListener="#{ouvirMusicaBean.listarMusicas}"
-							update=":menu:listarMusicas">
-						</p:menuitem>
-					</p:submenu>
+							update=":menu:listarMusicas" style="font-weight:bold; width:400px; display: block; padding: .5em .5em .5em 2.0em;"
+							/>
+					</p:menu>
+					<p:panelMenu styleClass="grad2" >
 					<p:submenu label="Minha conta">
 						<p:menuitem value="Visualizar informações"
 							action="#{editarUsuarioBean.visualizarMinhasInformacoes()}"
@@ -73,18 +75,26 @@
 						</p:submenu>
 					</p:submenu>
 				</p:panelMenu>
+			
+					
 			</div>
 			<div>
 			<h:panelGroup id="listarMusicas">
-				<div id="lista" style="width: 50%;">
-					<p:dataList value="#{ouvirMusicaBean.listaMusicas}" varStatus="loop" var="musica" id="musicas" rendered="#{ouvirMusicaBean.listaMusicas != null}">
+			<h:message for="adicionarMusica" />
+				<div id="lista" style="width: 70%;">
+					<p:dataTable value="#{ouvirMusicaBean.listaMusicas}" varStatus="loop" var="musica" id="musicas" rendered="#{ouvirMusicaBean.listaMusicas != null}">
+					<p:column width="72%">
 						<li class="sm2_link" style="list-style: none">
 						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:musicas:#{loop.index}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">
 							<h:outputText value="#{musica.nome}" />
 						</a>	
 						</li>
+					</p:column>
+					<p:column>
+						<p:commandButton id="adicionarMusica" actionListener="#{ouvirMusicaBean.adicionarMusica(musica)}" value="adicionar musica" style="font-size:0.8em"/>
+					</p:column>
 						<p:commandButton id="fakeButton" actionListener="#{ouvirMusicaBean.tocarMusica(musica)}" style="display:none"/>
-					</p:dataList>
+					</p:dataTable>
 				</div>
 			</h:panelGroup>
 			</div>

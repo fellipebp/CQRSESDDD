@@ -4,16 +4,18 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.text.MaskFormatter;
 
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.EventoProcessador;
+import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
+import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
@@ -158,6 +160,12 @@ public class Usuario  implements Serializable {
 		usuario.setEmail( editarUsuarioComando.getEmail());
 //		usuario.setAggregateID(usuarioComando.aggregateId().toString());
 		new EventoProcessador().processar((new UsuarioEditadoEvento(editarUsuarioComando.aggregateId(), usuario)));
+		
+	}
+	
+	//Nao sei se fica aqui
+	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando) throws Exception {
+		new EventoProcessador().processar((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica())));
 		
 	}
 	

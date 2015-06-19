@@ -25,7 +25,7 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 	public List<Musica> listarTodasMusicas() {
 		List<Musica> musicas = new ArrayList<>();
 		
-		URL resource = this.getClass().getClassLoader().getResource("projeto/tcc/dominio/music");
+		URL resource = this.getClass().getClassLoader().getResource("../../resources/music/");
 		try {
 			Musica musica;
 			File diretorio = new File(resource.toURI());
@@ -44,7 +44,7 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 
 	@Override
 	public Musica recuperaMusicaPeloNome(String nome) {
-		URL resource = this.getClass().getClassLoader().getResource("projeto/tcc/dominio/music/"+nome);
+		URL resource = this.getClass().getClassLoader().getResource("../../resources/music/"+nome);
 		Musica musica = null;
 		try {
 			File arquivoMusica = new File(resource.toURI());
