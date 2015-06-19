@@ -26,6 +26,7 @@ public class UsuarioLogadoEvento implements Evento, Serializable{
 	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin){
 		this.aggregateId = aggregateId;
 		this.dtLogin = dtLogin;
+		this.senha = senha;
 	}
 
 //	@Override
