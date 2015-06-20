@@ -40,19 +40,18 @@ public class LoginUsuarioBean implements Serializable {
 	}
 
 	private void salvaAggregateIDNaSessao(String aggregateID) {
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		HttpServletRequest request = (HttpServletRequest)externalContext.getRequest();
-		request.getSession().setAttribute("aggregateID", aggregateID);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("aggregateID",aggregateID);
 	}
+	
 
 	public FazerLoginDTO getFazerLoginDTO() {
 		return fazerLoginDTO;
 	}
 
-
 	public void setFazerLoginDTO(FazerLoginDTO fazerLoginDTO) {
 		this.fazerLoginDTO = fazerLoginDTO;
 	}
+
 
 
 

@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.dominio.entidades.musica.Musica;
@@ -31,11 +31,13 @@ public class OuvirMusicaBean implements Serializable {
 	private List<String> musicas;
 	private boolean tocando;
 	private String nomeMusicaTemp;
-	private HttpServletRequest request;
+	private HttpSession sessao;
+	
 
 	@PostConstruct
 	public void init() {
-		request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);       
 		tocando = false;
 		nomeMusicaTemp = "";
 	}
@@ -74,9 +76,12 @@ public class OuvirMusicaBean implements Serializable {
 		}
 	}
 	
+	/**
+	 * @param musica
+	 */
 	public void adicionarMusica(Musica musica){
 		try{
-		Object aggregateIDObject = request.getSession().getAttribute("aggregateID");
+		Object aggregateIDObject = sessao.getAttribute("aggregateID");
 		servicoUsuarioEscrita.adicionarMusica(new AdicionarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Música adicionada com sucesso"));
 		}catch(Exception e){
