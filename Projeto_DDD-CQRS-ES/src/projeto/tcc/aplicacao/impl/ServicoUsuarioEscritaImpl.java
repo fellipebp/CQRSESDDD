@@ -7,6 +7,7 @@ import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
@@ -25,6 +26,17 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+	
+	@Override
+	public boolean deslogarUsuario(DeslogarComando deslogarComando) {
+		usuario = new Usuario();
+		try {
+			return usuario.deslogar(deslogarComando);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+
 
 	//outros métodos omitidos
 	
@@ -59,5 +71,6 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 		}
 		
 	}
+
 
 }

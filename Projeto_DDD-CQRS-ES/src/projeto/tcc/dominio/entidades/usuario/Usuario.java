@@ -6,17 +6,22 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.MaskFormatter;
 
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
@@ -133,6 +138,17 @@ public class Usuario  implements Serializable {
 		throw new RuntimeException("Usuário ou senha inválidos");
 		
 	}
+	
+	
+	public boolean deslogar(DeslogarComando deslogarComando) throws Exception{
+		if (deslogarComando.getAggregateID() !=null) {
+			UsuarioDeslogadoEvento ude = new UsuarioDeslogadoEvento((UUID)deslogarComando.getAggregateID(), new Date());
+			new EventoProcessador().processar(ude);
+			return true;
+		}
+		return false;
+	}
+	
 
 	public int getId() {
 		return id;
@@ -168,8 +184,6 @@ public class Usuario  implements Serializable {
 		new EventoProcessador().processar((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica())));
 		
 	}
-	
-
 
 
 }

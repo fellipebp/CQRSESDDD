@@ -26,14 +26,13 @@ public class UsuarioEditadoManipulador extends ManipuladorEventos {
 		try {
 			PreparedStatement pstmt = null;
 			pstmt = (PreparedStatement) conexao.prepareStatement("update  " +
-					"dadosusuario SET login = ?, senha = ?, nome = ?, CPF = ?, email = ? " +
+					"dadosusuario SET senha = ?, nome = ?, CPF = ?, email = ? " +
 					"WHERE aggregateID = ?");
-			pstmt.setString(1, usuarioEditadoEvento.getUsuario().getLogin());
-			pstmt.setString(2, usuarioEditadoEvento.getUsuario().getSenha());
-			pstmt.setString(3, usuarioEditadoEvento.getUsuario().getNome());
-			pstmt.setString(4, usuarioEditadoEvento.getUsuario().getCPF());
-			pstmt.setString(5, usuarioEditadoEvento.getUsuario().getEmail());
-			pstmt.setString(6, usuarioEditadoEvento.getAggregateId().toString());
+			pstmt.setString(1, usuarioEditadoEvento.getSenha());
+			pstmt.setString(2, usuarioEditadoEvento.getNome());
+			pstmt.setString(3, usuarioEditadoEvento.getCPF());
+			pstmt.setString(4, usuarioEditadoEvento.getEmail());
+			pstmt.setString(5, usuarioEditadoEvento.getAggregateId().toString());
 			pstmt.executeUpdate();
 			pstmt.close();
 		} catch (Exception e) {

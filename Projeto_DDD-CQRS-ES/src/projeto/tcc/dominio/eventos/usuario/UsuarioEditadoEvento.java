@@ -14,13 +14,20 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private UUID aggregateId;
-	private Usuario usuario;
+	private String senha;
+	private String CPF;
+	private String nome;
+	private String email;
 	private Date dtAlteracao;
 	
+	
 	public UsuarioEditadoEvento(UUID aggregateID, Usuario usuario) {
-		this.usuario = usuario;
 		this.aggregateId = aggregateID;
 		this.dtAlteracao = new Date();
+		this.senha = usuario.getSenha();
+		this.CPF = usuario.getCPF();
+		this.nome = usuario.getNome();
+		this.email = usuario.getEmail();
 				
 	}
 
@@ -28,13 +35,39 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 	public UUID getAggregateId() {
 		return aggregateId;
 	}
+	
+	
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getCPF() {
+		return CPF;
+	}
+
+	public void setCPF(String cPF) {
+		CPF = cPF;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Date getDtAlteracao() {

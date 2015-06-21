@@ -1,6 +1,7 @@
 package projeto.tcc.interfaceusuario.controle;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
+import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 
@@ -32,6 +34,23 @@ public class LoginUsuarioBean implements Serializable {
 			String aggregateID = servicoUsuarioEscrita.logarUsuario(fazerLoginComando);
 			salvaAggregateIDNaSessao(aggregateID);
 			return "app/ouvirMusica.xhtml?faces-redirect=true";
+		} catch (Exception e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+		} 
+		return "";
+	}
+	
+	
+	public String deslogar(){
+		try {
+			HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+			DeslogarComando deslogarComando = new DeslogarComando(request.getSession().getAttribute("aggregateID"));
+			boolean ok = servicoUsuarioEscrita.deslogarUsuario(deslogarComando);
+			if (ok) {
+				request.getSession().invalidate();
+			}
+			return "loginUsuario.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));

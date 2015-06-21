@@ -2,6 +2,7 @@ package projeto.tcc.aplicacao;
 
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
@@ -15,5 +16,7 @@ public interface ServicoUsuarioEscrita {
 	void editarInformacoesUsuario(EditarUsuarioComando editarUsuarioComando);
 	
 	void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando);
+
+	boolean deslogarUsuario(DeslogarComando deslogarComando);
 
 }

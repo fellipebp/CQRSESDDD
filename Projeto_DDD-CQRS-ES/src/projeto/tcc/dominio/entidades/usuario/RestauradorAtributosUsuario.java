@@ -39,11 +39,10 @@ public class RestauradorAtributosUsuario {
 	
 	public void aplicaMudanca(UsuarioEditadoEvento usuarioEditadoEvento){
 		try {
-			this.usuario.login = usuarioEditadoEvento.getUsuario().getLogin();
-			this.usuario.senha = usuarioEditadoEvento.getUsuario().getSenha();
-			this.usuario.nome = usuarioEditadoEvento.getUsuario().getNome();
-			this.usuario.CPF = usuarioEditadoEvento.getUsuario().getCPF();
-			this.usuario.email = usuarioEditadoEvento.getUsuario().getEmail();
+			this.usuario.senha = usuarioEditadoEvento.getSenha();
+			this.usuario.nome = usuarioEditadoEvento.getNome();
+			this.usuario.CPF = usuarioEditadoEvento.getCPF();
+			this.usuario.email = usuarioEditadoEvento.getEmail();
 			this.usuario.aggregateID = usuarioEditadoEvento.getAggregateId().toString();
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());

@@ -44,7 +44,6 @@ public class EditarUsuarioBean implements Serializable{
 		getUsuarioDTO().setCpf(usuario.getCPF());
 		// usuarioDTO.setDataNascimento(usuario.getDataNascimento());
 		getUsuarioDTO().setEmail(usuario.getEmail());
-		getUsuarioDTO().setLogin(usuario.getLogin());
 		getUsuarioDTO().setNome(usuario.getNome());
 		getUsuarioDTO().setSenha(usuario.getSenha());
 	}

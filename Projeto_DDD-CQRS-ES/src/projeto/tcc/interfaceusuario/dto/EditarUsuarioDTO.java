@@ -11,7 +11,6 @@ public class EditarUsuarioDTO implements Serializable{
 	private static final long serialVersionUID = 6142650016392378500L;
 	private String nome;
 	private String cpf;
-	private String login;
 	private String senha;
 	private String email;
 	
@@ -34,13 +33,6 @@ public class EditarUsuarioDTO implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
 
 	public String getSenha() {
 		return senha;

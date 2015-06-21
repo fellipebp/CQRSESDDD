@@ -15,7 +15,6 @@ public class EditarUsuarioComando implements Comando {
 	private String email;
 	
 	public EditarUsuarioComando(UUID usuarioUID, EditarUsuarioDTO editarUsuarioDTO) {
-		this.login =  editarUsuarioDTO.getLogin();
 		this.senha =  editarUsuarioDTO.getSenha();
 		this.cpf = editarUsuarioDTO.getCpf();
 		this.nome = editarUsuarioDTO.getNome();
