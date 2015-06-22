@@ -3,12 +3,11 @@ package projeto.tcc.dominio.entidades.usuario;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.MaskFormatter;
 
 import projeto.tcc.dominio.entidades.musica.Musica;
@@ -44,6 +43,7 @@ public class Usuario  implements Serializable {
 	protected Date dataNascimento;
 	protected String sexo;
 	protected String aggregateID;
+	protected Set<Musica> minhasMusicas;
 	
 	//private listaEventos (mudancas)
 
@@ -183,6 +183,14 @@ public class Usuario  implements Serializable {
 	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando) throws Exception {
 		new EventoProcessador().processar((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica())));
 		
+	}
+
+	public Set<Musica> getMinhasMusicas() {
+		return minhasMusicas;
+	}
+
+	public void setMinhasMusicas(Set<Musica> minhasMusicas) {
+		this.minhasMusicas = minhasMusicas;
 	}
 
 

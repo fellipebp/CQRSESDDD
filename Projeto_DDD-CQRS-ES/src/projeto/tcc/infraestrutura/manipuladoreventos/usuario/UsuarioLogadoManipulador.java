@@ -27,7 +27,7 @@ public class UsuarioLogadoManipulador {
 			PreparedStatement pstmt1 = null;
 			pstmt1 = (PreparedStatement) conexao.prepareStatement("insert into " +
 					"auditoriaLoginUsuario(aggregateID,login,acao, data) " +
-					"values(?,?,?)", 
+					"values(?,?,?, ?)", 
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt1.setString(1, usuarioLogadoEvento.getAggregateId().toString());
 			pstmt1.setString(2, usuarioLogadoEvento.getLogin());

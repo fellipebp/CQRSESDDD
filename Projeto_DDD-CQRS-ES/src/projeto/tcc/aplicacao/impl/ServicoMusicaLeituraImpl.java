@@ -2,9 +2,11 @@ package projeto.tcc.aplicacao.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioMusicaImpl;
 
 public class ServicoMusicaLeituraImpl implements ServicoMusicaLeitura, Serializable {
@@ -24,6 +26,11 @@ public class ServicoMusicaLeituraImpl implements ServicoMusicaLeitura, Serializa
 
 	public Musica carregaMusicaPorNome(String nome) {
 		return repositorioMusica.recuperaMusicaPeloNome(nome);
+	}
+
+	@Override
+	public Set<Musica> listarMinhasMusicas(String aggregateID) {
+		return repositorioMusica.recuperarMinhasMusicas(aggregateID);
 	}
 
 }

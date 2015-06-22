@@ -3,6 +3,7 @@ package projeto.tcc.interfaceusuario.controle;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
@@ -27,8 +29,9 @@ public class OuvirMusicaBean implements Serializable {
 	private ServicoMusicaFacade servicoMusicaFacade;
 	
 	@Inject	private ServicoUsuarioEscrita servicoUsuarioEscrita;
+	@Inject	private ServicoMusicaLeitura servicoMusicaLeitura;
 	private List<Musica> listaMusicas;
-	private List<String> musicas;
+	private Set<Musica> minhasMusicas;
 	private boolean tocando;
 	private String nomeMusicaTemp;
 	private HttpSession sessao;
@@ -48,10 +51,8 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	public void listarMinhasMusicas() {
-		// temp
-		musicas = new ArrayList<String>();
-		musicas.add("O Rappa Me Deixa.mp3");
-		musicas.add("O Rappa Minha Alma.mp3");
+		Object aggregateIDObject = sessao.getAttribute("aggregateID");
+		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(aggregateIDObject));
 	}
 
 	public void listarFavoritos() {
@@ -98,6 +99,14 @@ public class OuvirMusicaBean implements Serializable {
 
 	public void setListaMusicas(List<Musica> listaMusicas) {
 		this.listaMusicas = listaMusicas;
+	}
+
+	public Set<Musica> getMinhasMusicas() {
+		return minhasMusicas;
+	}
+
+	public void setMinhasMusicas(Set<Musica> minhasMusicas) {
+		this.minhasMusicas = minhasMusicas;
 	}
 
 }

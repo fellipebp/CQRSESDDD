@@ -1,10 +1,12 @@
 package projeto.tcc.infraestrutura.manipuladoreventos;
 
 import projeto.tcc.dominio.eventos.Evento;
+import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.MusicaAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioCadastradoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioDeslogadoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioEditadoManipulador;
@@ -28,6 +30,11 @@ public class ManipuladorEventos {
 		
 		else if(evento instanceof UsuarioEditadoEvento){
 			new UsuarioEditadoManipulador((UsuarioEditadoEvento)evento);
+		}
+		
+		else if(evento instanceof MusicaAdicionadaEvento){
+			new MusicaAdicionadaManipulador((MusicaAdicionadaEvento)evento);
+			
 		}
 		
 		
