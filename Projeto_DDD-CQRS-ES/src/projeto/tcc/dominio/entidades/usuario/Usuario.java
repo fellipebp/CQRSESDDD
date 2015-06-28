@@ -3,7 +3,6 @@ package projeto.tcc.dominio.entidades.usuario;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -13,6 +12,7 @@ import javax.swing.text.MaskFormatter;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
+import projeto.tcc.dominio.eventos.musica.MusicaTocadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
@@ -23,6 +23,7 @@ import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
+import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 
 public class Usuario  implements Serializable {
@@ -179,9 +180,13 @@ public class Usuario  implements Serializable {
 		
 	}
 	
-	//Nao sei se fica aqui
 	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando) throws Exception {
 		new EventoProcessador().processar((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica())));
+		
+	}
+	
+	public void tocarMusica(TocarMusicaComando tocarMusicaComando) throws Exception {
+		new EventoProcessador().processar((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica())));
 		
 	}
 

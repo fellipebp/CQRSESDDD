@@ -82,18 +82,18 @@
 			<h:panelGroup id="listarMusicas">
 			<h:message for="adicionarMusica" />
 				<div id="lista" style="width: 70%;">
-					<p:dataTable value="#{ouvirMusicaBean.listaMusicas}" varStatus="loop" var="musica" id="musicas" rendered="#{ouvirMusicaBean.listaMusicas != null}">
+					<p:dataTable value="#{ouvirMusicaBean.listaMusicas}" rowIndexVar="loop" var="musica" id="musicas" rendered="#{ouvirMusicaBean.listaMusicas != null}">
 					<p:column width="72%">
 						<li class="sm2_link" style="list-style: none">
-						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:musicas:#{loop.index}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">
+						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:musicas:#{loop}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">
 							<h:outputText value="#{musica.nome}" />
 						</a>	
 						</li>
 					</p:column>
 					<p:column>
 						<p:commandButton id="adicionarMusica" actionListener="#{ouvirMusicaBean.adicionarMusica(musica)}" value="adicionar musica" style="font-size:0.8em"/>
+						<p:commandButton id="fakeButton" actionListener="#{ouvirMusicaBean.tocarMusica(musica)}" value="fake button" style="display:none"/>
 					</p:column>
-						<p:commandButton id="fakeButton" actionListener="#{ouvirMusicaBean.tocarMusica(musica)}" style="display:none"/>
 					</p:dataTable>
 				</div>
 			</h:panelGroup>
@@ -101,15 +101,18 @@
 			<div>
 			<h:panelGroup id="listarMinhasMusicas">
 				<div id="minhaLista" style="width: 70%;">
-					<p:dataTable value="#{ouvirMusicaBean.minhasMusicas}" varStatus="loop" var="musica" id="minhasMusicas" rendered="#{ouvirMusicaBean.minhasMusicas != null}">
+					<p:dataTable value="#{ouvirMusicaBean.minhasMusicas}" rowIndexVar="loop" var="musica" id="minhasMusicas" rendered="#{ouvirMusicaBean.minhasMusicas != null}">
 					<p:column width="72%">
 						<li class="sm2_link" style="list-style: none">
-						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:musicas:#{loop.index}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">
+						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:minhasMusicas:#{loop}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">
 							<h:outputText value="#{musica.nome}" />
 						</a>	
 						</li>
 					</p:column>
-						<p:commandButton id="fakeButton" actionListener="#{ouvirMusicaBean.tocarMusica(musica)}" style="display:none"/>
+					<p:column style="display:none">
+						<p:commandButton id="fakeButton" actionListener="#{ouvirMusicaBean.tocarMusica(musica)}" value="fake button"/>
+					</p:column>
+				
 					</p:dataTable>
 				</div>
 			</h:panelGroup>

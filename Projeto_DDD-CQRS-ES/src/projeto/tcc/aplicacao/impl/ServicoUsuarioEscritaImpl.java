@@ -3,19 +3,18 @@ package projeto.tcc.aplicacao.impl;
 import java.io.Serializable;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
-import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
+import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Serializable{
 	
 	private static final long serialVersionUID = -7673302045438349809L;
 	private Usuario usuario;
-	private Musica musica;
 
 	@Override
 	public String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception{
@@ -66,6 +65,17 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 		usuario = new Usuario();
 		try {
 			usuario.adicionarMusica(adicionarMusicaComando);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void tocarMusica(TocarMusicaComando tocarMusicaComando) {
+		usuario = new Usuario();
+		try {
+			usuario.tocarMusica(tocarMusicaComando);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

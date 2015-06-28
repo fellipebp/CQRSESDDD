@@ -1,34 +1,54 @@
 package projeto.tcc.dominio.eventos.musica;
 
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.Evento;
 
-public class MusicaTocadaEvento implements Evento {
+public class MusicaTocadaEvento implements Evento, Serializable {
 	
-	private Musica musica;
-	//mais algum atributo?
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6204840125591633059L;
+	private UUID aggregateId;
+	private String nomeMusica;
 
 
-//	@Override
-//	public void Processar() {
-//		getMusica().tocar(this);
-//	}
-
-	public Musica getMusica() {
-		return musica;
+	
+	public MusicaTocadaEvento(UUID aggregateId, String nomeMusica) {
+		this.aggregateId = aggregateId;
+		this.nomeMusica = nomeMusica;
 	}
 
-	public void setMusica(Musica musica) {
-		this.musica = musica;
-	}
 
-	@Override
+
 	public UUID getAggregateId() {
-		// TODO Auto-generated method stub
-		return null;
+		return aggregateId;
 	}
+
+
+
+	public void setAggregateId(UUID aggregateId) {
+		this.aggregateId = aggregateId;
+	}
+
+
+
+	public String getNomeMusica() {
+		return nomeMusica;
+	}
+
+
+
+	public void setNomeMusica(String nomeMusica) {
+		this.nomeMusica = nomeMusica;
+	}
+
+
 
 }

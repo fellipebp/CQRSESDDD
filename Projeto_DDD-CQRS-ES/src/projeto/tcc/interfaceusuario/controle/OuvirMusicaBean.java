@@ -1,7 +1,6 @@
 package projeto.tcc.interfaceusuario.controle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -18,6 +17,7 @@ import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
+import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
 
 @Named
@@ -67,12 +67,14 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	public void tocarMusica(Musica musica) {
+		Object aggregateIDObject = sessao.getAttribute("aggregateID");
 		if (musica.getNome().equals(nomeMusicaTemp) && tocando == true) {
 			System.out.println("musica pausada: " + musica.getNome());
 			this.tocando = false;
 		} else {
 			this.tocando = true;
 			System.out.println("musica tocando: " + musica.getNome());
+			servicoUsuarioEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
 			this.nomeMusicaTemp = musica.getNome();
 		}
 	}
@@ -83,8 +85,13 @@ public class OuvirMusicaBean implements Serializable {
 	public void adicionarMusica(Musica musica){
 		try{
 		Object aggregateIDObject = sessao.getAttribute("aggregateID");
+		if(!minhasMusicas.contains(musica)){
 		servicoUsuarioEscrita.adicionarMusica(new AdicionarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Música adicionada com sucesso"));
+		}
+		else
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você já possui essa música"));
+		
 		}catch(Exception e){
 				FacesContext fc = FacesContext.getCurrentInstance();
 				fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocorreu um erro ao adicionar a musica", null));
