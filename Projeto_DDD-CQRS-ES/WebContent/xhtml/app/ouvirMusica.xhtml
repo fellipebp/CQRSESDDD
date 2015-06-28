@@ -35,8 +35,8 @@
 					<p:submenu
 						label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
 						<p:menuitem value="Minhas músicas"
-							actionListener="#{ouvirMusicaBean.listarMinhasMusicas}"
-							icon="ui-icon-disk" update=":menu:listarMinhasMusicas" />
+							action="#{ouvirMusicaBean.listarMinhasMusicas}"
+							icon="ui-icon-disk" update="@form" />
 						<p:menuitem value="Meus favoritos"
 							actionListener="#{ouvirMusicaBean.listarFavoritos}"
 							icon="ui-icon-arrowrefresh-1-w" />
@@ -44,8 +44,8 @@
 				</p:panelMenu>
 					<p:menu style="width:98%" >
 					<p:menuitem value="Buscar músicas"
-							actionListener="#{ouvirMusicaBean.listarMusicas}"
-							update=":menu:listarMusicas" style="font-weight:bold; width:93%; display: block; padding: .5em .5em .5em 2.0em;"
+							action="#{ouvirMusicaBean.listarMusicas}"
+							update="@form" style="font-weight:bold; width:93%; display: block; padding: .5em .5em .5em 2.0em;"
 							/>
 					</p:menu>
 					<p:panelMenu styleClass="grad2" >
@@ -82,7 +82,7 @@
 			<h:panelGroup id="listarMusicas">
 			<h:message for="adicionarMusica" />
 				<div id="lista" style="width: 70%;">
-					<p:dataTable value="#{ouvirMusicaBean.listaMusicas}" rowIndexVar="loop" var="musica" id="musicas" rendered="#{ouvirMusicaBean.listaMusicas != null}">
+					<p:dataTable value="#{ouvirMusicaBean.listaMusicas}" rowIndexVar="loop" var="musica" id="musicas" rendered="#{ouvirMusicaBean.todasMusicasStatus}">
 					<p:column width="72%">
 						<li class="sm2_link" style="list-style: none">
 						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:musicas:#{loop}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">
@@ -101,7 +101,7 @@
 			<div>
 			<h:panelGroup id="listarMinhasMusicas">
 				<div id="minhaLista" style="width: 70%;">
-					<p:dataTable value="#{ouvirMusicaBean.minhasMusicas}" rowIndexVar="loop" var="musica" id="minhasMusicas" rendered="#{ouvirMusicaBean.minhasMusicas != null}">
+					<p:dataTable value="#{ouvirMusicaBean.minhasMusicas}" rowIndexVar="loop" var="musica" id="minhasMusicas" rendered="#{ouvirMusicaBean.minhasMusicasStatus}">
 					<p:column width="72%">
 						<li class="sm2_link" style="list-style: none">
 						<a href="../../resources/music/#{musica.nome}" onclick="document.getElementById('menu:minhasMusicas:#{loop}:fakeButton').click();" style="text-decoration: none;" class="sm2_link sm2_playing">

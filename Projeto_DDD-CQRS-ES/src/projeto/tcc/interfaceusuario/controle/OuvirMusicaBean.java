@@ -35,6 +35,8 @@ public class OuvirMusicaBean implements Serializable {
 	private boolean tocando;
 	private String nomeMusicaTemp;
 	private HttpSession sessao;
+	private boolean todasMusicasStatus;
+	private boolean minhasMusicasStatus;
 	
 
 	@PostConstruct
@@ -42,17 +44,25 @@ public class OuvirMusicaBean implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);       
 		tocando = false;
+		setTodasMusicasStatus(false);
+		setMinhasMusicasStatus(false);
 		nomeMusicaTemp = "";
 	}
 
-	public void listarMusicas() {
+	public String listarMusicas() {
 		this.listaMusicas = servicoMusicaFacade.listarTodasMusicas();
+		setTodasMusicasStatus(true);
+		setMinhasMusicasStatus(false);
+		return null;
 
 	}
 
-	public void listarMinhasMusicas() {
+	public String listarMinhasMusicas() {
 		Object aggregateIDObject = sessao.getAttribute("aggregateID");
 		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(aggregateIDObject));
+		setTodasMusicasStatus(false);
+		setMinhasMusicasStatus(true);
+		return null;
 	}
 
 	public void listarFavoritos() {
@@ -114,6 +124,22 @@ public class OuvirMusicaBean implements Serializable {
 
 	public void setMinhasMusicas(Set<Musica> minhasMusicas) {
 		this.minhasMusicas = minhasMusicas;
+	}
+
+	public boolean isTodasMusicasStatus() {
+		return todasMusicasStatus;
+	}
+
+	public void setTodasMusicasStatus(boolean todasMusicasStatus) {
+		this.todasMusicasStatus = todasMusicasStatus;
+	}
+
+	public boolean isMinhasMusicasStatus() {
+		return minhasMusicasStatus;
+	}
+
+	public void setMinhasMusicasStatus(boolean minhasMusicasStatus) {
+		this.minhasMusicasStatus = minhasMusicasStatus;
 	}
 
 }
