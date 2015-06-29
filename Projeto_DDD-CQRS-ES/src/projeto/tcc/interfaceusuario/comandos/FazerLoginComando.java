@@ -53,4 +53,11 @@ public class FazerLoginComando implements Comando {
 		this.login = login;
 	}
 
+
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

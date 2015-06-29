@@ -19,6 +19,7 @@ public class UsuarioLogadoEvento implements Evento, Serializable{
 	private String login;
 	private String senha;
 	private Date dtLogin;
+	private Integer version;
 	
 	public UsuarioLogadoEvento() {
 	}
@@ -66,6 +67,11 @@ public class UsuarioLogadoEvento implements Evento, Serializable{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public Integer getVersion() {
+		return this.version;
 	}
 
 

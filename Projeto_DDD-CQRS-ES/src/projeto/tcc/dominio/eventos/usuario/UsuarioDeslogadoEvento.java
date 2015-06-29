@@ -10,6 +10,7 @@ public class UsuarioDeslogadoEvento implements Evento{
 	private UUID aggregateID;
 	private String login;
 	private Date dtDeslogin;
+	private Integer version;
 
 	public UsuarioDeslogadoEvento(UUID aggregateID, Date data) {
 		this.aggregateID = aggregateID;
@@ -40,6 +41,11 @@ public class UsuarioDeslogadoEvento implements Evento{
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+
+	@Override
+	public Integer getVersion() {
+		return this.version;
 	}
 
 }

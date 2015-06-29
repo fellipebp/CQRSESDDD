@@ -13,6 +13,7 @@ public class EditarUsuarioDTO implements Serializable{
 	private String cpf;
 	private String senha;
 	private String email;
+	private Integer version;
 	
 	public EditarUsuarioDTO() {
 	}
@@ -48,6 +49,14 @@ public class EditarUsuarioDTO implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 }

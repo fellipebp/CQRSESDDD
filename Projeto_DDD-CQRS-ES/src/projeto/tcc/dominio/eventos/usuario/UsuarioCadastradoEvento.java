@@ -19,6 +19,7 @@ public class UsuarioCadastradoEvento implements Evento, Serializable {
 	private String CPF;
 	private String nome;
 	private String email;
+	private Integer version;
 	
 	public UsuarioCadastradoEvento(UUID aggregateId, Usuario usuario) {
 		this.aggregateId = aggregateId;
@@ -100,6 +101,13 @@ public class UsuarioCadastradoEvento implements Evento, Serializable {
 
 	public void setCPF(String cPF) {
 		CPF = cPF;
+	}
+
+
+
+	@Override
+	public Integer getVersion() {
+		return this.version;
 	}
 
 

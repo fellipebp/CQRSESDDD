@@ -13,6 +13,7 @@ public class CadastrarUsuarioComando implements Comando {
 	private String cpf;
 	private String nome;
 	private String email;
+	private Integer version;
 	
 	public CadastrarUsuarioComando(UUID usuarioUID , CriarUsuarioDTO usuarioDTO) {
 		this.usuarioUID = usuarioUID;
@@ -77,6 +78,12 @@ public class CadastrarUsuarioComando implements Comando {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	@Override
+	public Integer getVersion() {
+		return this.version;
 	}
 
 }

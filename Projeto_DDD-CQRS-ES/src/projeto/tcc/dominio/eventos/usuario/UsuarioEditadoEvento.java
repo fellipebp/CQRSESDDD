@@ -19,7 +19,7 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 	private String nome;
 	private String email;
 	private Date dtAlteracao;
-	
+	private Integer version;
 	
 	public UsuarioEditadoEvento(UUID aggregateID, Usuario usuario) {
 		this.aggregateId = aggregateID;
@@ -80,6 +80,11 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 
 	public void setAggregateId(UUID aggregateId) {
 		this.aggregateId = aggregateId;
+	}
+
+	@Override
+	public Integer getVersion() {
+		return this.version;
 	}
 
 }

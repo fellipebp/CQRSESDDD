@@ -12,4 +12,10 @@ public class MusicaRemovidaEvento implements Evento {
 		return null;
 	}
 
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

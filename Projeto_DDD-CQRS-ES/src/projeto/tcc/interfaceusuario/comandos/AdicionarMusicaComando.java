@@ -42,5 +42,12 @@ public class AdicionarMusicaComando implements Comando {
 	}
 
 
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

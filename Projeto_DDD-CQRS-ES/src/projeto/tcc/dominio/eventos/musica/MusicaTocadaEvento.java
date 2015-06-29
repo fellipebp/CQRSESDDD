@@ -51,4 +51,12 @@ public class MusicaTocadaEvento implements Evento, Serializable {
 
 
 
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }

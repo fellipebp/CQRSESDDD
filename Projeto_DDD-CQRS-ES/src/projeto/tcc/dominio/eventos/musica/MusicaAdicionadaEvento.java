@@ -38,4 +38,11 @@ public class MusicaAdicionadaEvento implements Evento, Serializable{
 		return aggregateId;
 	}
 
+
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

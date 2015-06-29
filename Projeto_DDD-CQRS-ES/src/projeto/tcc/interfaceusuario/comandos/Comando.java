@@ -4,4 +4,6 @@ import java.util.UUID;
 
 public interface Comando {
 	UUID aggregateId();
+	Integer getVersion();
+
 }

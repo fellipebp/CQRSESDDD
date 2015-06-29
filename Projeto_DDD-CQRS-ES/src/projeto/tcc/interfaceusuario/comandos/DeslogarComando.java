@@ -24,4 +24,10 @@ public class DeslogarComando implements Comando {
 		this.aggregateID = aggregateID;
 	}
 
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

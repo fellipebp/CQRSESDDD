@@ -75,5 +75,11 @@ public class EditarUsuarioComando implements Comando {
 		this.email = email;
 	}
 
+	@Override
+	public Integer getVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

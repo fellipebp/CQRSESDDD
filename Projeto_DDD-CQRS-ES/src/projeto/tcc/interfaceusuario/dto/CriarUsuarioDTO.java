@@ -13,6 +13,7 @@ public class CriarUsuarioDTO implements Serializable {
 	private String login;
 	private String senha;
 	private String email;
+	private Integer version;
 	
 	public CriarUsuarioDTO() {
 	}
@@ -55,6 +56,14 @@ public class CriarUsuarioDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 	
 	
