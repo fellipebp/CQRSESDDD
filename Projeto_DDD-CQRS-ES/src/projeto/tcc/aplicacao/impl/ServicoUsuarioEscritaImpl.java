@@ -1,8 +1,10 @@
 package projeto.tcc.aplicacao.impl;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
@@ -59,28 +61,5 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando) {
-		usuario = new Usuario();
-		try {
-			usuario.adicionarMusica(adicionarMusicaComando);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	@Override
-	public void tocarMusica(TocarMusicaComando tocarMusicaComando) {
-		usuario = new Usuario();
-		try {
-			usuario.tocarMusica(tocarMusicaComando);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-
 
 }

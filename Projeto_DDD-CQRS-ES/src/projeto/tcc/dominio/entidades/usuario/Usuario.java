@@ -44,7 +44,6 @@ public class Usuario  implements Serializable {
 	protected Date dataNascimento;
 	protected String sexo;
 	protected String aggregateID;
-	protected Set<Musica> minhasMusicas;
 	
 	//private listaEventos (mudancas)
 
@@ -180,8 +179,11 @@ public class Usuario  implements Serializable {
 		
 	}
 	
-	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando) throws Exception {
+	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica) throws Exception {
+		if(!minhasMusicas.contains(musica))
 		new EventoProcessador().processar((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica())));
+		else
+			throw new RuntimeException("Você já possui essa música");
 		
 	}
 	
@@ -190,13 +192,6 @@ public class Usuario  implements Serializable {
 		
 	}
 
-	public Set<Musica> getMinhasMusicas() {
-		return minhasMusicas;
-	}
-
-	public void setMinhasMusicas(Set<Musica> minhasMusicas) {
-		this.minhasMusicas = minhasMusicas;
-	}
 
 
 }

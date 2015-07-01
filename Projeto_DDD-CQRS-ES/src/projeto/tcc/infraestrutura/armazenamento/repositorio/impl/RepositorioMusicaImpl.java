@@ -81,7 +81,6 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 			while (rs.next()) {
 				Musica musica = new Musica();
 				musica.setNome(rs.getString("nome"));
-				if (musica != null)
 					minhasMusicas.add(musica);
 			}
 		} catch (SQLException e) {

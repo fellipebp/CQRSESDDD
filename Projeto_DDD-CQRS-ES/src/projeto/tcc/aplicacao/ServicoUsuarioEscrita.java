@@ -1,5 +1,8 @@
 package projeto.tcc.aplicacao;
 
+import java.util.Set;
+
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
@@ -16,10 +19,6 @@ public interface ServicoUsuarioEscrita {
 
 	void editarInformacoesUsuario(EditarUsuarioComando editarUsuarioComando);
 	
-	void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando);
-	
-	void tocarMusica(TocarMusicaComando adicionarMusicaComando);
-
 	boolean deslogarUsuario(DeslogarComando deslogarComando);
 
 }

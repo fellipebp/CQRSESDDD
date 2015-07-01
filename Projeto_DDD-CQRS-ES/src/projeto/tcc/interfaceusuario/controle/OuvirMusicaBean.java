@@ -14,7 +14,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
-import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
+import projeto.tcc.aplicacao.ServicoPlayListEscrita;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
@@ -28,7 +28,7 @@ public class OuvirMusicaBean implements Serializable {
 	@Inject
 	private ServicoMusicaFacade servicoMusicaFacade;
 	
-	@Inject	private ServicoUsuarioEscrita servicoUsuarioEscrita;
+	@Inject	private ServicoPlayListEscrita servicoPlayListEscrita;
 	@Inject	private ServicoMusicaLeitura servicoMusicaLeitura;
 	private List<Musica> listaMusicas;
 	private Set<Musica> minhasMusicas;
@@ -37,12 +37,15 @@ public class OuvirMusicaBean implements Serializable {
 	private HttpSession sessao;
 	private boolean todasMusicasStatus;
 	private boolean minhasMusicasStatus;
+	private Object aggregateIDObject;
 	
 
 	@PostConstruct
 	public void init() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);       
+	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);     
+	    aggregateIDObject = sessao.getAttribute("aggregateID");
+		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(aggregateIDObject));
 		tocando = false;
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
@@ -58,7 +61,6 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	public String listarMinhasMusicas() {
-		Object aggregateIDObject = sessao.getAttribute("aggregateID");
 		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(aggregateIDObject));
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(true);
@@ -77,14 +79,13 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	public void tocarMusica(Musica musica) {
-		Object aggregateIDObject = sessao.getAttribute("aggregateID");
 		if (musica.getNome().equals(nomeMusicaTemp) && tocando == true) {
 			System.out.println("musica pausada: " + musica.getNome());
 			this.tocando = false;
 		} else {
 			this.tocando = true;
 			System.out.println("musica tocando: " + musica.getNome());
-			servicoUsuarioEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
+			servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
 			this.nomeMusicaTemp = musica.getNome();
 		}
 	}
@@ -94,18 +95,13 @@ public class OuvirMusicaBean implements Serializable {
 	 */
 	public void adicionarMusica(Musica musica){
 		try{
-		Object aggregateIDObject = sessao.getAttribute("aggregateID");
-		if(!minhasMusicas.contains(musica)){
-		servicoUsuarioEscrita.adicionarMusica(new AdicionarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
+		servicoPlayListEscrita.adicionarMusica(new AdicionarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()), minhasMusicas, musica);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Música adicionada com sucesso"));
-		}
-		else
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você já possui essa música"));
 		
-		}catch(Exception e){
-				FacesContext fc = FacesContext.getCurrentInstance();
-				fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Ocorreu um erro ao adicionar a musica", null));
-		}
+		}catch (Exception e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+		} 
 		
 		
 	}
