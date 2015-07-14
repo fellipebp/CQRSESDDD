@@ -21,13 +21,14 @@ public class UsuarioCadastradoEvento implements Evento, Serializable {
 	private String email;
 	private Integer version;
 	
-	public UsuarioCadastradoEvento(UUID aggregateId, Usuario usuario) {
+	public UsuarioCadastradoEvento(UUID aggregateId,Integer version, Usuario usuario) {
 		this.aggregateId = aggregateId;
 		this.login = usuario.getLogin();
 		this.senha = usuario.getSenha();
 		this.CPF = usuario.getCPF();
 		this.nome = usuario.getNome();
 		this.email = usuario.getEmail();
+		this.version = version;
 	}
 	
 

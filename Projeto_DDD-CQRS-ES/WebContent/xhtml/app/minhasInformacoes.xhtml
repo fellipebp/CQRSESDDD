@@ -13,10 +13,11 @@
 		<p:messages/>
 		<h:outputText value="Minhas Informações"/>
 		<h:panelGrid columns="2" cellpadding="5">
-		
+			
+			<h:inputHidden value="#{editarUsuarioBean.usuarioDTO.version}" />
 			<p:outputLabel value="nome: " for="nome" indicateRequired="true"
 				styleClass="alignRight" />
-			<p:inputText id="nome" value="#{editarUsuarioBean.usuarioDTO.login}"
+			<p:inputText id="nome" value="#{editarUsuarioBean.usuarioDTO.nome}"
 				required="true" />
 			<p:outputLabel value="CPF: " for="cpf" indicateRequired="true"
 				styleClass="alignRight" />

@@ -12,7 +12,7 @@ import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 public interface ServicoUsuarioEscrita {
 
-	String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception;
+//	String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception;
 	
 	//outros métodos omitidos
 	void cadastrarUsuario(CadastrarUsuarioComando cadastrarUsuarioComando);

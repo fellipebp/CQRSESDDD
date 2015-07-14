@@ -22,6 +22,7 @@ public class CadastrarUsuarioComando implements Comando {
 		this.setCpf(usuarioDTO.getCpf());
 		this.nome = usuarioDTO.getNome();
 		this.email = usuarioDTO.getEmail();
+		this.version = 0;
 	}
 	
 	

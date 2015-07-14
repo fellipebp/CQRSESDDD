@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class UsuarioLogadoEvento implements Evento, Serializable{
@@ -24,17 +23,13 @@ public class UsuarioLogadoEvento implements Evento, Serializable{
 	public UsuarioLogadoEvento() {
 	}
 	
-	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin){
+	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin, Integer version){
 		this.aggregateId = aggregateId;
+		this.login = login;
 		this.dtLogin = dtLogin;
 		this.senha = senha;
+		this.version = version;
 	}
-
-//	@Override
-//	public void Processar() {
-//		usuario.logar(this);
-//		
-//	}
 
 
 	public Date getDtLogin() {

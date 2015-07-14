@@ -44,14 +44,14 @@ public class PlayList implements Serializable {
 	
 	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica) throws Exception {
 		if(!minhasMusicas.contains(musica))
-		new EventoProcessador().processar((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica())));
+		new EventoProcessador().processarEvento((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica(), 0)));
 		else
 			throw new RuntimeException("Você já possui essa música");
 		
 	}
 	
 	public void tocarMusica(TocarMusicaComando tocarMusicaComando) throws Exception {
-		new EventoProcessador().processar((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica())));
+		new EventoProcessador().processarEvento((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica(),  0)));
 		
 	}
 

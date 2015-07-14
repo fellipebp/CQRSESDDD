@@ -17,12 +17,13 @@ public class MusicaTocadaEvento implements Evento, Serializable {
 	private static final long serialVersionUID = 6204840125591633059L;
 	private UUID aggregateId;
 	private String nomeMusica;
-
+	private Integer version;
 
 	
-	public MusicaTocadaEvento(UUID aggregateId, String nomeMusica) {
+	public MusicaTocadaEvento(UUID aggregateId, String nomeMusica, Integer version) {
 		this.aggregateId = aggregateId;
 		this.nomeMusica = nomeMusica;
+		this.version = version;
 	}
 
 
@@ -53,8 +54,7 @@ public class MusicaTocadaEvento implements Evento, Serializable {
 
 	@Override
 	public Integer getVersion() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.version;
 	}
 
 

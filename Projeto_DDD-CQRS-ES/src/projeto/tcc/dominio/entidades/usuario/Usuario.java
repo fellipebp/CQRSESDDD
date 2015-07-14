@@ -122,7 +122,9 @@ public class Usuario  implements Serializable {
 		usuario.setNome(usuarioComando.getNome());
 		usuario.setCPF( usuarioComando.getCpf());
 		usuario.setEmail( usuarioComando.getEmail());
-		new EventoProcessador().processar((new UsuarioCadastradoEvento(usuarioComando.aggregateId(), usuario)));
+		EventoProcessador eventoProcessador = new EventoProcessador();
+		eventoProcessador.processarEvento((new UsuarioCadastradoEvento(usuarioComando.aggregateId(),usuarioComando.getVersion(), usuario)));
+		eventoProcessador.processarAggregado(usuarioComando.aggregateId(), Usuario.class, usuarioComando.getVersion());
 	}
 	
 	
@@ -131,7 +133,7 @@ public class Usuario  implements Serializable {
 		String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(comandoLogin.getLogin());
 		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(aggregateID);
 		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
-			new EventoProcessador().processar(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase.getLogin(), usuarioBase.getSenha(),new Date()));
+			new EventoProcessador().processarEvento(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase.getLogin(), usuarioBase.getSenha(),new Date(),0));
 			return aggregateID;
 		}
 		//TODO criar exceção especifica
@@ -143,7 +145,7 @@ public class Usuario  implements Serializable {
 	public boolean deslogar(DeslogarComando deslogarComando) throws Exception{
 		if (deslogarComando.getAggregateID() !=null) {
 			UsuarioDeslogadoEvento ude = new UsuarioDeslogadoEvento((UUID)deslogarComando.getAggregateID(), new Date());
-			new EventoProcessador().processar(ude);
+			new EventoProcessador().processarEvento(ude);
 			return true;
 		}
 		return false;
@@ -175,23 +177,12 @@ public class Usuario  implements Serializable {
 		usuario.setCPF( editarUsuarioComando.getCpf());
 		usuario.setEmail( editarUsuarioComando.getEmail());
 //		usuario.setAggregateID(usuarioComando.aggregateId().toString());
-		new EventoProcessador().processar((new UsuarioEditadoEvento(editarUsuarioComando.aggregateId(), usuario)));
+		EventoProcessador eventoProcessador = new EventoProcessador();
+		eventoProcessador.processarEvento((new UsuarioEditadoEvento(editarUsuarioComando.aggregateId(), usuario)));
+		eventoProcessador.processarAggregado(editarUsuarioComando.aggregateId(), Usuario.class, editarUsuarioComando.getVersion());
+		
 		
 	}
-	
-	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica) throws Exception {
-		if(!minhasMusicas.contains(musica))
-		new EventoProcessador().processar((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica())));
-		else
-			throw new RuntimeException("Você já possui essa música");
-		
-	}
-	
-	public void tocarMusica(TocarMusicaComando tocarMusicaComando) throws Exception {
-		new EventoProcessador().processar((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica())));
-		
-	}
-
 
 
 }

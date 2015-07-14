@@ -18,15 +18,15 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 	private static final long serialVersionUID = -7673302045438349809L;
 	private Usuario usuario;
 
-	@Override
-	public String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception{
-		usuario = new Usuario();
-		try {
-			return usuario.logar(fazerLoginComando);
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
-		}
-	}
+//	@Override
+//	public String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception{
+//		usuario = new Usuario();
+//		try {
+//			return usuario.logar(fazerLoginComando);
+//		} catch (Exception e) {
+//			throw new RuntimeException(e.getMessage());
+//		}
+//	}
 	
 	@Override
 	public boolean deslogarUsuario(DeslogarComando deslogarComando) {

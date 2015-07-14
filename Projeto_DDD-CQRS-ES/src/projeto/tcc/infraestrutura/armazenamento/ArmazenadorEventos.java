@@ -23,45 +23,40 @@ public class ArmazenadorEventos {
 
 	public static void salvarEvento(Evento evento) {
 		connection = Conexao.getConectionEventSource();
-		try {
-//			if (!versaoEhValida(evento.getVersion(), evento.getAggregateId())) {
-//			FIXME CRIAR EXCEÇÃO ESPECIFICA
-//				throw new RuntimeException("Versao Incorreta");
-//			}
-			PreparedStatement pstmt1 = null;
-//			pstmt1 = (PreparedStatement) connection.prepareStatement(
-//					"insert into eventstore(agregateid,events, version) values(?,?,?)",
-//					PreparedStatement.RETURN_GENERATED_KEYS);
+		if (evento.getAggregateId() != null && evento.getVersion() != null) {
 
-			pstmt1 = (PreparedStatement) connection.prepareStatement(
-					"insert into eventstore(agregateid,events) values(?,?)",
-					PreparedStatement.RETURN_GENERATED_KEYS);
+			try {
+//				if (!versaoEhValida(evento.getVersion(),evento.getAggregateId())) {
+					// FIXME CRIAR EXCEÇÃO ESPECIFICA
+//					throw new RuntimeException("Versao Incorreta");
+//				}
+				PreparedStatement pstmt1 = null;
+				pstmt1 = (PreparedStatement) connection
+						.prepareStatement("insert into eventstore(agregateid,events, version) values(?,?,?)",
+								PreparedStatement.RETURN_GENERATED_KEYS);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(bos);
+				oos.writeObject(evento);
+				oos.flush();
+				oos.close();
+				bos.close();
+				byte[] dadosEvento = bos.toByteArray();
+				pstmt1.setString(1, evento.getAggregateId().toString());
+				pstmt1.setObject(2, dadosEvento);
+				pstmt1.setInt(3, evento.getVersion());
+				pstmt1.executeUpdate();
+				pstmt1.close();
 
-			// set input parameters
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeObject(evento);
-			oos.flush();
-			oos.close();
-			bos.close();
-			byte[] dadosEvento = bos.toByteArray();
-			pstmt1.setString(1, evento.getAggregateId().toString());
-			pstmt1.setObject(2, dadosEvento);
-			//pstmt1.setInt(1, evento.getVersion() );
-			pstmt1.executeUpdate();
-			pstmt1.close();
-			
-			
-			System.out.println("writeJavaObject: done serializing: ");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return;
-		}finally{
-			Conexao.fechaConexao();
+				System.out.println("writeJavaObject: done serializing: ");
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			} finally {
+				Conexao.fechaConexao();
+			}
+
+			new Publicador(evento);
 		}
-		
-		new Publicador(evento);
-		
 	}
 	
 	public static void salvarAggregado(UUID aggregateID, Class<?> clazz, Integer version) {
@@ -69,11 +64,11 @@ public class ArmazenadorEventos {
 		try {
 			PreparedStatement pstmt2 = null;
 			pstmt2 = (PreparedStatement) connection.prepareStatement(
-					"insert into aggregates(agregate_id,type, version) values(?,?,?)",
+					"insert into aggregates(aggregate_id,type, version) values(?,?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
 			pstmt2.setString(1, aggregateID.toString());
-			pstmt2.setObject(2, clazz.getName());
+			pstmt2.setString(2, clazz.getName());
 			pstmt2.setInt(3, version);
 			pstmt2.executeUpdate();
 			pstmt2.close();
@@ -93,7 +88,7 @@ public class ArmazenadorEventos {
 			PreparedStatement pstmt = (PreparedStatement) Conexao
 					.getConectionEventSource()
 					.prepareStatement(
-							"SELECT version from eventsource.aggregates where aggregateId = ?");
+							"SELECT version from eventsource.aggregates where aggregate_id = ?");
 			pstmt.setString(1, aggregateID.toString());
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
