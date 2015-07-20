@@ -13,6 +13,8 @@ public interface RepositorioUsuario {
 	
 	String existeUsuarioComEsseLogin(String login); 
 	
+	String getAggregatePlayList(String aggregateID); 
+	
 	void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception;
 
 }

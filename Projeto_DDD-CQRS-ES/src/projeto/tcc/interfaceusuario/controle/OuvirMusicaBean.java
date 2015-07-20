@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoPlayListEscrita;
+import projeto.tcc.aplicacao.ServicoPlayListLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
@@ -29,6 +30,7 @@ public class OuvirMusicaBean implements Serializable {
 	private ServicoMusicaFacade servicoMusicaFacade;
 	
 	@Inject	private ServicoPlayListEscrita servicoPlayListEscrita;
+	@Inject	private ServicoPlayListLeitura servicoPlayListLeitura;
 	@Inject	private ServicoMusicaLeitura servicoMusicaLeitura;
 	private List<Musica> listaMusicas;
 	private Set<Musica> minhasMusicas;
@@ -38,6 +40,7 @@ public class OuvirMusicaBean implements Serializable {
 	private boolean todasMusicasStatus;
 	private boolean minhasMusicasStatus;
 	private Object aggregateIDObject;
+	private String agregadoPlayList;
 	
 
 	@PostConstruct
@@ -45,6 +48,7 @@ public class OuvirMusicaBean implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);     
 	    aggregateIDObject = sessao.getAttribute("aggregateID");
+//	    agregadoPlayList = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject);//Ainda sendo trabalhado
 		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(aggregateIDObject));
 		tocando = false;
 		setTodasMusicasStatus(false);

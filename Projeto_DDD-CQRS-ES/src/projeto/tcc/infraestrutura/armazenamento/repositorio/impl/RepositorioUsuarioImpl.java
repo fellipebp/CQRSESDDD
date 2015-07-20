@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import projeto.tcc.dominio.entidades.usuario.RestauradorAtributosUsuario;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
+import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.armazenamento.ArmazenadorEventos;
@@ -115,5 +116,27 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		return restauradorAtributosUsuario.getUsuario();
 	}
 
+	//Ainda sendo construido
+	@Override
+	public String getAggregatePlayList(String aggregateID) {
+		Method method;
+		RestauradorAtributosUsuario restauradorAtributosUsuario = new RestauradorAtributosUsuario();
+		try {
+			List<Evento> eventos = ArmazenadorEventos.recuperaEventos(aggregateID);
+			if (!eventos.isEmpty()) {
+				
+				for(Evento evento : eventos) {
+					if(evento instanceof PlayListAdicionadaEvento){
+						method = restauradorAtributosUsuario.getClass().getMethod("aplicaMudanca", evento.getClass());
+						method.invoke(restauradorAtributosUsuario, evento);
+					}
+				}
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }
