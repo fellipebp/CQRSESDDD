@@ -18,6 +18,7 @@ import projeto.tcc.aplicacao.ServicoPlayListEscrita;
 import projeto.tcc.aplicacao.ServicoPlayListLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
+import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
 
@@ -48,8 +49,8 @@ public class OuvirMusicaBean implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);     
 	    aggregateIDObject = sessao.getAttribute("aggregateID");
-//	    agregadoPlayList = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject);//Ainda sendo trabalhado
-		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(aggregateIDObject));
+	    agregadoPlayList = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());//Ainda sendo trabalhado
+		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(agregadoPlayList));
 		tocando = false;
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
@@ -65,7 +66,7 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	public String listarMinhasMusicas() {
-		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(aggregateIDObject));
+		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(agregadoPlayList));
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(true);
 		return null;
@@ -99,7 +100,12 @@ public class OuvirMusicaBean implements Serializable {
 	 */
 	public void adicionarMusica(Musica musica){
 		try{
-		servicoPlayListEscrita.adicionarMusica(new AdicionarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()), minhasMusicas, musica);
+			if(agregadoPlayList == null){
+				UUID agregadoRand = UUID.randomUUID();
+				agregadoPlayList = String.valueOf(agregadoRand);
+				servicoPlayListEscrita.criarPlayList(new CriarPlayListComando((UUID.fromString(String.valueOf(aggregateIDObject))),(UUID.fromString(String.valueOf(agregadoRand))), "Default"));
+			}
+		servicoPlayListEscrita.adicionarMusica(new AdicionarMusicaComando((UUID.fromString(String.valueOf(agregadoPlayList))),musica.getNome()), minhasMusicas, musica);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Música adicionada com sucesso"));
 		
 		}catch (Exception e) {

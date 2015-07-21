@@ -6,6 +6,7 @@ import projeto.tcc.aplicacao.ServicoPlayListEscrita;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
+import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 public class ServicoPlayListEscritaImpl implements ServicoPlayListEscrita{
@@ -28,6 +29,17 @@ public class ServicoPlayListEscritaImpl implements ServicoPlayListEscrita{
 		playList = new PlayList();
 		try {
 			playList.tocarMusica(tocarMusicaComando);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public void criarPlayList(CriarPlayListComando criarPlayListComando) {
+		playList = new PlayList();
+		try {
+			playList.criarPlayList(criarPlayListComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}

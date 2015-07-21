@@ -1,12 +1,15 @@
 package projeto.tcc.dominio.entidades.musica;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.musica.MusicaTocadaEvento;
+import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
+import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 public class PlayList implements Serializable {
@@ -16,7 +19,7 @@ public class PlayList implements Serializable {
 	 */
 	private static final long serialVersionUID = 4406930874998196493L;
 	private String nome;
-	private Musica musica;
+	private List<Musica> musicas;
 	
 	public PlayList() {
 		// TODO Auto-generated constructor stub
@@ -34,15 +37,16 @@ public class PlayList implements Serializable {
 		this.nome = nome;
 	}
 
-	public Musica getMusica() {
-		return musica;
+	public List<Musica> getMusica() {
+		return musicas;
 	}
 
-	public void setMusica(Musica musica) {
-		this.musica = musica;
+	public void setMusica(List<Musica> musicas) {
+		this.musicas = musicas;
 	}
 	
 	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica) throws Exception {
+		
 		if(!minhasMusicas.contains(musica))
 		new EventoProcessador().processarEvento((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica(), 0)));
 		else
@@ -53,6 +57,18 @@ public class PlayList implements Serializable {
 	public void tocarMusica(TocarMusicaComando tocarMusicaComando) throws Exception {
 		new EventoProcessador().processarEvento((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica(),  0)));
 		
+	}
+	
+	public void criarPlayList(CriarPlayListComando criarPlayListComando)throws Exception {
+		new EventoProcessador().processarEvento((new PlayListAdicionadaEvento(criarPlayListComando.aggregateId(),criarPlayListComando.getPlayListUID(), criarPlayListComando.getNome(), 0)));
+	}
+
+	public List<Musica> getMusicas() {
+		return musicas;
+	}
+
+	public void setMusicas(List<Musica> musicas) {
+		this.musicas = musicas;
 	}
 
 }

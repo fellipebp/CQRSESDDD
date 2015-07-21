@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
+import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
@@ -23,6 +24,10 @@ public class RestauradorAtributosUsuario {
 		 this.usuario.login = usuarioLogadoEvento.getLogin();
 		 this.usuario.senha = usuarioLogadoEvento.getSenha();
 		
+	}
+	
+	public void aplicaMudanca(PlayListAdicionadaEvento playListAdicionadaEvento){
+		this.usuario.aggregateIDPlayList = playListAdicionadaEvento.getPlayListId().toString();
 	}
 	
 	public void aplicaMudanca(MusicaAdicionadaEvento musicaAdicionadaEvento){

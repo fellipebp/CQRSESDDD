@@ -129,6 +129,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 					if(evento instanceof PlayListAdicionadaEvento){
 						method = restauradorAtributosUsuario.getClass().getMethod("aplicaMudanca", evento.getClass());
 						method.invoke(restauradorAtributosUsuario, evento);
+						break;
 					}
 				}
 				
@@ -136,7 +137,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return restauradorAtributosUsuario.getUsuario().getAggregateIDPlayList();
 	}
 
 }
