@@ -5,30 +5,27 @@ import java.util.UUID;
 
 public class AdicionarMusicaComando implements Comando {
 	
-	private UUID usuarioUID;
+	private UUID playListUID;
 	private String nomeMusica;
 	
-	public AdicionarMusicaComando(UUID usuarioUID, String nomeMusica) {
-		this.usuarioUID = usuarioUID;
+	public AdicionarMusicaComando(UUID playListUID, String nomeMusica) {
+		this.playListUID = playListUID;
 		this.nomeMusica = nomeMusica;
 	}
 	
 
 	@Override
 	public UUID aggregateId() {
-		return usuarioUID;
+		return playListUID;
 	}
-
-	
-	//getters e setter omitidos
 
 	public UUID getLoginID() {
-		return usuarioUID;
+		return playListUID;
 	}
 
 
-	public void setLoginID(UUID usuarioUID) {
-		this.usuarioUID = usuarioUID;
+	public void setLoginID(UUID playListUID) {
+		this.playListUID = playListUID;
 	}
 
 
@@ -47,6 +44,8 @@ public class AdicionarMusicaComando implements Comando {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 

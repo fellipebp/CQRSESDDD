@@ -44,6 +44,7 @@ public class Usuario  implements Serializable {
 	protected Date dataNascimento;
 	protected String sexo;
 	protected String aggregateID;
+	protected String aggregateIDPlayList;
 	
 	//private listaEventos (mudancas)
 
@@ -182,6 +183,14 @@ public class Usuario  implements Serializable {
 		eventoProcessador.processarAggregado(editarUsuarioComando.aggregateId(), Usuario.class, editarUsuarioComando.getVersion());
 		
 		
+	}
+
+	public String getAggregateIDPlayList() {
+		return aggregateIDPlayList;
+	}
+
+	public void setAggregateIDPlayList(String aggregateIDPlayList) {
+		this.aggregateIDPlayList = aggregateIDPlayList;
 	}
 
 

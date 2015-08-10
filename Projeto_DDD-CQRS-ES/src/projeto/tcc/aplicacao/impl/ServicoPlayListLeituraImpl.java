@@ -9,10 +9,7 @@ public class ServicoPlayListLeituraImpl implements ServicoPlayListLeitura{
 	// Ainda sendo construido
 	@Override
 	public String buscarAgregadoPlayList(String aggregateID) {
-		 new RepositorioUsuarioImpl().getAggregatePlayList(aggregateID);
-		
-		return null;
-		
+		return new RepositorioUsuarioImpl().getAggregatePlayList(aggregateID);
 	}
 	
 
