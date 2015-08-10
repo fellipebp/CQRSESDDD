@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
+	<title>Login</title>
+</h:head>
+<h:body styleClass="grad2">
+	<h:form>
+		<h1>
+			<h:outputText value="Bem vindo(a) ao serviço de música digital." />
+		</h1>
+		<p:messages globalOnly="true" autoUpdate="true" />
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel value="Login:" for="login" indicateRequired="true" />
+			<p:inputText id="login" readonly="true" style="background-color: grey;"
+				value="#{loginUsuarioBean.fazerLoginDTO.login}"
+				requiredMessage="É necessário preencher o login." required="true" />
+			<p:outputLabel value="Senha:" for="senha" indicateRequired="true" />
+			<p:password id="senha"
+				value="#{loginUsuarioBean.fazerLoginDTO.senha}"
+				requiredMessage="É necessário preencher a senha." required="true" />
+			<!-- 		 	<f:facet name="footer"> -->
+			<h:inputHidden value="#{loginUsuarioBean.fazerLoginDTO.version}" />
+			<p:commandButton action="#{loginUsuarioBean.logar()}" value="Logar"
+				ajax="false" />
+			<!-- 			</f:facet> -->
+		</h:panelGrid>
+		<h:outputLink value="criarUsuario.xhtml?faces-redirect=true">Ainda não se cadastrou? Clique aqui</h:outputLink>
+		<br />
+	</h:form>
+</h:body>
+</html>

@@ -2,15 +2,18 @@ package projeto.tcc.infraestrutura.manipuladoreventos.usuario;
 
 import java.sql.Connection;
 
+import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.manipuladoreventos.ManipuladorEventos;
+import projeto.tcc.infraestrutura.Subscriber;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class UsuarioEditadoManipulador extends ManipuladorEventos {
+public class UsuarioEditadoManipulador implements Subscriber<Evento>{
 	
-	
+	public UsuarioEditadoManipulador() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public UsuarioEditadoManipulador(UsuarioEditadoEvento evento) {
 		trata(evento);
@@ -40,6 +43,13 @@ public class UsuarioEditadoManipulador extends ManipuladorEventos {
 			return;
 		}finally{
 			Conexao.fechaConexao();
+		}
+	}
+
+	@Override
+	public void getPublication(Evento arg) {
+		if (arg instanceof UsuarioEditadoEvento) {
+			insereViews((UsuarioEditadoEvento) arg);
 		}
 	}
 

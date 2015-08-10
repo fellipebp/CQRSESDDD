@@ -6,15 +6,15 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-	private static final String EVENTSOURCE = "jdbc:mysql://localhost:3306/eventsource";
-	private static final String BASELEITURA = "jdbc:mysql://localhost:3306/baseleitura";
+	private static String EVENTSOURCE_DEFAULT_CONFIG = "jdbc:mysql://localhost:3306/eventsource";
+	private static String BASELEITURA_DEFAULT_CONFIG = "jdbc:mysql://localhost:3306/baseleitura";
 	private static Connection connection;
 	
 
 	public static Connection getConectionEventSource() {
 		carregaDriver();
 		try {
-			connection = DriverManager.getConnection(EVENTSOURCE, "root","mysql");
+			connection = DriverManager.getConnection(EVENTSOURCE_DEFAULT_CONFIG, "root","mysql");
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
@@ -25,6 +25,7 @@ public class Conexao {
 		return connection;
 
 	}
+	
 
 	private static void verificaConexao() {
 		if (connection != null) {
@@ -37,7 +38,7 @@ public class Conexao {
 	public static Connection getConectionReader() {
 		carregaDriver();
 		try {
-			connection = DriverManager.getConnection(BASELEITURA, "root","mysql");
+			connection = DriverManager.getConnection(BASELEITURA_DEFAULT_CONFIG, "root","mysql");
 		} catch (SQLException e) {
 			System.out.println("Connection Failed! Check output console");
 			e.printStackTrace();
@@ -46,7 +47,7 @@ public class Conexao {
 		verificaConexao();
 		return connection;
 	}
-
+	
 	private static void carregaDriver() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -64,4 +65,13 @@ public class Conexao {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void setConnectionReaderConfig(String config){
+		BASELEITURA_DEFAULT_CONFIG = config;
+	}
+	
+	public static void setConnectionEventSourceConfig(String config){
+		EVENTSOURCE_DEFAULT_CONFIG = config;
+	}
+
 }

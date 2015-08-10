@@ -9,16 +9,20 @@ import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
 import projeto.tcc.infraestrutura.Conexao;
+import projeto.tcc.infraestrutura.Subscriber;
 
-public class UsuarioLogadoManipulador {
+public class UsuarioLogadoManipulador implements Subscriber<Evento> {
 
+	
+	public UsuarioLogadoManipulador() {
+		// TODO Auto-generated constructor stub
+	}
 	public UsuarioLogadoManipulador(UsuarioLogadoEvento evento) {
 		trata(evento);
 	}
 	
 	public void trata(UsuarioLogadoEvento evento) {
 		insereViews(evento);
-	
 	}
 
 	private void insereViews(UsuarioLogadoEvento usuarioLogadoEvento) {
@@ -40,6 +44,13 @@ public class UsuarioLogadoManipulador {
 			return;
 		}finally{
 			Conexao.fechaConexao();
+		}
+	}
+
+	@Override
+	public void getPublication(Evento arg) {
+		if (arg instanceof UsuarioLogadoEvento) {
+			insereViews((UsuarioLogadoEvento) arg);
 		}
 	}
 

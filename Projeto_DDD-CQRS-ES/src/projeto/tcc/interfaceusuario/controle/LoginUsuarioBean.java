@@ -32,9 +32,23 @@ public class LoginUsuarioBean implements Serializable {
 	public String logar(){
 		try {
 			FazerLoginComando fazerLoginComando = new FazerLoginComando(fazerLoginDTO);
-			String aggregateID = servicoSegurancaEscrita.logarUsuario(fazerLoginComando);
-			salvaAggregateIDNaSessao(aggregateID);
+			fazerLoginComando.setAggregateID(UUID.fromString(String.valueOf(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("aggregateID"))));
+			servicoSegurancaEscrita.logarUsuario(fazerLoginComando);
 			return "app/ouvirMusica.xhtml?faces-redirect=true";
+		} catch (Exception e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+		} 
+		return "";
+	}
+	
+	
+	public String continuar(){
+		try {
+			FazerLoginComando fazerLoginComando = new FazerLoginComando(fazerLoginDTO);
+			String aggregateID = servicoSegurancaEscrita.existeUsuarioComEsseLogin(fazerLoginComando);
+			salvaAggregateIDNaSessao(aggregateID);
+			return "loginUsuarioSenha.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));

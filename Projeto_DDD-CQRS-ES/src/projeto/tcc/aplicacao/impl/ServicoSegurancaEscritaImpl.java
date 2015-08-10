@@ -19,7 +19,8 @@ public class ServicoSegurancaEscritaImpl implements ServicoSegurancaEscrita, Ser
 			throws Exception {
 		seguranca = new Seguranca();
 		try {
-			return seguranca.logar(fazerLoginComando);
+			String logar = seguranca.logar(fazerLoginComando);
+			return logar;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -30,6 +31,20 @@ public class ServicoSegurancaEscritaImpl implements ServicoSegurancaEscrita, Ser
 		seguranca = new Seguranca();
 		try {
 			return seguranca.deslogar(deslogarComando);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	
+	@Override
+	public String existeUsuarioComEsseLogin(FazerLoginComando fazerLoginComando)
+			throws Exception {
+		seguranca = new Seguranca();
+		try {
+			String logar = seguranca.existeUsuarioComEsseLogin(fazerLoginComando);
+			//necessario buscar versao do evento relacionado ao login aqui???
+			return logar;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}

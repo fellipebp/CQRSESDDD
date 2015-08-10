@@ -7,6 +7,8 @@ import projeto.tcc.infraestrutura.armazenamento.ArmazenadorEventos;
 
 public class EventoProcessador  {
 	
+	public EventoProcessador() {
+	}
 	
 	public void processarEvento(Evento e) throws Exception{
 		ArmazenadorEventos.salvarEvento(e);

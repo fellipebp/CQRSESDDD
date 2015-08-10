@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import projeto.tcc.dominio.eventos.Evento;
 
-public class PlayListAdicionadaEvento implements Evento, Serializable{
+public class PlayListAdicionadaEvento  implements Evento, Serializable{
 
 	
 	/**
@@ -45,5 +45,6 @@ public class PlayListAdicionadaEvento implements Evento, Serializable{
 	public Integer getVersion() {
 		return this.version;
 	}
+	
 
 }

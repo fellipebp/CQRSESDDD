@@ -1,11 +1,12 @@
 package projeto.tcc.dominio.eventos.usuario;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 import projeto.tcc.dominio.eventos.Evento;
 
-public class UsuarioDeslogadoEvento implements Evento{
+public class UsuarioDeslogadoEvento implements Evento, Serializable{
 	
 	private UUID aggregateID;
 	private String login;

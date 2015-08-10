@@ -19,14 +19,8 @@
 			<p:inputText id="login"
 				value="#{loginUsuarioBean.fazerLoginDTO.login}"
 				requiredMessage="É necessário preencher o login." required="true" />
-			<p:outputLabel value="Senha:" for="senha" indicateRequired="true" />
-			<p:password id="senha"
-				value="#{loginUsuarioBean.fazerLoginDTO.senha}"
-				requiredMessage="É necessário preencher a senha." required="true" />
-			<!-- 		 	<f:facet name="footer"> -->
-			<p:commandButton action="#{loginUsuarioBean.logar()}" value="Logar"
+			<p:commandButton action="#{loginUsuarioBean.continuar()}" value="Continuar"
 				ajax="false" />
-			<!-- 			</f:facet> -->
 		</h:panelGrid>
 		<h:outputLink value="criarUsuario.xhtml?faces-redirect=true">Ainda não se cadastrou? Clique aqui</h:outputLink>
 		<br />

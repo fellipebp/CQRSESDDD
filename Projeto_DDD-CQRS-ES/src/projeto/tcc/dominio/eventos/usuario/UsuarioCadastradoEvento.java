@@ -7,7 +7,7 @@ import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 
 
-public class UsuarioCadastradoEvento implements Evento, Serializable {
+public class UsuarioCadastradoEvento implements  Evento, Serializable {
 	
 	/**
 	 * 

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import projeto.tcc.dominio.eventos.Evento;
 
-public class UsuarioLogadoEvento implements Evento, Serializable{
+public class UsuarioLogadoEvento implements  Evento, Serializable{
 	
 	
 

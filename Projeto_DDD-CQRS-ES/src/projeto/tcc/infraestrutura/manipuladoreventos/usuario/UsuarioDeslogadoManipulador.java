@@ -3,15 +3,17 @@ package projeto.tcc.infraestrutura.manipuladoreventos.usuario;
 import java.sql.Connection;
 import java.sql.Date;
 
-import com.mysql.jdbc.PreparedStatement;
-
-import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.manipuladoreventos.ManipuladorEventos;
+import projeto.tcc.infraestrutura.Subscriber;
 
-public class UsuarioDeslogadoManipulador extends ManipuladorEventos {
-	
+import com.mysql.jdbc.PreparedStatement;
+
+public class UsuarioDeslogadoManipulador implements Subscriber<Evento> {
+	public UsuarioDeslogadoManipulador() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public UsuarioDeslogadoManipulador(UsuarioDeslogadoEvento evento) {
 		trata(evento);
@@ -41,6 +43,13 @@ public class UsuarioDeslogadoManipulador extends ManipuladorEventos {
 			return;
 		}finally{
 			Conexao.fechaConexao();
+		}
+	}
+
+	@Override
+	public void getPublication(Evento arg) {
+		if (arg instanceof UsuarioDeslogadoEvento) {
+			insereViews((UsuarioDeslogadoEvento) arg);
 		}
 	}
 

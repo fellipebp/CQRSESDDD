@@ -14,12 +14,34 @@ import java.util.UUID;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.Publicador;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.MusicaAdicionadaManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioCadastradoManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioDeslogadoManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioEditadoManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioLogadoManipulador;
 
 import com.mysql.jdbc.PreparedStatement;
 
 public class ArmazenadorEventos {
 	
+	private static Publicador publicador;
 	private static Connection connection;
+
+	  static {
+	      publicador = new Publicador();
+	      carregaSubscribers();
+	  }
+	  
+	
+	private static void carregaSubscribers() {
+		publicador.subscriber(new MusicaAdicionadaManipulador());
+		publicador.subscriber(new UsuarioCadastradoManipulador());
+		publicador.subscriber(new UsuarioDeslogadoManipulador());
+		publicador.subscriber(new UsuarioEditadoManipulador());
+		publicador.subscriber(new MusicaAdicionadaManipulador());
+		publicador.subscriber(new UsuarioLogadoManipulador());
+	}
+
 
 	public static void salvarEvento(Evento evento) {
 		connection = Conexao.getConectionEventSource();
@@ -46,8 +68,6 @@ public class ArmazenadorEventos {
 				pstmt1.setInt(3, evento.getVersion());
 				pstmt1.executeUpdate();
 				pstmt1.close();
-
-				System.out.println("writeJavaObject: done serializing: ");
 			} catch (Exception e) {
 				e.printStackTrace();
 				return;
@@ -55,9 +75,10 @@ public class ArmazenadorEventos {
 				Conexao.fechaConexao();
 			}
 
-			new Publicador(evento);
+			publicador.publicaEvento(evento);
 		}
 	}
+
 	
 	public static void salvarAggregado(UUID aggregateID, Class<?> clazz, Integer version) {
 		connection = Conexao.getConectionEventSource();
@@ -125,12 +146,10 @@ public class ArmazenadorEventos {
 				if (buf != null) {
 					objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
 					evento = (Evento) objectIn.readObject();
-					System.out.println("Deserialization Successful."+ "\nDeserialized Class: "+ evento.getClass().getName());	
 					eventos.add(evento);
 				}
 				
 			}
-			
 			return eventos;
 		} catch (Exception e) {
 			e.printStackTrace();

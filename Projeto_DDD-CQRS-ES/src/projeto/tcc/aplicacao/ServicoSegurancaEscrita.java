@@ -7,4 +7,5 @@ public interface ServicoSegurancaEscrita {
 	
 	String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception;
 	boolean deslogarUsuario(DeslogarComando deslogarComando) throws Exception;
+	String existeUsuarioComEsseLogin(FazerLoginComando fazerLoginComando)throws Exception;
 }

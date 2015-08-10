@@ -1,5 +1,6 @@
 package projeto.tcc.infraestrutura;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,30 +10,27 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
-
 import projeto.tcc.dominio.eventos.Evento;
-import projeto.tcc.infraestrutura.manipuladoreventos.ManipuladorEventos;
 
 @ApplicationScoped
-public class Publicador {
+public class Publicador implements Publisher<Evento> {
 
 	private static Queue<Evento> filaEventos = new LinkedList<>();
 	private final ExecutorService pool = Executors.newFixedThreadPool(10);
 	private Calendar dataUltimaPublicacao;
-	private ManipuladorEventos manipuladorEventos= new ManipuladorEventos();
-
+	//private ManipuladorEventos manipuladorEventos= new ManipuladorEventos();
+	private List<Subscriber<Evento>> subscribers;
 	
-	public Publicador(Evento evento) {
-		adicionaEvento(evento);
-		init();
+	public Publicador() {
+		subscribers = new ArrayList<>();
 	}
 	
 	@PostConstruct
 	public void init(){
+	
 //		dataUltimaPublicacao = Calendar.getInstance();
 //		TimerTask task = new TimerTask() {
 //			@Override
@@ -49,7 +47,7 @@ public class Publicador {
 //		long intevalPeriod = 1 * 1000;
 //		timer.scheduleAtFixedRate(task, delay, intevalPeriod);
 	teste(); // esta em faze de testes usando essa tecnologia FUTURE
-		
+	
 	}
 	
 
@@ -72,7 +70,8 @@ public class Publicador {
 	public void publicar2(Queue<Evento> filaEventos){
 		
 		for (Evento evento : filaEventos) {
-			manipuladorEventos.trata(evento);
+		//	manipuladorEventos.trata(evento);
+			publish(evento);
 		}
 		filaEventos.clear();
 
@@ -81,7 +80,8 @@ public class Publicador {
 	public void publicar() {
 		dataUltimaPublicacao = Calendar.getInstance();
 		for (Evento evento : filaEventos) {
-			manipuladorEventos.trata(evento);
+			publish(evento);
+			//manipuladorEventos.trata(evento);
 		}
 		filaEventos.clear();
 
@@ -97,5 +97,22 @@ public class Publicador {
 		filaEventos.add(evento);
 	}
 
+	@Override
+	public void subscriber(Subscriber<Evento> sub) {
+			subscribers.add(sub);
+		
+	}
+
+	@Override
+	public void publish(Evento arg) {
+		for (Subscriber<Evento> subscriber : subscribers) {
+			subscriber.getPublication(arg);
+		}
+	}
+
+	public void publicaEvento(Evento evento) {
+		adicionaEvento(evento);
+		init();
+	}
 
 }

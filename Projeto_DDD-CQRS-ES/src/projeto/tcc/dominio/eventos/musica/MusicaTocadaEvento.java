@@ -4,7 +4,6 @@ package projeto.tcc.dominio.eventos.musica;
 import java.io.Serializable;
 import java.util.UUID;
 
-import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class MusicaTocadaEvento implements Evento, Serializable {

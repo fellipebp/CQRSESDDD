@@ -3,15 +3,20 @@ package projeto.tcc.infraestrutura.manipuladoreventos.usuario;
 
 import java.sql.Connection;
 
+import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
+import projeto.tcc.infraestrutura.Subscriber;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class MusicaAdicionadaManipulador {
+public class MusicaAdicionadaManipulador implements Subscriber<Evento>{
 
 	
+	public MusicaAdicionadaManipulador() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public MusicaAdicionadaManipulador(MusicaAdicionadaEvento evento) {
 		trata(evento);
@@ -41,6 +46,14 @@ public class MusicaAdicionadaManipulador {
 		}finally{
 			Conexao.fechaConexao();
 		}
+	}
+
+	@Override
+	public void getPublication(Evento arg) {
+		if (arg instanceof MusicaAdicionadaEvento) {
+			insereViews((MusicaAdicionadaEvento) arg);
+		}
+		
 	}
 
 
