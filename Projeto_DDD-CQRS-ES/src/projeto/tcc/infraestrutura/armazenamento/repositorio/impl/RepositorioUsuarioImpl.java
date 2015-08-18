@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -118,7 +119,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 
 	//Ainda sendo construido
 	@Override
-	public String getAggregatePlayList(String aggregateID) {
+	public UUID getAggregatePlayList(String aggregateID) {
 		Method method;
 		RestauradorAtributosUsuario restauradorAtributosUsuario = new RestauradorAtributosUsuario();
 		try {

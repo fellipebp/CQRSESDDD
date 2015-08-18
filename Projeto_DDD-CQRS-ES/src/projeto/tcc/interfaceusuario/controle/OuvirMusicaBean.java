@@ -41,7 +41,7 @@ public class OuvirMusicaBean implements Serializable {
 	private boolean todasMusicasStatus;
 	private boolean minhasMusicasStatus;
 	private Object aggregateIDObject;
-	private String agregadoPlayList;
+	private UUID agregadoPlayList;
 	
 
 	@PostConstruct
@@ -83,29 +83,43 @@ public class OuvirMusicaBean implements Serializable {
 
 	}
 
-	public void tocarMusica(Musica musica) {
-		if (musica.getNome().equals(nomeMusicaTemp) && tocando == true) {
-			System.out.println("musica pausada: " + musica.getNome());
-			this.tocando = false;
-		} else {
-			this.tocando = true;
-			System.out.println("musica tocando: " + musica.getNome());
-			servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
-			this.nomeMusicaTemp = musica.getNome();
-		}
+	
+	public void playMusica(Musica musica){
+		
+		System.out.println("musica tocando: " + musica.getNome());
+		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
+		this.nomeMusicaTemp = musica.getNome();
+		
+		
 	}
+	
+	
+	public void pauseMusica(Musica musica){
+		
+		System.out.println("musica pausada: " + musica.getNome());
+	}
+	
+//	public void tocarMusica(Musica musica) {
+//		if (musica.getNome().equals(nomeMusicaTemp) && tocando == true) {
+//			System.out.println("musica pausada: " + musica.getNome());
+//			this.tocando = false;
+//		} else {
+//			this.tocando = true;
+//			System.out.println("musica tocando: " + musica.getNome());
+//			servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
+//			this.nomeMusicaTemp = musica.getNome();
+//		}
+//	}
 	
 	/**
 	 * @param musica
 	 */
 	public void adicionarMusica(Musica musica){
 		try{
-			if(agregadoPlayList == null){
-				UUID agregadoRand = UUID.randomUUID();
-				agregadoPlayList = String.valueOf(agregadoRand);
-				servicoPlayListEscrita.criarPlayList(new CriarPlayListComando((UUID.fromString(String.valueOf(aggregateIDObject))),(UUID.fromString(String.valueOf(agregadoRand))), "Default"));
-			}
-		servicoPlayListEscrita.adicionarMusica(new AdicionarMusicaComando((UUID.fromString(String.valueOf(agregadoPlayList))),musica.getNome()), minhasMusicas, musica);
+	
+		agregadoPlayList = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
+		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(agregadoPlayList));
+		servicoPlayListEscrita.adicionarMusica(new AdicionarMusicaComando(agregadoPlayList ,musica.getNome()), minhasMusicas, musica, aggregateIDObject);
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Música adicionada com sucesso"));
 		
 		}catch (Exception e) {

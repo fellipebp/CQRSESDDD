@@ -44,7 +44,7 @@ public class Usuario  implements Serializable {
 	protected Date dataNascimento;
 	protected String sexo;
 	protected String aggregateID;
-	protected String aggregateIDPlayList;
+	protected UUID aggregateIDPlayList;
 	
 	//private listaEventos (mudancas)
 
@@ -185,11 +185,11 @@ public class Usuario  implements Serializable {
 		
 	}
 
-	public String getAggregateIDPlayList() {
+	public UUID getAggregateIDPlayList() {
 		return aggregateIDPlayList;
 	}
 
-	public void setAggregateIDPlayList(String aggregateIDPlayList) {
+	public void setAggregateIDPlayList(UUID aggregateIDPlayList) {
 		this.aggregateIDPlayList = aggregateIDPlayList;
 	}
 

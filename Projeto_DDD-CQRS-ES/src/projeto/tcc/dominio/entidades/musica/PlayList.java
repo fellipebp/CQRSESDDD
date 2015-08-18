@@ -3,7 +3,9 @@ package projeto.tcc.dominio.entidades.musica;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
+import projeto.tcc.aplicacao.impl.ServicoPlayListEscritaImpl;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.musica.MusicaTocadaEvento;
@@ -20,7 +22,6 @@ public class PlayList implements Serializable {
 	private static final long serialVersionUID = 4406930874998196493L;
 	private String nome;
 	private List<Musica> musicas;
-	
 	public PlayList() {
 		// TODO Auto-generated constructor stub
 	}
@@ -45,7 +46,13 @@ public class PlayList implements Serializable {
 		this.musicas = musicas;
 	}
 	
-	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica) throws Exception {
+	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica, Object aggregateIDObject) throws Exception {
+		
+		if(adicionarMusicaComando.aggregateId() == null){
+			UUID agregadoRand = UUID.randomUUID();
+			adicionarMusicaComando.setPlaylistID(agregadoRand);
+			criarPlayList(new CriarPlayListComando((UUID.fromString(String.valueOf(aggregateIDObject))),(UUID.fromString(String.valueOf(agregadoRand))), "Default"));
+		}
 		
 		if(!minhasMusicas.contains(musica))
 		new EventoProcessador().processarEvento((new MusicaAdicionadaEvento(adicionarMusicaComando.aggregateId(), adicionarMusicaComando.getNomeMusica(), 0)));
