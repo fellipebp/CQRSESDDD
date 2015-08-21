@@ -19,12 +19,7 @@ public class AdicionarMusicaComando implements Comando {
 		return playListUID;
 	}
 
-	public UUID getLoginID() {
-		return playListUID;
-	}
-
-
-	public void setLoginID(UUID playListUID) {
+	public void setPlaylistID(UUID playListUID) {
 		this.playListUID = playListUID;
 	}
 

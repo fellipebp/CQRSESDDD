@@ -27,7 +27,7 @@ public class RestauradorAtributosUsuario {
 	}
 	
 	public void aplicaMudanca(PlayListAdicionadaEvento playListAdicionadaEvento){
-		this.usuario.aggregateIDPlayList = playListAdicionadaEvento.getPlayListId().toString();
+		this.usuario.aggregateIDPlayList = playListAdicionadaEvento.getPlayListId();
 	}
 	
 	public void aplicaMudanca(MusicaAdicionadaEvento musicaAdicionadaEvento){

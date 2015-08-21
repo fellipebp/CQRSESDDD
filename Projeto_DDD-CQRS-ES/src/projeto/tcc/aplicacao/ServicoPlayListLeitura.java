@@ -1,9 +1,11 @@
 package projeto.tcc.aplicacao;
 
+import java.util.UUID;
+
 
 public interface ServicoPlayListLeitura {
 
 	
-	String buscarAgregadoPlayList(String aggregateID);
+	UUID buscarAgregadoPlayList(String aggregateID);
 	
 }

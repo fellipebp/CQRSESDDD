@@ -9,7 +9,7 @@ import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 public interface ServicoPlayListEscrita {
 
-	void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica);
+	void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica, Object aggregateID);
 	
 	void criarPlayList(CriarPlayListComando criarPlayListComando);
 	

@@ -14,10 +14,10 @@ public class ServicoPlayListEscritaImpl implements ServicoPlayListEscrita{
 	private PlayList playList;
 	
 	@Override
-	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica) {
+	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica, Object aggregateId) {
 		playList = new PlayList();
 		try {
-			playList.adicionarMusica(adicionarMusicaComando, minhasMusicas, musica);
+			playList.adicionarMusica(adicionarMusicaComando, minhasMusicas, musica, aggregateId);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
