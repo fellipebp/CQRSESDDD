@@ -3,27 +3,23 @@ package projeto.tcc.dominio.entidades.usuario;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Set;
+import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.swing.text.MaskFormatter;
 
-import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.EventoProcessador;
-import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
-import projeto.tcc.dominio.eventos.musica.MusicaTocadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
+import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
-import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
-import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 
 public class Usuario  implements Serializable {
@@ -113,45 +109,73 @@ public class Usuario  implements Serializable {
 		this.senha = senha;
 	}
 	public void criarCadastro(CadastrarUsuarioComando usuarioComando) throws Exception {
-		Usuario usuario = new RepositorioUsuarioImpl().getUsuarioPorCPF(usuarioComando.getCpf());
-		if(usuario != null){
-			throw new RuntimeException("Já existe um usuário com esse cpf");
-		}
-		usuario = new Usuario();
-		usuario.setLogin(usuarioComando.getLogin());
-		usuario.setSenha(usuarioComando.getSenha());
-		usuario.setNome(usuarioComando.getNome());
-		usuario.setCPF( usuarioComando.getCpf());
-		usuario.setEmail( usuarioComando.getEmail());
-		EventoProcessador eventoProcessador = new EventoProcessador();
-		eventoProcessador.processarEvento((new UsuarioCadastradoEvento(usuarioComando.aggregateId(),usuarioComando.getVersion(), usuario)));
-		eventoProcessador.processarAggregado(usuarioComando.aggregateId(), Usuario.class, usuarioComando.getVersion());
-	}
-	
-	
-	public String logar(FazerLoginComando comandoLogin) throws Exception {
-		RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
-		String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(comandoLogin.getLogin());
-		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(aggregateID);
-		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
-			new EventoProcessador().processarEvento(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase.getLogin(), usuarioBase.getSenha(),new Date(),0));
-			return aggregateID;
-		}
-		//TODO criar exceção especifica
-		throw new RuntimeException("Usuário ou senha inválidos");
 		
+		//REPOSITORIO FICA RESPONSAVEL POR TRATAR A CACHE
+		//PEDE O REPOSITORIO PARA CARREGAR O OBJETO, PROCESSO O NEGOCIO E ANTES DE GERAR O EVENTO VERIFICA SE A VERSAO DO OBJETO EM QUESTAO ESTÁ IGUAL AO QUE ESTÁ NA CACHE
+		//SE NAO ESTIVER, SIGNIFICA QUE ALGUEM PROCESSOU E GEROU A VERSAO ANTES
+//		Usuario usuario = new RepositorioUsuarioImpl().getUsuarioPorCPF(usuarioComando.getCpf());
+//		if (ControlerVersionValidator.jaExisteIDAgregadoNaCache(usuarioComando.aggregateId().toString())) {
+//			throw new RuntimeException("Ocorreram alterações durante o processamento da sua operação. Tente novamente.");
+//		}
+//		ControlerVersionValidator.adicionaIDAgregagadoNaCache(usuarioComando.aggregateId().toString());
+//		
+//		if(usuario != null){
+//			throw new RuntimeException("Já existe um usuário com esse cpf");
+//		}
+//		usuario = new Usuario();
+//		usuario.setLogin(usuarioComando.getLogin());
+//		usuario.setSenha(usuarioComando.getSenha());
+//		usuario.setNome(usuarioComando.getNome());
+//		usuario.setCPF( usuarioComando.getCpf());
+//		usuario.setEmail( usuarioComando.getEmail());
+//		EventoProcessador eventoProcessador = new EventoProcessador();
+//		eventoProcessador.processarEvento((new UsuarioCadastradoEvento(usuarioComando.aggregateId(),usuarioComando.getVersion(), usuario)));
+//		eventoProcessador.processarAggregado(usuarioComando.aggregateId(), Usuario.class, usuarioComando.getVersion());
 	}
 	
 	
-	public boolean deslogar(DeslogarComando deslogarComando) throws Exception{
-		if (deslogarComando.getAggregateID() !=null) {
-			UsuarioDeslogadoEvento ude = new UsuarioDeslogadoEvento((UUID)deslogarComando.getAggregateID(), new Date());
-			new EventoProcessador().processarEvento(ude);
-			return true;
+	public Usuario criarCadastro(Map<String, Object> valores) throws Exception {
+			
+			//REPOSITORIO FICA RESPONSAVEL POR TRATAR A CACHE
+			//PEDE O REPOSITORIO PARA CARREGAR O OBJETO, PROCESSO O NEGOCIO E ANTES DE GERAR O EVENTO VERIFICA SE A VERSAO DO OBJETO EM QUESTAO ESTÁ IGUAL AO QUE ESTÁ NA CACHE
+			//SE NAO ESTIVER, SIGNIFICA QUE ALGUEM PROCESSOU E GEROU A VERSAO ANTES
+			Usuario usuario = new RepositorioUsuarioImpl().getUsuarioPorCPF(String.valueOf(valores.get("cpf")));
+			if(usuario != null){
+				throw new RuntimeException("Já existe um usuário com esse cpf");
+			}
+			usuario = new Usuario();
+			usuario.setLogin(String.valueOf(valores.get("login")));
+			usuario.setSenha(String.valueOf(valores.get("senha")));
+			usuario.setNome(String.valueOf(valores.get("nome")));
+			usuario.setCPF( String.valueOf(valores.get("cpf")));
+			usuario.setEmail(String.valueOf(valores.get("email")));
+			return usuario;
 		}
-		return false;
-	}
-	
+		
+//	
+//	public String logar(FazerLoginComando comandoLogin) throws Exception {
+//		RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
+//		String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(comandoLogin.getLogin());
+//		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(aggregateID);
+//		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
+//			new EventoProcessador().processarEvento(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase.getLogin(), usuarioBase.getSenha(),new Date(),0));
+//			return aggregateID;
+//		}
+//		//TODO criar exceção especifica
+//		throw new RuntimeException("Usuário ou senha inválidos");
+//		
+//	}
+//	
+//	
+//	public boolean deslogar(DeslogarComando deslogarComando) throws Exception{
+//		if (deslogarComando.getAggregateID() !=null) {
+//			UsuarioDeslogadoEvento ude = new UsuarioDeslogadoEvento((UUID)deslogarComando.getAggregateID(), new Date());
+//			new EventoProcessador().processarEvento(ude);
+//			return true;
+//		}
+//		return false;
+//	}
+//	
 
 	public int getId() {
 		return id;

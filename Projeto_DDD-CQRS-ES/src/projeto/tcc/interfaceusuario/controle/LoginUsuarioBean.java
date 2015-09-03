@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import projeto.tcc.aplicacao.ServicoSegurancaEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
+import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
@@ -48,6 +49,7 @@ public class LoginUsuarioBean implements Serializable {
 			FazerLoginComando fazerLoginComando = new FazerLoginComando(fazerLoginDTO);
 			String aggregateID = servicoSegurancaEscrita.existeUsuarioComEsseLogin(fazerLoginComando);
 			salvaAggregateIDNaSessao(aggregateID);
+			this.fazerLoginDTO.setVersion(ControlerVersionValidator.getProximaVersaoAgregado(aggregateID));
 			return "loginUsuarioSenha.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
@@ -61,10 +63,8 @@ public class LoginUsuarioBean implements Serializable {
 		try {
 			HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 			DeslogarComando deslogarComando = new DeslogarComando(request.getSession().getAttribute("aggregateID"));
-			boolean ok = servicoSegurancaEscrita.deslogarUsuario(deslogarComando);
-			if (ok) {
-				request.getSession().invalidate();
-			}
+			servicoSegurancaEscrita.deslogarUsuario(deslogarComando);
+			request.getSession().invalidate();
 			return "loginUsuario.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();

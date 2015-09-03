@@ -3,6 +3,9 @@ package projeto.tcc.aplicacao.impl;
 import java.io.Serializable;
 
 import projeto.tcc.aplicacao.ServicoSegurancaEscrita;
+import projeto.tcc.aplicacao.comandos.ProcessadorCadastrarUsuarioComando;
+import projeto.tcc.aplicacao.comandos.ProcessadorLoginUsuarioComando;
+import projeto.tcc.aplicacao.comandos.ProcessadorLogoffUsuarioComando;
 import projeto.tcc.dominio.entidades.seguranca.Seguranca;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
@@ -15,22 +18,19 @@ public class ServicoSegurancaEscritaImpl implements ServicoSegurancaEscrita, Ser
 	private Seguranca seguranca;
 
 	@Override
-	public String logarUsuario(FazerLoginComando fazerLoginComando)
+	public void logarUsuario(FazerLoginComando fazerLoginComando)
 			throws Exception {
-		seguranca = new Seguranca();
 		try {
-			String logar = seguranca.logar(fazerLoginComando);
-			return logar;
+			new ProcessadorLoginUsuarioComando().execute(fazerLoginComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
 	@Override
-	public boolean deslogarUsuario(DeslogarComando deslogarComando) {
-		seguranca = new Seguranca();
+	public void deslogarUsuario(DeslogarComando deslogarComando) {
 		try {
-			return seguranca.deslogar(deslogarComando);
+			new ProcessadorLogoffUsuarioComando().execute(deslogarComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -42,9 +42,7 @@ public class ServicoSegurancaEscritaImpl implements ServicoSegurancaEscrita, Ser
 			throws Exception {
 		seguranca = new Seguranca();
 		try {
-			String logar = seguranca.existeUsuarioComEsseLogin(fazerLoginComando);
-			//necessario buscar versao do evento relacionado ao login aqui???
-			return logar;
+			return seguranca.existeUsuarioComEsseLogin(fazerLoginComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}

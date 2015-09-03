@@ -3,6 +3,7 @@ package projeto.tcc.dominio.eventos;
 
 import java.util.UUID;
 
+import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.armazenamento.ArmazenadorEventos;
 
 public class EventoProcessador  {

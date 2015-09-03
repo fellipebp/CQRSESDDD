@@ -1,6 +1,12 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Test;
+
 import projeto.tcc.dominio.entidades.seguranca.Seguranca;
 import projeto.tcc.dominio.eventos.perfilusuario.PerfilAdicionadoEvento;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
@@ -25,14 +31,17 @@ public class SegurancaTest {
 //		}
 
 //	}
-
+	
+	
+	@Test
 	public void naoDeveDeslogarUsuario(){
-		boolean deslogar;
+		seguranca = new Seguranca();
 		try {
-			deslogar = seguranca.deslogar(new DeslogarComando(""));
-			assertEquals(false, deslogar);
-		} catch (Exception e) {
+			Map<String, Object> valores = new HashMap<String, Object>();
+			seguranca.deslogar(valores);
 			fail();
+		} catch (Exception e) {
+			assertTrue(true);
 		}
 		
 	}

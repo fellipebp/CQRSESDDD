@@ -31,22 +31,7 @@ public class Publicador implements Publisher<Evento> {
 	@PostConstruct
 	public void init(){
 	
-//		dataUltimaPublicacao = Calendar.getInstance();
-//		TimerTask task = new TimerTask() {
-//			@Override
-//			public void run() {
-//				if (filaEventos.size() == 5
-//						|| (!filaEventos.isEmpty() && tempoUltPublicaoMaiorQue30Segundos())) {
-//					publicar();
-//				}
-//
-//			}
-//		};
-//		Timer timer = new Timer();
-//		long delay = 0;
-//		long intevalPeriod = 1 * 1000;
-//		timer.scheduleAtFixedRate(task, delay, intevalPeriod);
-	teste(); // esta em faze de testes usando essa tecnologia FUTURE
+		teste(); // esta em faze de testes usando essa tecnologia FUTURE
 	
 	}
 	

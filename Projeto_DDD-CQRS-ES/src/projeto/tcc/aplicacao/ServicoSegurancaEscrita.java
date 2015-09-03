@@ -5,7 +5,7 @@ import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 public interface ServicoSegurancaEscrita {
 	
-	String logarUsuario(FazerLoginComando fazerLoginComando) throws Exception;
-	boolean deslogarUsuario(DeslogarComando deslogarComando) throws Exception;
+	void logarUsuario(FazerLoginComando fazerLoginComando) throws Exception;
+	void deslogarUsuario(DeslogarComando deslogarComando) throws Exception;
 	String existeUsuarioComEsseLogin(FazerLoginComando fazerLoginComando)throws Exception;
 }

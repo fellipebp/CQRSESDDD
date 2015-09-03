@@ -1,5 +1,5 @@
 
-package projeto.tcc.infraestrutura.manipuladoreventos.usuario;
+package projeto.tcc.infraestrutura.manipuladoreventos.musica;
 
 import java.sql.Connection;
 

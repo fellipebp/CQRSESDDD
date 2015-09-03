@@ -12,6 +12,7 @@ import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.auditoria.AuditoriaRegistradaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
+import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
@@ -25,21 +26,14 @@ public class Seguranca {
 	}
 	
 	
-	public String logar(FazerLoginComando comandoLogin) throws Exception {
+	public void logar(Map<String, Object> valores) throws Exception {
 		RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
-		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(comandoLogin.getAggregateID().toString());
-		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
-			new EventoProcessador().processarEvento(
-					new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase.getLogin(), usuarioBase.getSenha(),new Date(), comandoLogin.getVersion()));
-//			Auditoria auditoria = new Auditoria();
-//			auditoria.setDtLogin(new Date());
-//			auditoria.setAggregateID(usuarioBase.getAggregateID());
-			return comandoLogin.getAggregateID().toString();
+		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(String.valueOf(valores.get("aggregateID")));
+		
+		if (usuarioBase ==null || !	String.valueOf(valores.get("senha")).equals(usuarioBase.getSenha())) {
+			//TODO criar exceção especifica
+			throw new RuntimeException("Usuário ou senha inválidos");
 		}
-		
-		//TODO criar exceção especifica
-		throw new RuntimeException("Usuário ou senha inválidos");
-		
 	}
 	
 	
@@ -52,19 +46,15 @@ public class Seguranca {
 		 return aggregateID;
 	}
 	
-	public boolean deslogar(DeslogarComando deslogarComando) throws Exception{
-		if (deslogarComando.getAggregateID() !=null) {
-			UsuarioDeslogadoEvento ude = new UsuarioDeslogadoEvento((UUID)deslogarComando.getAggregateID(), new Date());
-			EventoProcessador eventoProcessador = new EventoProcessador();
-			eventoProcessador.processarEvento(ude);
-//			Auditoria auditoria = this.mapAuditoria.get(deslogarComando.getAggregateID());
-//			auditoria.setDtLogoff(new Date());
-//			eventoProcessador.processarEvento(
-//					new AuditoriaRegistradaEvento(UUID.fromString(auditoria.getAggregateID()), auditoria.getDtLogin(), auditoria.getDtLogoff(), auditoria.getEventos(), 0));
-//			this.mapAuditoria.remove(auditoria.getAggregateID());
-			return true;
+	public void deslogar(Map<String, Object> valores) throws Exception{
+		if (valores.get("aggregateID") ==null) {
+			throw new RuntimeException("Não existe nenhum usuário registrado com este CPF.");
 		}
-		return false;
+//		Auditoria auditoria = this.mapAuditoria.get(deslogarComando.getAggregateID());
+//		auditoria.setDtLogoff(new Date());
+//		eventoProcessador.processarEvento(
+//				new AuditoriaRegistradaEvento(UUID.fromString(auditoria.getAggregateID()), auditoria.getDtLogin(), auditoria.getDtLogoff(), auditoria.getEventos(), 0));
+//		this.mapAuditoria.remove(auditoria.getAggregateID());
 	}
 	
 	

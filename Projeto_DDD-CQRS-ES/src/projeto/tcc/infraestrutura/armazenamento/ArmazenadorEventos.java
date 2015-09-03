@@ -13,8 +13,9 @@ import java.util.UUID;
 
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.infraestrutura.Conexao;
+import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.Publicador;
-import projeto.tcc.infraestrutura.manipuladoreventos.usuario.MusicaAdicionadaManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioCadastradoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioDeslogadoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioEditadoManipulador;
@@ -70,12 +71,15 @@ public class ArmazenadorEventos {
 				pstmt1.close();
 			} catch (Exception e) {
 				e.printStackTrace();
-				return;
 			} finally {
 				Conexao.fechaConexao();
 			}
+			
+			atualizaUltimaVersaoAgregado(evento.getAggregateId(), evento.getVersion());
 
 			publicador.publicaEvento(evento);
+			
+			ControlerVersionValidator.removeIDAgregadoCache(evento.getAggregateId().toString());
 		}
 	}
 
@@ -102,27 +106,24 @@ public class ArmazenadorEventos {
 		
 	}
 	
-	private static boolean versaoEhValida(Integer version, UUID aggregateID){
-		Integer versaoEsperada= 0;
+	
+	public static void atualizaUltimaVersaoAgregado(UUID aggregateID, Integer version) {
+		connection = Conexao.getConectionEventSource();
 		try {
+			PreparedStatement pstmt2 = null;
+			pstmt2 = (PreparedStatement) connection.prepareStatement(
+					"UPDATE aggregates SET version = ? WHERE aggregate_id = ? ");
 
-			PreparedStatement pstmt = (PreparedStatement) Conexao
-					.getConectionEventSource()
-					.prepareStatement(
-							"SELECT version from eventsource.aggregates where aggregate_id = ?");
-			pstmt.setString(1, aggregateID.toString());
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
-				versaoEsperada = rs.getInt("version")+1;
-			}
-			if (version == versaoEsperada) {
-				return true;
-			}
-		} catch (SQLException e) {
+			pstmt2.setInt(1, version);
+			pstmt2.setString(2, aggregateID.toString());
+			pstmt2.executeUpdate();
+			pstmt2.close();
+		} catch (Exception e) {
 			e.printStackTrace();
+			return;
+		}finally{
+			Conexao.fechaConexao();
 		}
-
-		return false;
 		
 	}
 
@@ -159,6 +160,24 @@ public class ArmazenadorEventos {
 		return null;
 	}
 	
+	
+	public static Integer getProximaVersaoAgregado(String aggregateID) {
+		connection = Conexao.getConectionEventSource();
+		try {
+			PreparedStatement pstmt = (PreparedStatement) connection
+					.prepareStatement("select version from aggregates where aggregate_id = ?");
+			pstmt.setString(1, aggregateID);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("version")+1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			Conexao.fechaConexao();
+		}
+		return 0;
+	}
 
 
 	
