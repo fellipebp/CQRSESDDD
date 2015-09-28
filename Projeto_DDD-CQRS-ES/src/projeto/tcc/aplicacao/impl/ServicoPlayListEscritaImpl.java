@@ -1,23 +1,20 @@
 package projeto.tcc.aplicacao.impl;
 
-import java.util.Set;
-
 import projeto.tcc.aplicacao.ServicoPlayListEscrita;
-import projeto.tcc.dominio.entidades.musica.Musica;
-import projeto.tcc.dominio.entidades.musica.PlayList;
+import projeto.tcc.aplicacao.comandos.ProcessadorAdicionarMusicaComando;
+import projeto.tcc.aplicacao.comandos.ProcessadorCriarPlayListComando;
+import projeto.tcc.aplicacao.comandos.ProcessadorTocarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 
 public class ServicoPlayListEscritaImpl implements ServicoPlayListEscrita{
 
-	private PlayList playList;
 	
 	@Override
-	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando, Set<Musica> minhasMusicas, Musica musica, Object aggregateId) {
-		playList = new PlayList();
+	public void adicionarMusica(AdicionarMusicaComando adicionarMusicaComando) {
 		try {
-			playList.adicionarMusica(adicionarMusicaComando, minhasMusicas, musica, aggregateId);
+			new ProcessadorAdicionarMusicaComando().execute(adicionarMusicaComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -26,9 +23,8 @@ public class ServicoPlayListEscritaImpl implements ServicoPlayListEscrita{
 	
 	@Override
 	public void tocarMusica(TocarMusicaComando tocarMusicaComando) {
-		playList = new PlayList();
 		try {
-			playList.tocarMusica(tocarMusicaComando);
+			new ProcessadorTocarMusicaComando().execute(tocarMusicaComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
@@ -37,9 +33,8 @@ public class ServicoPlayListEscritaImpl implements ServicoPlayListEscrita{
 
 	@Override
 	public void criarPlayList(CriarPlayListComando criarPlayListComando) {
-		playList = new PlayList();
 		try {
-			playList.criarPlayList(criarPlayListComando);
+			new ProcessadorCriarPlayListComando().execute(criarPlayListComando);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}

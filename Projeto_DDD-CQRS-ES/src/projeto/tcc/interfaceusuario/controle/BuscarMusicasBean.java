@@ -2,7 +2,6 @@ package projeto.tcc.interfaceusuario.controle;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,19 +13,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoPlayListEscrita;
 import projeto.tcc.aplicacao.ServicoPlayListLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
-import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
 
 @Named
 @ViewScoped
-public class OuvirMusicaBean implements Serializable {
+public class BuscarMusicasBean implements Serializable {
 
 	private static final long serialVersionUID = -6673863557198240345L;
 	@Inject
@@ -34,18 +31,15 @@ public class OuvirMusicaBean implements Serializable {
 	
 	@Inject	private ServicoPlayListEscrita servicoPlayListEscrita;
 	@Inject	private ServicoPlayListLeitura servicoPlayListLeitura;
-	@Inject	private ServicoMusicaLeitura servicoMusicaLeitura;
 	private List<Musica> listaMusicas;
 	private Set<Musica> minhasMusicas;
 	private Musica musicaSelecionada;
 	private HttpSession sessao;
 	private boolean todasMusicasStatus;
 	private boolean minhasMusicasStatus;
-	private boolean minhasMusicasPlayListStatus;
 	private Object aggregateIDObject;
 	private List<PlayList> minhasPlayLists;
-	private String agregadoPlayListSelecionada;
-	private String nomePlayList;
+	private String agregadoPlayList;
 	
 
 	@PostConstruct
@@ -53,9 +47,10 @@ public class OuvirMusicaBean implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);     
 	    aggregateIDObject = sessao.getAttribute("aggregateID");
+//	    minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());//Ainda sendo trabalhado
+//		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(agregadoPlayList));
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
-		setMinhasMusicasPlayListStatus(false);
 		
 	}
 
@@ -63,38 +58,15 @@ public class OuvirMusicaBean implements Serializable {
 		this.listaMusicas = servicoMusicaFacade.listarTodasMusicas();
 		setTodasMusicasStatus(true);
 		setMinhasMusicasStatus(false);
-		setMinhasMusicasPlayListStatus(false);
 		return null;
 
 	}
 
-	public void listarMinhasMusicasPlayList(String aggregateID) {
-		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(aggregateID);
+	public String listarMinhasMusicas() {
+//		minhasMusicas = servicoMusicaLeitura.listarMinhasMusicas(String.valueOf(agregadoPlayList));
 		setTodasMusicasStatus(false);
-		setMinhasMusicasStatus(false);
-		setMinhasMusicasPlayListStatus(true);
-	}
-	
-	public String listarMinhasMusicasPlayList() {
-		minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
-		setMinhasMusicasPlayListStatus(true);
-		setTodasMusicasStatus(false);
-		setMinhasMusicasStatus(false);
+		setMinhasMusicasStatus(true);
 		return null;
-	}
-	
-	
-	public void criarPlayList(){
-		try{
-		UUID agregado = UUID.randomUUID();
-		servicoPlayListEscrita.criarPlayList(new CriarPlayListComando(UUID.fromString(String.valueOf(aggregateIDObject)),agregado, nomePlayList, minhasPlayLists));
-		minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("PlayList adicionada com sucesso"));
-		}catch (Exception e) {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
-		} 
-		
 	}
 
 	public void listarFavoritos() {
@@ -109,12 +81,10 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	
-	public void playMusica(){
-		FacesContext context = FacesContext.getCurrentInstance();
-	    Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-	    String[] parts = params.get("param1").split("/");
-	    System.out.println("música tocando:"+ parts[6]);
-		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),parts[6]));
+	public void playMusica(Musica musica){
+		
+		System.out.println("musica tocando: " + musica.getNome());
+		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
 		
 		
 	}
@@ -140,7 +110,7 @@ public class OuvirMusicaBean implements Serializable {
 	/**
 	 * @param musica
 	 */
-	public void atualizarModalAdicionarMusica(Musica musica){
+	public void atualizarModal(Musica musica){
 		try{
 	
 		minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
@@ -156,7 +126,7 @@ public class OuvirMusicaBean implements Serializable {
 	
 	public void adicionarMusica(){
 		try{
-		servicoPlayListEscrita.adicionarMusica(new AdicionarMusicaComando(UUID.fromString(agregadoPlayListSelecionada), musicaSelecionada));
+		servicoPlayListEscrita.adicionarMusica(new AdicionarMusicaComando(UUID.fromString(agregadoPlayList), musicaSelecionada));
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Música adicionada com sucesso"));
 			
 		}catch (Exception e) {
@@ -217,27 +187,11 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	public String getAgregadoPlayList() {
-		return agregadoPlayListSelecionada;
+		return agregadoPlayList;
 	}
 
 	public void setAgregadoPlayList(String agregadoPlayList) {
-		this.agregadoPlayListSelecionada = agregadoPlayList;
-	}
-
-	public boolean isMinhasMusicasPlayListStatus() {
-		return minhasMusicasPlayListStatus;
-	}
-
-	public void setMinhasMusicasPlayListStatus(boolean minhasMusicasPlayListStatus) {
-		this.minhasMusicasPlayListStatus = minhasMusicasPlayListStatus;
-	}
-
-	public String getNomePlayList() {
-		return nomePlayList;
-	}
-
-	public void setNomePlayList(String nomePlayList) {
-		this.nomePlayList = nomePlayList;
+		this.agregadoPlayList = agregadoPlayList;
 	}
 
 }

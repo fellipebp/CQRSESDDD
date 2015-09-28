@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<ui:composition>
+	<div>
+		<h:panelGroup id="listarMinhasMusicasPlayList" rendered="#{ouvirMusicaBean.minhasMusicasPlayListStatus}">
+				
+				<p:commandButton value="Criar PlayList" oncomplete="PF('criarPlayList').show()" update=":criarPlayListDialog" />
+				
+				<p:dataTable var="playlist" value="#{ouvirMusicaBean.minhasPlayLists}" scrollable="true" scrollHeight="350">
+				
+				<p:column>
+				<p:commandLink value="#{playlist.nome}  " oncomplete="minhaFuncao()" update="@form" actionListener="#{ouvirMusicaBean.listarMinhasMusicasPlayList(playlist.aggregateID)}" 
+				style="color:red"/>
+				</p:column>
+				</p:dataTable>
+				
+				
+				
+				<div style="width: 70%; float: right">
+					<div>
+					<h:panelGroup rendered="#{ouvirMusicaBean.minhasMusicas != null}">
+						<ul id="playlist" >
+							<ui:repeat var="musica"
+								value="#{ouvirMusicaBean.minhasMusicas.toArray()}">
+								<li class="active" style='list-style: none;'><a
+									style='text-decoration: none'
+									href="#{request.contextPath}/resources/music/#{musica.nome}">
+										<h:outputText value="#{musica.nome}" />
+								</a></li>
+							</ui:repeat>
+						</ul>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{ouvirMusicaBean.minhasMusicas == null}">
+						<h:outputText value="Não há músicas para essa playlist" style="color:white" />
+					</h:panelGroup>
+					</div>
+					
+					</div>
+		</h:panelGroup>
+	</div>
+	
+
+
+	
+</ui:composition>
+</html>

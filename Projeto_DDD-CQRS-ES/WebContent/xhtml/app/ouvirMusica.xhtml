@@ -12,7 +12,6 @@
 </h:head>
 <h:body styleClass="grad2">
 	<h:form id="menu">
-
 		<div style="overflow: hidden;">
 			<div style="width: 30%; float: left;">
 				<p:growl autoUpdate="true" />
@@ -20,12 +19,13 @@
 
 					<p:submenu
 						label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
-						<p:menuitem value="Minhas músicas"
-							action="#{ouvirMusicaBean.listarMinhasMusicas}"
-							icon="ui-icon-disk" update="@form" oncomplete="minhaFuncao()" />
 						<p:menuitem value="Meus favoritos"
 							actionListener="#{ouvirMusicaBean.listarFavoritos}"
 							icon="ui-icon-arrowrefresh-1-w" />
+						<p:menuitem value="Playlists"
+							action="#{ouvirMusicaBean.listarMinhasMusicasPlayList}"
+							icon="ui-icon-arrowrefresh-1-w" oncomplete="minhaFuncao()"
+							update="@form" />
 					</p:submenu>
 				</p:panelMenu>
 				<p:menu style="width:98%">
@@ -60,97 +60,69 @@
 						</p:submenu>
 					</p:submenu>
 				</p:panelMenu>
-
-
 			</div>
 
-
-			<div>
-
-				<h:panelGroup id="listarMusicas">
-					<h:message for="adicionarMusica" />
-					<div id="lista" style="width: 90%;">
-						<p:dataTable value="#{ouvirMusicaBean.listaMusicas}"
-							rowIndexVar="loop" var="musica" id="musicas"
-							rendered="#{ouvirMusicaBean.todasMusicasStatus}">
-							<p:column width="45%">
-								<audio controls="controls" preload="metadata"
-									onplay="document.getElementById('menu:musicas:#{loop}:fakeButtonPlay').click();"
-									onpause="document.getElementById('menu:musicas:#{loop}:fakeButtonPause').click();">
-
-									<source src="../../resources/music/#{musica.nome}"
-										type="audio/mpeg" />
-								</audio>
-							</p:column>
-							<p:column width="40%">
-								<li class="sm2_link" style="list-style: none"><a
-									href="../../resources/music/#{musica.nome}"
-									onclick="document.getElementById('menu:musicas:#{loop}:fakeButton').click();"
-									style="text-decoration: none;" class="sm2_link sm2_playing">
-										<h:outputText value="#{musica.nome}" />
-								</a></li>
-							</p:column>
-							<p:column>
-								<p:commandButton id="adicionarMusica"
-									actionListener="#{ouvirMusicaBean.adicionarMusica(musica)}"
-									value="adicionar musica" style="font-size:0.8em" />
-								<p:commandButton id="fakeButtonPlay"
-									actionListener="#{ouvirMusicaBean.playMusica(musica)}"
-									value="fake button" style="display:none" />
-								<p:commandButton id="fakeButtonPause"
-									actionListener="#{ouvirMusicaBean.pauseMusica(musica)}"
-									value="fake button" style="display:none" />
-							</p:column>
-						</p:dataTable>
-					</div>
-				</h:panelGroup>
+			<ui:include src="listarMusicas.xhtml" />
+			<ui:include src="musicasPlayList.xhtml" />
+		</div>
+		<div>
+			<div style="width: 100%;position: fixed; bottom: 0;">
+			<div style="float: right">
+					<p:commandButton id="next" value="Próximo" style="margin-bot:10px;" />
+					<p:commandButton id="previous" value="Anterior" />
 			</div>
 			<div>
-				<h:panelGroup rendered="#{ouvirMusicaBean.minhasMusicasStatus}">
-					<div style="width: 70%; float: right">
-					<div>
-						<ul id="playlist">
-							<ui:repeat var="musica"
-								value="#{ouvirMusicaBean.minhasMusicas.toArray()}">
-								<li class="active" style='list-style: none;'><a
-									style='text-decoration: none'
-									href="#{request.contextPath}/resources/music/#{musica.nome}">
-										<h:outputText value="#{musica.nome}" />
-								</a></li>
-							</ui:repeat>
-						</ul>
-					</div>
-					<div>
-					<div>
-						<audio id="audio" preload="auto" tabindex="0" controls=""
-							type="audio/mpeg">
-							<source type="audio/mp3" src="" />
-							Sorry, your browser does not support HTML5 audio.
-						</audio>
-					</div>
-							<div>
-								<p:commandButton id="next" value="next" style="margin-bot:10px;" />
-								<p:commandButton id="previous" value="previous" />
-							</div>
-						</div>
-					</div>
-
-				</h:panelGroup>
+				<audio id="audio" preload="auto" tabindex="0" controls=""
+					type="audio/mpeg" style="width: 100%">
+					<source type="audio/mp3" src="" />
+					Sorry, your browser does not support HTML5 audio.
+				</audio>
+				<p:remoteCommand name="playMusic" actionListener="#{ouvirMusicaBean.playMusica}" />
 			</div>
+			</div>
+
+
 		</div>
 
+
 	</h:form>
+	<p:dialog id="checkBoxPlayListDialog" widgetVar="checkBoxPlayList"
+		modal="true" resizable="false" closable="true" width="690"
+		height="100">
+		<h:outputText value="Escolha a Playlist:" />
+		<h:form>
+			<h:selectOneListbox id="playlists" label="PlayList"
+				value="#{ouvirMusicaBean.agregadoPlayList}" size="1"
+				title="PlayList" style=" width : 400px">
+				<f:selectItems itemLabel="#{playlist.nome}" var="playlist"
+					itemValue="#{playlist.aggregateID}"
+					value="#{ouvirMusicaBean.minhasPlayLists}" />
+			</h:selectOneListbox>
+			<br />
+			<br />
+			<h:commandButton
+				actionListener="#{ouvirMusicaBean.adicionarMusica()}"
+				value="Adicionar música" />
+		</h:form>
+
+	</p:dialog>
+	<p:dialog id="criarPlayListDialog" widgetVar="criarPlayList"
+		modal="true" resizable="false" closable="true" width="690"
+		height="100">
+		<h:outputText value="Escolha o nome de sua Playlist:" />
+		<h:form>
+			<h:inputText value="#{ouvirMusicaBean.nomePlayList}"></h:inputText>
+			<br />
+			<br />
+			<p:commandButton actionListener="#{ouvirMusicaBean.criarPlayList}"
+				value="Criar PlayList" oncomplete="PF('criarPlayList').hide()"
+				update=":menu:listarMinhasMusicasPlayList" />
+		</h:form>
+
+	</p:dialog>
 
 	<script>
-	jQuery(document).ready(function () {
-		minhaFuncao();
-		
-	});
-	
-	jQuery( window ).load(function() {
-		minhaFuncao();
-    });
-	
+
 	function minhaFuncao(){
 		var audio;
 		var playlist;
@@ -212,6 +184,7 @@
 		    par.addClass('active').siblings().removeClass('active');
 		    audio[0].load();
 		    audio[0].play();
+		    playMusic([{name:'param1', value:player.src}]);
 		    }
 		
 	    
@@ -220,4 +193,5 @@
 		
 	</script>
 </h:body>
+
 </html>

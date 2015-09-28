@@ -1,9 +1,11 @@
 package projeto.tcc.dominio.entidades.usuario;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import projeto.tcc.dominio.entidades.musica.Musica;
+import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
@@ -17,6 +19,7 @@ public class RestauradorAtributosUsuario {
 	
 	public RestauradorAtributosUsuario() {
 		this.usuario = new Usuario();
+		this.usuario.playlists = new ArrayList<PlayList>();
 	}
 	
 	public void aplicaMudanca(UsuarioLogadoEvento usuarioLogadoEvento){
@@ -27,7 +30,10 @@ public class RestauradorAtributosUsuario {
 	}
 	
 	public void aplicaMudanca(PlayListAdicionadaEvento playListAdicionadaEvento){
-		this.usuario.aggregateIDPlayList = playListAdicionadaEvento.getPlayListId();
+		PlayList playlist = new PlayList();
+		playlist.setAggregateID(playListAdicionadaEvento.getPlayListId().toString());
+		playlist.setNome(playListAdicionadaEvento.getNomePlayList());
+		this.usuario.playlists.add(playlist);
 	}
 	
 	public void aplicaMudanca(MusicaAdicionadaEvento musicaAdicionadaEvento){

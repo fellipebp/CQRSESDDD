@@ -2,15 +2,19 @@ package projeto.tcc.interfaceusuario.comandos;
 
 import java.util.UUID;
 
+import projeto.tcc.dominio.entidades.musica.Musica;
+
 
 public class AdicionarMusicaComando implements Comando {
 	
 	private UUID playListUID;
-	private String nomeMusica;
+	private Musica musica;
+	private Integer version;
 	
-	public AdicionarMusicaComando(UUID playListUID, String nomeMusica) {
+	public AdicionarMusicaComando(UUID playListUID, Musica musica) {
 		this.playListUID = playListUID;
-		this.nomeMusica = nomeMusica;
+		this.musica = musica;
+		this.version = 0;
 	}
 	
 
@@ -24,21 +28,25 @@ public class AdicionarMusicaComando implements Comando {
 	}
 
 
-	public String getNomeMusica() {
-		return nomeMusica;
-	}
-
-
-	public void setNomeMusica(String nomeMusica) {
-		this.nomeMusica = nomeMusica;
-	}
 
 
 	@Override
 	public Integer getVersion() {
 		// TODO Auto-generated method stub
-		return null;
+		return version;
 	}
+
+
+	public Musica getMusica() {
+		return musica;
+	}
+
+
+	public void setMusica(Musica musica) {
+		this.musica = musica;
+	}
+
+
 
 
 
