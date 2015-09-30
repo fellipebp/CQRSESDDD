@@ -32,9 +32,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 	}
 	
 	
-	public void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception{
-		ArmazenadorEventos.salvarEvento(e);
-	}
+//	public void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception{
+//		ArmazenadorEventos.salvarEvento(e);
+//	}
 
 
 	@Override

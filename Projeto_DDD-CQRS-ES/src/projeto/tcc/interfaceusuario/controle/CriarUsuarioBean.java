@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
+import projeto.tcc.dominio.PerfilEnums;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
 
@@ -30,9 +31,9 @@ public class CriarUsuarioBean implements Serializable{
 	private String senha;
 	
 	@PostConstruct
-	    public void init(){
+	public void init(){
 	      
-	    }
+	}
 
 	
 	public String criarUsuario() throws Exception{
@@ -41,6 +42,10 @@ public class CriarUsuarioBean implements Serializable{
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario cadastrado com sucesso"));
 		return "loginUsuario.xhtml";
 		
+	}
+	
+	public PerfilEnums[] getPerfis(){
+		return PerfilEnums.values();
 	}
 
 

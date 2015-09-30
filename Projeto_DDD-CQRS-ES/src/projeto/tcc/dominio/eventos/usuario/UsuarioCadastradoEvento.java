@@ -19,9 +19,11 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 	private String CPF;
 	private String nome;
 	private String email;
-	private Integer version;
+	private Integer cdPerfil;
 	
-	public UsuarioCadastradoEvento(UUID aggregateId,Integer version, Usuario usuario) {
+	private Long version;
+	
+	public UsuarioCadastradoEvento(UUID aggregateId,Long version, Usuario usuario) {
 		this.aggregateId = aggregateId;
 		this.login = usuario.getLogin();
 		this.senha = usuario.getSenha();
@@ -29,10 +31,9 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 		this.nome = usuario.getNome();
 		this.email = usuario.getEmail();
 		this.version = version;
+		this.cdPerfil = usuario.getCdPerfil();
 	}
 	
-
-
 	public String getLogin() {
 		return login;
 	}
@@ -107,17 +108,27 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		return this.version;
 	}
 
 
 
+	public Integer getCdPerfil() {
+		return cdPerfil;
+	}
 
-//	public void Processar() {
-//		usuario.cuidarCadastro(this);
-//		
-//	}
+
+
+	public void setCdPerfil(Integer cdPerfil) {
+		this.cdPerfil = cdPerfil;
+	}
+
+	@Override
+	public Class<?> getClazz() {
+		return Usuario.class;
+	}
+
 
 
 

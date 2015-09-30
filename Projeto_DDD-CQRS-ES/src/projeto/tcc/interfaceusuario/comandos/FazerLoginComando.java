@@ -9,7 +9,7 @@ public class FazerLoginComando implements Comando {
 	private UUID aggregateID;
 	private String login;
 	private String senha;
-	private Integer version;
+	private Long version;
 	
 	public FazerLoginComando(FazerLoginDTO fazerLoginDTO) {
 		this.login = fazerLoginDTO.getLogin();
@@ -45,7 +45,7 @@ public class FazerLoginComando implements Comando {
 
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		return this.version;
 	}
 

@@ -17,6 +17,6 @@ public interface RepositorioUsuario {
 	
 	UUID getAggregatePlayList(String aggregateID); 
 	
-	void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception;
+//	void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception;
 
 }

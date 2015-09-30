@@ -5,18 +5,13 @@ import java.util.UUID;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import projeto.tcc.aplicacao.ServicoSegurancaEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
-import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
 import projeto.tcc.infraestrutura.ControlerVersionValidator;
-import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 
@@ -26,7 +21,7 @@ public class LoginUsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = -7918764410608856865L;
 	@Inject
-	private ServicoSegurancaEscrita servicoSegurancaEscrita;
+	private ServicoUsuarioEscrita servicoUsuarioEscrita;
 	@Inject
 	private FazerLoginDTO fazerLoginDTO;
 	
@@ -34,7 +29,7 @@ public class LoginUsuarioBean implements Serializable {
 		try {
 			FazerLoginComando fazerLoginComando = new FazerLoginComando(fazerLoginDTO);
 			fazerLoginComando.setAggregateID(UUID.fromString(String.valueOf(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("aggregateID"))));
-			servicoSegurancaEscrita.logarUsuario(fazerLoginComando);
+			servicoUsuarioEscrita.logarUsuario(fazerLoginComando);
 			return "app/ouvirMusica.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
@@ -47,9 +42,9 @@ public class LoginUsuarioBean implements Serializable {
 	public String continuar(){
 		try {
 			FazerLoginComando fazerLoginComando = new FazerLoginComando(fazerLoginDTO);
-			String aggregateID = servicoSegurancaEscrita.existeUsuarioComEsseLogin(fazerLoginComando);
+			String aggregateID = servicoUsuarioEscrita.existeUsuarioComEsseLogin(fazerLoginComando);
 			salvaAggregateIDNaSessao(aggregateID);
-			this.fazerLoginDTO.setVersion(ControlerVersionValidator.getProximaVersaoAgregado(aggregateID));
+			this.fazerLoginDTO.setVersion(ControlerVersionValidator.getUltimaVersaoAgregado(aggregateID));
 			return "loginUsuarioSenha.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
@@ -62,8 +57,8 @@ public class LoginUsuarioBean implements Serializable {
 	public String deslogar(){
 		try {
 			HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-			DeslogarComando deslogarComando = new DeslogarComando(request.getSession().getAttribute("aggregateID"));
-			servicoSegurancaEscrita.deslogarUsuario(deslogarComando);
+//			DeslogarComando deslogarComando = new DeslogarComando(request.getSession().getAttribute("aggregateID"));
+//			servicoSegurancaEscrita.deslogarUsuario(deslogarComando);
 			request.getSession().invalidate();
 			return "loginUsuario.xhtml?faces-redirect=true";
 		} catch (Exception e) {

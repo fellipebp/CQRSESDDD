@@ -3,6 +3,7 @@ package projeto.tcc.dominio.eventos.musica;
 import java.io.Serializable;
 import java.util.UUID;
 
+import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class MusicaAdicionadaEvento implements Evento, Serializable{
@@ -14,9 +15,9 @@ public class MusicaAdicionadaEvento implements Evento, Serializable{
 	private static final long serialVersionUID = -7929264690665248399L;
 	private String nomeMusica;
 	private UUID aggregateId;
-	private Integer version;
+	private Long version;
 	
-	public MusicaAdicionadaEvento(UUID aggregateId, String nomeMusica, Integer version) {
+	public MusicaAdicionadaEvento(UUID aggregateId, String nomeMusica, Long version) {
 		this.aggregateId = aggregateId;
 		this.nomeMusica = nomeMusica;
 		this.version = version;
@@ -42,8 +43,14 @@ public class MusicaAdicionadaEvento implements Evento, Serializable{
 
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		return this.version;
+	}
+
+
+	@Override
+	public Class<?> getClazz() {
+		return Musica.class;
 	}
 
 }

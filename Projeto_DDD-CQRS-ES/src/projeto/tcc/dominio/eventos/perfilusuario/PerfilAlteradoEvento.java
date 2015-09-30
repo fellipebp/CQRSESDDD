@@ -3,6 +3,7 @@ package projeto.tcc.dominio.eventos.perfilusuario;
 import java.io.Serializable;
 import java.util.UUID;
 
+import projeto.tcc.dominio.entidades.usuario.PerfilUsuario;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class PerfilAlteradoEvento   implements Evento, Serializable{
@@ -19,9 +20,15 @@ public class PerfilAlteradoEvento   implements Evento, Serializable{
 	}
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Class<?> getClazz() {
+		// TODO Auto-generated method stub
+		return PerfilUsuario.class;
 	}
 
 }

@@ -1,10 +1,18 @@
-package projeto.tcc.aplicacao.comandos;
+package projeto.tcc.aplicacao.comandos.processador;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import projeto.tcc.aplicacao.comandos.PosProcessadorComandos;
+import projeto.tcc.aplicacao.comandos.ProcessadorComandos;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
+import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.EventoProcessador;
+import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
@@ -23,14 +31,19 @@ public class ProcessadorCadastrarUsuarioComando implements ProcessadorComandos{
 		valores.put("nome", cadastrarUsuarioComando.getNome());
 		valores.put("cpf", cadastrarUsuarioComando.getCpf());
 		valores.put("email", cadastrarUsuarioComando.getEmail());
+		valores.put("dtNascimento", cadastrarUsuarioComando.getDtNascimento().getTime());
+		valores.put("cdPerfil", cadastrarUsuarioComando.getCdPerfil());
 		
 		Usuario usuario = new Usuario().criarCadastro(valores);
 		
 		PosProcessadorComandos.validaVersaoComando(comando);
 		
+		List<Evento> eventos = new ArrayList<>();
 		EventoProcessador eventoProcessador = new EventoProcessador();
-		eventoProcessador.processarEvento((new UsuarioCadastradoEvento(cadastrarUsuarioComando.aggregateId(),cadastrarUsuarioComando.getVersion(), usuario)));
-		eventoProcessador.processarAggregado(cadastrarUsuarioComando.aggregateId(), Usuario.class, cadastrarUsuarioComando.getVersion());
+		UsuarioCadastradoEvento usuarioCadastradoEvento = new UsuarioCadastradoEvento(cadastrarUsuarioComando.aggregateId(),new Timestamp(new Date().getTime()).getTime(), usuario);
+		eventos.add(usuarioCadastradoEvento);
+		eventoProcessador.processarEventos(eventos);
+//		eventoProcessador.processarAggregado(cadastrarUsuarioComando.aggregateId(), Usuario.class, cadastrarUsuarioComando.getVersion());
 	}
 
 }

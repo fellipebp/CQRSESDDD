@@ -1,7 +1,8 @@
-package projeto.tcc.dominio.entidades.perfilusuario;
+package projeto.tcc.dominio.entidades.usuario;
 
 import java.io.Serializable;
 
+//FIXME VERIFICAR VISIBILIDADE
 public class PerfilUsuario implements Serializable{
 
 	/**
@@ -11,9 +12,23 @@ public class PerfilUsuario implements Serializable{
 	private String aggregateID;
 	private Integer cdPerfil;
 	private String descricao;
+	private Double valor;
 	
 	
+	public PerfilUsuario() {
+	}
 	
+	public PerfilUsuario(String aggregateID, Integer cdPerfil, String descricao, Double valor) {
+		super();
+		this.aggregateID = aggregateID;
+		this.cdPerfil = cdPerfil;
+		this.descricao = descricao;
+		this.valor = valor;
+	}
+
+
+
+
 	public String getAggregateID() {
 		return aggregateID;
 	}
@@ -31,6 +46,14 @@ public class PerfilUsuario implements Serializable{
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 	
 	

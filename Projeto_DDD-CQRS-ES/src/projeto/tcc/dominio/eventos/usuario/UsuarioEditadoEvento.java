@@ -19,7 +19,8 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 	private String nome;
 	private String email;
 	private Date dtAlteracao;
-	private Integer version;
+	private Integer cdPerfil;
+	private Long version;
 	
 	public UsuarioEditadoEvento(UUID aggregateID, Usuario usuario) {
 		this.aggregateId = aggregateID;
@@ -28,7 +29,7 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 		this.CPF = usuario.getCPF();
 		this.nome = usuario.getNome();
 		this.email = usuario.getEmail();
-				
+		this.cdPerfil = usuario.getCdPerfil();
 	}
 
 	@Override
@@ -83,8 +84,21 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 	}
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		return this.version;
+	}
+
+	public Integer getCdPerfil() {
+		return cdPerfil;
+	}
+
+	public void setCdPerfil(Integer cdPerfil) {
+		this.cdPerfil = cdPerfil;
+	}
+
+	@Override
+	public Class<?> getClazz() {
+		return Usuario.class;
 	}
 
 }

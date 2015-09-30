@@ -99,5 +99,10 @@ public class Publicador implements Publisher<Evento> {
 		adicionaEvento(evento);
 		init();
 	}
+	
+	public void publicaEventos(List<Evento> eventos) {
+		adicionaEventos(eventos);
+		init();
+	}
 
 }

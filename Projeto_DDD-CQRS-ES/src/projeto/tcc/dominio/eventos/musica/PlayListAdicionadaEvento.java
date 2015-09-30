@@ -3,6 +3,7 @@ package projeto.tcc.dominio.eventos.musica;
 import java.io.Serializable;
 import java.util.UUID;
 
+import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class PlayListAdicionadaEvento implements Evento, Serializable{
@@ -15,9 +16,9 @@ public class PlayListAdicionadaEvento implements Evento, Serializable{
 	private String nomePlayList;
 	private UUID aggregateId;
 	private UUID playListId;
-	private Integer version;
+	private Long version;
 	
-	public PlayListAdicionadaEvento(UUID aggregateId, UUID playListId, String nomePlayList, Integer version) {
+	public PlayListAdicionadaEvento(UUID aggregateId, UUID playListId, String nomePlayList, Long version) {
 		this.aggregateId = aggregateId;
 		this.playListId = playListId;
 		this.nomePlayList = nomePlayList;
@@ -44,13 +45,19 @@ public class PlayListAdicionadaEvento implements Evento, Serializable{
 
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		return this.version;
 	}
 
 
 	public UUID getPlayListId() {
 		return playListId;
+	}
+
+
+	@Override
+	public Class<?> getClazz() {
+		return PlayList.class;
 	}
 
 }

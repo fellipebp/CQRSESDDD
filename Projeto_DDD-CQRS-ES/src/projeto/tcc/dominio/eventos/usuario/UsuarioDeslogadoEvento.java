@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class UsuarioDeslogadoEvento implements Evento, Serializable{
@@ -11,7 +12,7 @@ public class UsuarioDeslogadoEvento implements Evento, Serializable{
 	private UUID aggregateID;
 	private String login;
 	private Date dtDeslogin;
-	private Integer version;
+	private Long version;
 
 	public UsuarioDeslogadoEvento(UUID aggregateID, Date data) {
 		this.aggregateID = aggregateID;
@@ -45,8 +46,13 @@ public class UsuarioDeslogadoEvento implements Evento, Serializable{
 	}
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		return this.version;
+	}
+
+	@Override
+	public Class<?> getClazz() {
+		return Usuario.class;
 	}
 
 }

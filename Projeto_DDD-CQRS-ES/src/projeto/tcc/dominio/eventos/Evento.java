@@ -6,5 +6,7 @@ import java.util.UUID;
 public interface Evento  {
 
 	UUID getAggregateId();
-	Integer getVersion();
+	Long getVersion();
+	Class<?> getClazz();
+	
 }

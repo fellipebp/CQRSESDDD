@@ -1,6 +1,7 @@
 package projeto.tcc.interfaceusuario.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class CriarUsuarioDTO implements Serializable {
 	
@@ -13,7 +14,10 @@ public class CriarUsuarioDTO implements Serializable {
 	private String login;
 	private String senha;
 	private String email;
-	private Integer version;
+	private Date dtNascimento;
+	private Integer cdPerfil;
+	
+	private Long version;
 	
 	public CriarUsuarioDTO() {
 	}
@@ -58,12 +62,28 @@ public class CriarUsuarioDTO implements Serializable {
 		this.email = email;
 	}
 
-	public Integer getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 
-	public void setVersion(Integer version) {
+	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public Integer getCdPerfil() {
+		return cdPerfil;
+	}
+
+	public void setCdPerfil(Integer cdPerfil) {
+		this.cdPerfil = cdPerfil;
+	}
+
+	public Date getDtNascimento() {
+		return dtNascimento;
+	}
+
+	public void setDtNascimento(Date dtNascimento) {
+		this.dtNascimento = dtNascimento;
 	}
 	
 	

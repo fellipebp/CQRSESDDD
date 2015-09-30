@@ -3,6 +3,7 @@ package projeto.tcc.dominio.entidades.usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import projeto.tcc.dominio.PerfilEnums;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
@@ -21,9 +22,8 @@ public class RestauradorAtributosUsuario {
 	
 	public void aplicaMudanca(UsuarioLogadoEvento usuarioLogadoEvento){
 		 this.usuario.aggregateID = usuarioLogadoEvento.getAggregateId().toString();
-		 this.usuario.login = usuarioLogadoEvento.getLogin();
-		 this.usuario.senha = usuarioLogadoEvento.getSenha();
-		
+		 this.usuario.dataUltimoLogin = usuarioLogadoEvento.getDtLogin();
+		 
 	}
 	
 	public void aplicaMudanca(PlayListAdicionadaEvento playListAdicionadaEvento){
@@ -43,6 +43,7 @@ public class RestauradorAtributosUsuario {
 			this.usuario.CPF = usuarioCadastradoEvento.getCPF();
 			this.usuario.email = usuarioCadastradoEvento.getEmail();
 			this.usuario.aggregateID = usuarioCadastradoEvento.getAggregateId().toString();
+			this.usuario.setPerfil(usuarioCadastradoEvento.getCdPerfil());
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
@@ -56,10 +57,12 @@ public class RestauradorAtributosUsuario {
 			this.usuario.CPF = usuarioEditadoEvento.getCPF();
 			this.usuario.email = usuarioEditadoEvento.getEmail();
 			this.usuario.aggregateID = usuarioEditadoEvento.getAggregateId().toString();
+			this.usuario.setPerfil(usuarioEditadoEvento.getCdPerfil());
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
+	
 
 	public Usuario getUsuario() {
 		return usuario;
