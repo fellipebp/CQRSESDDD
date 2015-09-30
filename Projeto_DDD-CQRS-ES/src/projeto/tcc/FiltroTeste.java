@@ -35,7 +35,7 @@ public class FiltroTeste implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         Object aggregateID = request.getSession().getAttribute("aggregateID");
         if (aggregateID == null) { 
-        	response.sendRedirect(request.getContextPath()+"/xhtml/loginUsuarioCPF.xhtml");
+        	response.sendRedirect(request.getContextPath()+"/xhtml/loginUsuario.xhtml");
         	return;
         } 
         chain.doFilter(req, res);

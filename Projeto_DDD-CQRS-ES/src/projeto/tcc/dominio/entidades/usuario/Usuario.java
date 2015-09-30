@@ -2,20 +2,27 @@ package projeto.tcc.dominio.entidades.usuario;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.swing.text.MaskFormatter;
 
-import projeto.tcc.dominio.entidades.musica.PlayList;
+import projeto.tcc.dominio.PerfilEnums;
 import projeto.tcc.dominio.eventos.EventoProcessador;
+import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
+import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
+import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
+import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 
 public class Usuario  implements Serializable {
@@ -34,9 +41,11 @@ public class Usuario  implements Serializable {
 	protected String CPF;
 	protected String email;
 	protected Date dataNascimento;
+	protected Date dataUltimoLogin;
 	protected String sexo;
 	protected String aggregateID;
-	protected List<PlayList> playlists;
+	protected UUID aggregateIDPlayList;
+	protected PerfilUsuario perfilUsuario;
 	
 	//private listaEventos (mudancas)
 
@@ -139,39 +148,53 @@ public class Usuario  implements Serializable {
 			if(usuario != null){
 				throw new RuntimeException("Já existe um usuário com esse cpf");
 			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date dtNascimento = new Date(Long.parseLong(valores.get("dtNascimento").toString()));
+			Calendar dtNascimentoC = Calendar.getInstance();
+			dtNascimentoC.setTime(dtNascimento);
+			Calendar dtAtual = Calendar.getInstance();
+			if(dtAtual.get(Calendar.YEAR) - dtNascimentoC.get(Calendar.YEAR) < 18){
+				throw new RuntimeException("É necessário ter mais de 18 anos para utilizar o aplicativo");
+			}
+			
 			usuario = new Usuario();
 			usuario.setLogin(String.valueOf(valores.get("login")));
 			usuario.setSenha(String.valueOf(valores.get("senha")));
 			usuario.setNome(String.valueOf(valores.get("nome")));
 			usuario.setCPF( String.valueOf(valores.get("cpf")));
 			usuario.setEmail(String.valueOf(valores.get("email")));
+			usuario.setPerfil(Integer.parseInt(valores.get("cdPerfil").toString()));
 			return usuario;
 		}
 		
-//	
-//	public String logar(FazerLoginComando comandoLogin) throws Exception {
-//		RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
-//		String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(comandoLogin.getLogin());
-//		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(aggregateID);
-//		if (usuarioBase !=null && comandoLogin.getSenha().equals(usuarioBase.getSenha())) {
-//			new EventoProcessador().processarEvento(new UsuarioLogadoEvento(UUID.fromString(usuarioBase.getAggregateID()), usuarioBase.getLogin(), usuarioBase.getSenha(),new Date(),0));
-//			return aggregateID;
-//		}
-//		//TODO criar exceção especifica
-//		throw new RuntimeException("Usuário ou senha inválidos");
-//		
-//	}
-//	
-//	
-//	public boolean deslogar(DeslogarComando deslogarComando) throws Exception{
-//		if (deslogarComando.getAggregateID() !=null) {
-//			UsuarioDeslogadoEvento ude = new UsuarioDeslogadoEvento((UUID)deslogarComando.getAggregateID(), new Date());
-//			new EventoProcessador().processarEvento(ude);
-//			return true;
-//		}
-//		return false;
-//	}
-//	
+	
+	public void logar(Map<String, Object> valores) throws Exception {
+		RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
+		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(String.valueOf(valores.get("aggregateID")));
+		
+		if (usuarioBase ==null || !	String.valueOf(valores.get("senha")).equals(usuarioBase.getSenha())) {
+			//TODO criar exceção especifica
+			throw new RuntimeException("Usuário ou senha inválidos");
+		}
+	}
+	
+	
+	public String existeUsuarioComEsseLogin(FazerLoginComando fazerLoginComando)throws Exception{
+		 RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
+		 String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(fazerLoginComando.getLogin());
+		 if (aggregateID == null || aggregateID =="") {
+			throw new RuntimeException("Não existe nenhum usuário registrado com este CPF.");
+		 }
+		 return aggregateID;
+	}
+	
+	public void deslogar(Map<String, Object> valores) throws Exception{
+		if (valores.get("aggregateID") ==null) {
+			throw new RuntimeException("Não existe nenhum usuário registrado com este CPF.");
+		}
+	}
+	
 
 	public int getId() {
 		return id;
@@ -190,28 +213,32 @@ public class Usuario  implements Serializable {
 	}
 		
 
-	public void editarInformacoes(EditarUsuarioComando editarUsuarioComando) throws Exception {
-		Usuario usuario = new Usuario();
-		usuario.setLogin(editarUsuarioComando.getLogin());
-		usuario.setSenha(editarUsuarioComando.getSenha());
-		usuario.setNome(editarUsuarioComando.getNome());
-		usuario.setCPF( editarUsuarioComando.getCpf());
-		usuario.setEmail( editarUsuarioComando.getEmail());
+	public void editarInformacoes(Map<String, Object> valores) throws Exception {
+		this.setLogin(String.valueOf(valores.get("login")));
+		this.setSenha(String.valueOf(valores.get("senha")));
+		this.setNome(String.valueOf(valores.get("nome")));
+		this.setCPF( String.valueOf(valores.get("cpf")));
+		this.setEmail(String.valueOf(valores.get("email")));
+		this.setPerfil(Integer.parseInt(valores.get("cdPerfil").toString()));
 //		usuario.setAggregateID(usuarioComando.aggregateId().toString());
-		EventoProcessador eventoProcessador = new EventoProcessador();
-		eventoProcessador.processarEvento((new UsuarioEditadoEvento(editarUsuarioComando.aggregateId(), usuario)));
-		eventoProcessador.processarAggregado(editarUsuarioComando.aggregateId(), Usuario.class, editarUsuarioComando.getVersion());
-		
 		
 	}
 
-	public List<PlayList> getPlayLists() {
-		return playlists;
+	public UUID getAggregateIDPlayList() {
+		return aggregateIDPlayList;
 	}
 
-	public void setPlayLists(List<PlayList> playlists) {
-		this.playlists = playlists;
+	public void setAggregateIDPlayList(UUID aggregateIDPlayList) {
+		this.aggregateIDPlayList = aggregateIDPlayList;
 	}
 
+	public Integer getCdPerfil(){
+		return this.perfilUsuario.getCdPerfil();
+	}
+	
+	public void setPerfil(Integer cdPerfil){
+		PerfilEnums perfil = PerfilEnums.getEnumByCdPerfil(cdPerfil);
+		this.perfilUsuario = new PerfilUsuario(this.aggregateID, perfil.getCdPerfil(), perfil.getDescricao(),perfil.getValor());
+	}
 
 }

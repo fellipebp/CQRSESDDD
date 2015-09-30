@@ -9,8 +9,7 @@ import junit.framework.TestCase;
 @RunWith(Suite.class)
 @SuiteClasses({ MusicaTest.class, 
 				UsuarioTest.class, 
-				PerfilUsuarioTest.class,
-				SegurancaTest.class })
+				PerfilUsuarioTest.class })
 public class ApplicatioTestCase extends TestCase {
 
 	@Override

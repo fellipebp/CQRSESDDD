@@ -14,12 +14,17 @@ public class EditarUsuarioComando implements Comando {
 	private String nome;
 	private String email;
 	
+	private Integer cdPerfil;
+	
+	private Long version;
+	
 	public EditarUsuarioComando(UUID usuarioUID, EditarUsuarioDTO editarUsuarioDTO) {
 		this.senha =  editarUsuarioDTO.getSenha();
 		this.cpf = editarUsuarioDTO.getCpf();
 		this.nome = editarUsuarioDTO.getNome();
 		this.email  = editarUsuarioDTO.getEmail();
 		this.usuarioUID = usuarioUID;
+		this.version = editarUsuarioDTO.getVersion();
 	}
 	
 	@Override
@@ -76,10 +81,16 @@ public class EditarUsuarioComando implements Comando {
 	}
 
 	@Override
-	public Integer getVersion() {
-		// TODO Auto-generated method stub
-		return null;
+	public Long getVersion() {
+		return version;
 	}
 
+	public Integer getCdPerfil() {
+		return cdPerfil;
+	}
+
+	public void setCdPerfil(Integer cdPerfil) {
+		this.cdPerfil = cdPerfil;
+	}
 	
 }

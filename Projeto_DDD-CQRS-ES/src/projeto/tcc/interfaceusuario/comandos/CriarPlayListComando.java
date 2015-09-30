@@ -1,9 +1,6 @@
 package projeto.tcc.interfaceusuario.comandos;
 
-import java.util.List;
 import java.util.UUID;
-
-import projeto.tcc.dominio.entidades.musica.PlayList;
 
 
 public class CriarPlayListComando implements Comando {
@@ -12,15 +9,11 @@ public class CriarPlayListComando implements Comando {
 	private UUID playListUID;
 	private UUID aggregateID;
 	private String nome;
-	private Integer version;
-	private List<PlayList>minhasPlayList;
 	
-	public CriarPlayListComando(UUID aggregateID, UUID playListUID , String nome, List<PlayList> minhasPlayList) {
+	public CriarPlayListComando(UUID aggregateID, UUID playListUID , String nome) {
 		this.aggregateID = aggregateID;
 		this.playListUID = playListUID;
-		this.minhasPlayList = minhasPlayList;
 		this.nome = nome;
-		this.version = 0;
 	}
 	
 	
@@ -31,9 +24,9 @@ public class CriarPlayListComando implements Comando {
 
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		// TODO Auto-generated method stub
-		return version;
+		return null;
 	}
 
 
@@ -49,16 +42,6 @@ public class CriarPlayListComando implements Comando {
 
 	public UUID getPlayListUID() {
 		return playListUID;
-	}
-
-
-	public List<PlayList> getMinhasPlayList() {
-		return minhasPlayList;
-	}
-
-
-	public void setMinhasPlayList(List<PlayList> minhasPlayList) {
-		this.minhasPlayList = minhasPlayList;
 	}
 
 

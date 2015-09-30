@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
 
 public class UsuarioLogadoEvento implements  Evento, Serializable{
@@ -15,19 +16,15 @@ public class UsuarioLogadoEvento implements  Evento, Serializable{
 	 */
 	private static final long serialVersionUID = -7012748516611245990L;
 	private UUID aggregateId;
-	private String login;
-	private String senha;
 	private Date dtLogin;
-	private Integer version;
+	private Long version;
 	
 	public UsuarioLogadoEvento() {
 	}
 	
-	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin, Integer version){
+	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin, Long version){
 		this.aggregateId = aggregateId;
-		this.login = login;
 		this.dtLogin = dtLogin;
-		this.senha = senha;
 		this.version = version;
 	}
 
@@ -48,25 +45,14 @@ public class UsuarioLogadoEvento implements  Evento, Serializable{
 		this.aggregateId = aggregateId;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
+	@Override
+	public Long getVersion() {
+		return this.version;
 	}
 
 	@Override
-	public Integer getVersion() {
-		return this.version;
+	public Class<?> getClazz() {
+		return Usuario.class;
 	}
 
 

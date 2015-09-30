@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Set;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
-import projeto.tcc.aplicacao.comandos.ProcessadorCadastrarUsuarioComando;
+import projeto.tcc.aplicacao.comandos.processador.ProcessadorCadastrarUsuarioComando;
+import projeto.tcc.aplicacao.comandos.processador.ProcessadorEditarUsuarioComando;
+import projeto.tcc.aplicacao.comandos.processador.ProcessadorLoginUsuarioComando;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
@@ -71,11 +73,32 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 
 	@Override
 	public void editarInformacoesUsuario(EditarUsuarioComando editarUsuarioComando) {
-		usuario = new Usuario();
 		try {
-			usuario.editarInformacoes(editarUsuarioComando);
+			new ProcessadorEditarUsuarioComando().execute(editarUsuarioComando);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void logarUsuario(FazerLoginComando fazerLoginComando)
+			throws Exception {
+		try {
+			new ProcessadorLoginUsuarioComando().execute(fazerLoginComando);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+	
+	
+	@Override
+	public String existeUsuarioComEsseLogin(FazerLoginComando fazerLoginComando)
+			throws Exception {
+		usuario = new Usuario();
+		try {
+			return usuario.existeUsuarioComEsseLogin(fazerLoginComando);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 

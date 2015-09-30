@@ -1,11 +1,10 @@
 package projeto.tcc.dominio.entidades.usuario;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import projeto.tcc.dominio.PerfilEnums;
 import projeto.tcc.dominio.entidades.musica.Musica;
-import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
@@ -19,21 +18,16 @@ public class RestauradorAtributosUsuario {
 	
 	public RestauradorAtributosUsuario() {
 		this.usuario = new Usuario();
-		this.usuario.playlists = new ArrayList<PlayList>();
 	}
 	
 	public void aplicaMudanca(UsuarioLogadoEvento usuarioLogadoEvento){
 		 this.usuario.aggregateID = usuarioLogadoEvento.getAggregateId().toString();
-		 this.usuario.login = usuarioLogadoEvento.getLogin();
-		 this.usuario.senha = usuarioLogadoEvento.getSenha();
-		
+		 this.usuario.dataUltimoLogin = usuarioLogadoEvento.getDtLogin();
+		 
 	}
 	
 	public void aplicaMudanca(PlayListAdicionadaEvento playListAdicionadaEvento){
-		PlayList playlist = new PlayList();
-		playlist.setAggregateID(playListAdicionadaEvento.getPlayListId().toString());
-		playlist.setNome(playListAdicionadaEvento.getNomePlayList());
-		this.usuario.playlists.add(playlist);
+		this.usuario.aggregateIDPlayList = playListAdicionadaEvento.getPlayListId();
 	}
 	
 	public void aplicaMudanca(MusicaAdicionadaEvento musicaAdicionadaEvento){
@@ -49,6 +43,7 @@ public class RestauradorAtributosUsuario {
 			this.usuario.CPF = usuarioCadastradoEvento.getCPF();
 			this.usuario.email = usuarioCadastradoEvento.getEmail();
 			this.usuario.aggregateID = usuarioCadastradoEvento.getAggregateId().toString();
+			this.usuario.setPerfil(usuarioCadastradoEvento.getCdPerfil());
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
@@ -62,10 +57,12 @@ public class RestauradorAtributosUsuario {
 			this.usuario.CPF = usuarioEditadoEvento.getCPF();
 			this.usuario.email = usuarioEditadoEvento.getEmail();
 			this.usuario.aggregateID = usuarioEditadoEvento.getAggregateId().toString();
+			this.usuario.setPerfil(usuarioEditadoEvento.getCdPerfil());
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage());
 		}
 	}
+	
 
 	public Usuario getUsuario() {
 		return usuario;

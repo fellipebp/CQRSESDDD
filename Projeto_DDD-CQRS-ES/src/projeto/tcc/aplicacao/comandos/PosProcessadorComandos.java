@@ -5,9 +5,9 @@ import projeto.tcc.interfaceusuario.comandos.Comando;
 
 public class PosProcessadorComandos {
 
-	static synchronized void validaVersaoComando(Comando comando) {
-		Integer proximaVersaoAgregado = ArmazenadorEventos.getProximaVersaoAgregado(comando.aggregateId().toString());
-		if (comando.getVersion() != proximaVersaoAgregado) {
+	public static synchronized void validaVersaoComando(Comando comando) {
+		Long ultimaVersaoAgregado = ArmazenadorEventos.getUltimaVersaoAgregado(comando.aggregateId().toString());
+		if (comando.getVersion() != ultimaVersaoAgregado) {
 			//TODO CRIAR EXCEÇÃO ESPECÍFICA
 			throw new RuntimeException();
 		}

@@ -1,5 +1,7 @@
 package projeto.tcc.interfaceusuario.comandos;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
@@ -13,7 +15,10 @@ public class CadastrarUsuarioComando implements Comando {
 	private String cpf;
 	private String nome;
 	private String email;
-	private Integer version;
+	private Date dtNascimento;
+	private Integer cdPerfil;
+	
+	private Long version;
 	
 	public CadastrarUsuarioComando(UUID usuarioUID , CriarUsuarioDTO usuarioDTO) {
 		this.usuarioUID = usuarioUID;
@@ -22,7 +27,9 @@ public class CadastrarUsuarioComando implements Comando {
 		this.setCpf(usuarioDTO.getCpf());
 		this.nome = usuarioDTO.getNome();
 		this.email = usuarioDTO.getEmail();
-		this.version = 0;
+		this.cdPerfil = usuarioDTO.getCdPerfil();
+		this.dtNascimento = usuarioDTO.getDtNascimento();
+		this.version = 0L;
 	}
 	
 	
@@ -83,8 +90,28 @@ public class CadastrarUsuarioComando implements Comando {
 
 
 	@Override
-	public Integer getVersion() {
+	public Long getVersion() {
 		return this.version;
+	}
+
+
+	public Integer getCdPerfil() {
+		return cdPerfil;
+	}
+
+
+	public void setCdPerfil(Integer cdPerfil) {
+		this.cdPerfil = cdPerfil;
+	}
+
+
+	public Date getDtNascimento() {
+		return dtNascimento;
+	}
+
+
+	public void setDtNascimento(Date dtNascimento) {
+		this.dtNascimento = dtNascimento;
 	}
 
 }

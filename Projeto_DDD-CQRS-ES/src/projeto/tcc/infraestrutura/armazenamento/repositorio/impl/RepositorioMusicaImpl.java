@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import projeto.tcc.dominio.entidades.musica.Musica;
-import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.RepositorioMusica;
 
@@ -69,7 +69,7 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 	}
 
 	public Set<Musica> recuperarMinhasMusicas(String aggregateID) {
-		Set<Musica> minhasMusicas = null;
+		Set<Musica> minhasMusicas = new HashSet<Musica>();
 		try {
 
 			PreparedStatement pstmt = (PreparedStatement) Conexao
@@ -78,12 +78,10 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 							"SELECT * from baseleitura.musicasusuario where aggregateId = ?");
 			pstmt.setString(1, aggregateID);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.isBeforeFirst())
-				minhasMusicas = new HashSet<Musica>();
 			while (rs.next()) {
 				Musica musica = new Musica();
 				musica.setNome(rs.getString("nome"));
-				minhasMusicas.add(musica);
+					minhasMusicas.add(musica);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,6 +89,4 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 
 		return minhasMusicas;
 	}
-	
-	
 }

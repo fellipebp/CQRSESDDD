@@ -44,6 +44,14 @@ public enum PerfilEnums {
 		this.valor = valor;
 	}
 	
+	public static PerfilEnums getEnumByCdPerfil(Integer cdPerfil){
+		for (PerfilEnums perfilEnum : PerfilEnums.values()) {
+			if (perfilEnum.getCdPerfil().equals(cdPerfil)) {
+				return perfilEnum;
+			}
+		}
+		return null;
+	}
 	
 	
 
