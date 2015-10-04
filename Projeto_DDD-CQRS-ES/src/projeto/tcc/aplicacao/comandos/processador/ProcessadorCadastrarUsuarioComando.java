@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import projeto.tcc.aplicacao.comandos.PosProcessadorComandos;
 import projeto.tcc.aplicacao.comandos.ProcessadorComandos;
@@ -37,11 +38,14 @@ public class ProcessadorCadastrarUsuarioComando implements ProcessadorComandos{
 		Usuario usuario = new Usuario().criarCadastro(valores);
 		
 		PosProcessadorComandos.validaVersaoComando(comando);
+		UUID idOne = UUID.randomUUID();
 		
 		List<Evento> eventos = new ArrayList<>();
 		EventoProcessador eventoProcessador = new EventoProcessador();
 		UsuarioCadastradoEvento usuarioCadastradoEvento = new UsuarioCadastradoEvento(cadastrarUsuarioComando.aggregateId(),new Timestamp(new Date().getTime()).getTime(), usuario);
+		PlayListAdicionadaEvento playListAdicionadaEvento = new PlayListAdicionadaEvento(cadastrarUsuarioComando.aggregateId(),idOne, "Default", new Timestamp(new Date().getTime()).getTime());	
 		eventos.add(usuarioCadastradoEvento);
+		eventos.add(playListAdicionadaEvento);
 		eventoProcessador.processarEventos(eventos);
 //		eventoProcessador.processarAggregado(cadastrarUsuarioComando.aggregateId(), Usuario.class, cadastrarUsuarioComando.getVersion());
 	}

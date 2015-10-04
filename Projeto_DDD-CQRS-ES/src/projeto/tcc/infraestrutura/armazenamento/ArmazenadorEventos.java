@@ -121,18 +121,11 @@ public class ArmazenadorEventos {
 	
 	
 	public static void atualizaUltimaVersaoAgregado(UUID aggregateID, Long version) {
-		connection = Conexao.getConectionEventSource();
+//		connection = Conexao.getConectionEventSource();
 		PreparedStatement pstmt2 = null;
 		try {
-			boolean jaExisteAgregado = jaExisteAgregado(aggregateID.toString());
-			if (jaExisteAgregado) {
-				pstmt2 = (PreparedStatement) connection.prepareStatement(
-						"UPDATE aggregates SET version = ? WHERE aggregate_id = ? ");
-				
-			}else{
-				
-			}
-
+			pstmt2 = (PreparedStatement) connection.prepareStatement(
+					"UPDATE aggregates SET version = ? WHERE aggregate_id = ? ");
 			pstmt2.setLong(1, version);
 			pstmt2.setString(2, aggregateID.toString());
 			pstmt2.executeUpdate();

@@ -7,7 +7,7 @@ public class PosProcessadorComandos {
 
 	public static synchronized void validaVersaoComando(Comando comando) {
 		Long ultimaVersaoAgregado = ArmazenadorEventos.getUltimaVersaoAgregado(comando.aggregateId().toString());
-		if (comando.getVersion() != ultimaVersaoAgregado) {
+		if (!comando.getVersion().equals(ultimaVersaoAgregado)){
 			//TODO CRIAR EXCEÇÃO ESPECÍFICA
 			throw new RuntimeException();
 		}

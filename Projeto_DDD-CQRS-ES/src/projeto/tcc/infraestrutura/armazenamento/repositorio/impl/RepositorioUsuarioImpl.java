@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.dominio.entidades.usuario.RestauradorAtributosUsuario;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.Evento;
@@ -116,10 +117,36 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		}
 		return restauradorAtributosUsuario.getUsuario();
 	}
+	
+	//@Override
+	//	public PlayList getPlayList(String aggregateID) {
+	//		List<Musica> musicas = new ArrayList<Musica>();
+	//		Musica musica = null;
+	//		PlayList playlist = null;
+	//		try {
+	////			RestauradorAtributosUsuario restauradorAtributosUsuario = new RestauradorAtributosUsuario();
+	//			PreparedStatement pstmt =  (PreparedStatement)Conexao.getConectionReader().prepareStatement("SELECT * from baseleitura.musicasusuario where aggregateId = ?");
+	//			pstmt.setString(1,aggregateID);
+	//			ResultSet rs = pstmt.executeQuery();
+	//			if (rs.next()) {
+	//				musica = new Musica();
+	//				musica.setNome( rs.getString("nome")); 
+	//				musicas.add(musica);
+	//			}
+	//			
+	//			List<PlayList> playlists = getAggregatePlayList(aggregateID);
+	//			playlist = playlists.get(0);
+	//			playlist.setMusicas(musicas);
+	//		} catch (SQLException e) {
+	//			e.printStackTrace();
+	//		}
+	//		
+	//		return playlist;
+	//	}
 
 	//Ainda sendo construido
 	@Override
-	public UUID getAggregatePlayList(String aggregateID) {
+	public List<PlayList> getAggregatePlayList(String aggregateID) {
 		Method method;
 		RestauradorAtributosUsuario restauradorAtributosUsuario = new RestauradorAtributosUsuario();
 		try {
@@ -130,7 +157,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 					if(evento instanceof PlayListAdicionadaEvento){
 						method = restauradorAtributosUsuario.getClass().getMethod("aplicaMudanca", evento.getClass());
 						method.invoke(restauradorAtributosUsuario, evento);
-						break;
 					}
 				}
 				
@@ -138,7 +164,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return restauradorAtributosUsuario.getUsuario().getAggregateIDPlayList();
+		
+		//FIXME AVERIGUAR ISSO ARQUI
+		return restauradorAtributosUsuario.getUsuario().getPlayLists();
 	}
 
 }

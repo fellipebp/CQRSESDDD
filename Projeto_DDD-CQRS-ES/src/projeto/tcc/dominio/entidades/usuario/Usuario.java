@@ -5,23 +5,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.swing.text.MaskFormatter;
 
 import projeto.tcc.dominio.PerfilEnums;
-import projeto.tcc.dominio.eventos.EventoProcessador;
-import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
-import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
-import projeto.tcc.dominio.eventos.usuario.UsuarioEditadoEvento;
-import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
-import projeto.tcc.infraestrutura.ControlerVersionValidator;
+import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
-import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
-import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 
@@ -44,7 +37,7 @@ public class Usuario  implements Serializable {
 	protected Date dataUltimoLogin;
 	protected String sexo;
 	protected String aggregateID;
-	protected UUID aggregateIDPlayList;
+	protected List<PlayList> playlists;
 	protected PerfilUsuario perfilUsuario;
 	
 	//private listaEventos (mudancas)
@@ -224,13 +217,14 @@ public class Usuario  implements Serializable {
 		
 	}
 
-	public UUID getAggregateIDPlayList() {
-		return aggregateIDPlayList;
+	
+	public List<PlayList> getPlayLists() {
+				return playlists;
 	}
-
-	public void setAggregateIDPlayList(UUID aggregateIDPlayList) {
-		this.aggregateIDPlayList = aggregateIDPlayList;
-	}
+	
+	public void setPlayLists(List<PlayList> playlists) {
+			this.playlists = playlists;
+ 	}
 
 	public Integer getCdPerfil(){
 		return this.perfilUsuario.getCdPerfil();

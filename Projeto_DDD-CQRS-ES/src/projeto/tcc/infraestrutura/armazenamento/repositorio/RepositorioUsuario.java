@@ -1,9 +1,9 @@
 package projeto.tcc.infraestrutura.armazenamento.repositorio;
 
-import java.util.UUID;
+import java.util.List;
 
+import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
-import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 
 public interface RepositorioUsuario {
 	
@@ -14,9 +14,11 @@ public interface RepositorioUsuario {
 	Usuario getUsuarioPorAggregateID(String aggregateID);
 	
 	String existeUsuarioComEsseLogin(String login); 
+
+	List<PlayList> getAggregatePlayList(String aggregateID); 
+
+	//PlayList getPlayList(String aggregateID);
 	
-	UUID getAggregatePlayList(String aggregateID); 
-	
-//	void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception;
+	//	void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception;
 
 }

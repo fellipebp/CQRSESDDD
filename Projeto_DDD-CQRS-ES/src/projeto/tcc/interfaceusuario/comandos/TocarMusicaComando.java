@@ -45,7 +45,7 @@ public class TocarMusicaComando implements Comando {
 	@Override
 	public Long getVersion() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0l;
 	}
 
 
