@@ -24,7 +24,7 @@
 							actionListener="#{ouvirMusicaBean.listarFavoritos}"
 							icon="ui-icon-arrowrefresh-1-w" />
 						<p:menuitem value="Playlists"
-							action="#{ouvirMusicaBean.listarMinhasMusicasPlayList}"
+							action="#{ouvirMusicaBean.listarMinhasPlayList}"
 							icon="ui-icon-arrowrefresh-1-w" oncomplete="minhaFuncao()"
 							update="@form" />
 					</p:submenu>
@@ -85,15 +85,15 @@
 						<source type="audio/mp3" src="" />
 						Sorry, your browser does not support HTML5 audio.
 					</audio>
-					<p:remoteCommand name="playMusic"
-						actionListener="#{ouvirMusicaBean.playMusica}" />
+					<p:remoteCommand name="playMusicaPlayList"
+						actionListener="#{ouvirMusicaBean.playMusicaPlayList}" />
 
 				</div>
 			</div>
 
 			<div style="vertical-align: top; align: right">
-				<p:commandButton action="#{loginUsuarioBean.deslogar()}"
-					icon="ui-icon-extlink"></p:commandButton>
+				<p:commandButton value="Deslogar" action="#{loginUsuarioBean.deslogar()}" 
+					icon="ui-icon-extlink" ajax=""></p:commandButton>
 			</div>
 		</div>
 
@@ -138,13 +138,71 @@
 
 	<script>
 	function minhaFuncao(){
- 		var audio;
- 		var playlist;
- 		    par.addClass('active').siblings().removeClass('active');
- 		    audio[0].load();
- 		    audio[0].play();
-		    playMusic([{name:'param1', value:player.src}]);
- 	}
+		var audio;
+		var playlist;
+		var tracks;
+		var current;
+		init();
+		function init() {
+		    current = 0;
+		    audio = jQuery('#audio');
+		    playlist = jQuery('#playlist');
+		    tracks = playlist.find('li a');
+		    len = tracks.length - 1;
+		    audio[0].volume = .10;
+		    audio[0].play();
+		    
+		    $(PrimeFaces.escapeClientId('menu:previous')).click(function(e) {
+				   current--
+				   if(current == -1){
+				     current = len-1;
+				   }
+				   link = playlist.find('a')[current];
+				   run(jQuery (link),audio[0]);
+				});
+			
+		    $(PrimeFaces.escapeClientId('menu:next')).click(function(e) {
+				   current++;
+			        if (current > len) {
+			            current = 0;
+			            link = playlist.find('a')[0];
+			        } else {
+			            link = playlist.find('a')[current];
+			        }
+			        run(jQuery (link), audio[0]);
+				});
+		   
+				
+		    playlist.find('a').click(function (e) {
+		        e.preventDefault();
+		        link = jQuery(this);
+		        current = link.parent().index();
+		        run(link, audio[0]);
+		    });
+		  
+		    audio[0].addEventListener('ended', function (e) {
+		        current++;
+		        if (current > len) {
+		            current = 0;
+		            link = playlist.find('a')[0];
+		        } else {
+		            link = playlist.find('a')[current];
+		        }
+		        run(jQuery (link), audio[0]);
+		    });
+		}
+		function run(link, player) {
+		    player.src = link.attr('href');
+		    par = link.parent();
+		    par.addClass('active').siblings().removeClass('active');
+		    audio[0].load();
+		    audio[0].play();
+		    playMusicaPlayList([{name:'param1', value:player.src}]);
+		    }
+		
+	    
+		
+	}
 		
 	</script>
 </h:body>

@@ -42,8 +42,8 @@
 			<p:outputLabel value="Digite a sua data de nascimento" for="dtNascimento"
 				indicateRequired="true" styleClass="alignRight" />
 				
-			<p:calendar id="dtNascimento"  value="#{criarUsuarioBean.usuarioDTO.dtNascimento}" 
-			required="true" requiredMessage="Campo data de nascimento não preenchido"  />	
+			<p:calendar id="dtNascimento" navigator="true" yearRange="c-100:c" value="#{criarUsuarioBean.usuarioDTO.dtNascimento}" 
+			required="true"  requiredMessage="Campo data de nascimento não preenchido"  />	
 			
 			
 			<p:selectOneMenu value="#{criarUsuarioBean.usuarioDTO.cdPerfil}">

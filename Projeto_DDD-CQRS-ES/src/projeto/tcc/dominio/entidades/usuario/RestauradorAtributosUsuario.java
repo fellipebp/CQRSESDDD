@@ -19,12 +19,12 @@ public class RestauradorAtributosUsuario {
 	
 	public RestauradorAtributosUsuario() {
 		this.usuario = new Usuario();
+		this.usuario.playlists = new ArrayList<PlayList>();
 	}
 	
 	public void aplicaMudanca(UsuarioLogadoEvento usuarioLogadoEvento){
 		 this.usuario.aggregateID = usuarioLogadoEvento.getAggregateId().toString();
 		 this.usuario.dataUltimoLogin = usuarioLogadoEvento.getDtLogin();
-		 this.usuario.playlists = new ArrayList<PlayList>();
 		 
 	}
 	

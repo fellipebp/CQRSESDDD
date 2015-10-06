@@ -60,7 +60,7 @@ public class LoginUsuarioBean implements Serializable {
 //			DeslogarComando deslogarComando = new DeslogarComando(request.getSession().getAttribute("aggregateID"));
 //			servicoSegurancaEscrita.deslogarUsuario(deslogarComando);
 			request.getSession().invalidate();
-			return "loginUsuario.xhtml?faces-redirect=true";
+			return "/xhtml/loginUsuarioCPF.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));

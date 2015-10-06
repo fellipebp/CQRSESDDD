@@ -75,7 +75,7 @@ public class OuvirMusicaBean implements Serializable {
 		setMinhasMusicasPlayListStatus(true);
 	}
 	
-	public String listarMinhasMusicasPlayList() {
+	public String listarMinhasPlayList() {
 		minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
 		setMinhasMusicasPlayListStatus(true);
 		setTodasMusicasStatus(false);
@@ -109,13 +109,19 @@ public class OuvirMusicaBean implements Serializable {
 	}
 
 	
-	public void playMusica(){
+	public void playMusicaPlayList(){
 		FacesContext context = FacesContext.getCurrentInstance();
 	    Map<String,String> params = context.getExternalContext().getRequestParameterMap();
 	    String[] parts = params.get("param1").split("/");
 	    System.out.println("música tocando:"+ parts[6]);
 		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),parts[6]));
 		
+		
+	}
+	
+	public void playMusicaPublica(Musica musica){
+		  System.out.println("música tocando:"+ musica.getNome());
+		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
 		
 	}
 	
