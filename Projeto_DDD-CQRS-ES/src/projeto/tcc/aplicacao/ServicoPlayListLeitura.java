@@ -8,5 +8,6 @@ import projeto.tcc.dominio.entidades.musica.PlayList;
 public interface ServicoPlayListLeitura {
 
 	
-	List<PlayList> buscarAgregadoPlayList(String aggregateID);
+	List<PlayList> buscarPlayLists(String aggregateID);
+	List<PlayList> buscarPlayListsPorEventos(String aggregateID);
 }

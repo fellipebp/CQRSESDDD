@@ -15,7 +15,9 @@ public interface RepositorioUsuario {
 	
 	String existeUsuarioComEsseLogin(String login); 
 
-	List<PlayList> getAggregatePlayList(String aggregateID); 
+	List<PlayList> getPlayListsPorEventos(String aggregateID); 
+	
+	List<PlayList> getListaPlayList(String aggregateID); 
 
 	//PlayList getPlayList(String aggregateID);
 	

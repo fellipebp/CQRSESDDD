@@ -19,6 +19,7 @@ import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.Publicador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaManipulador;
+import projeto.tcc.infraestrutura.manipuladoreventos.musica.PlayListAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioCadastradoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioDeslogadoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioEditadoManipulador;
@@ -44,6 +45,7 @@ public class ArmazenadorEventos {
 		publicador.subscriber(new UsuarioEditadoManipulador());
 		publicador.subscriber(new MusicaAdicionadaManipulador());
 		publicador.subscriber(new UsuarioLogadoManipulador());
+		publicador.subscriber(new PlayListAdicionadaManipulador());
 	}
 
 

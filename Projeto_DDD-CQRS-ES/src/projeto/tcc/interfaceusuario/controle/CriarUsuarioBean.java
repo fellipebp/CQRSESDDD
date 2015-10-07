@@ -37,10 +37,18 @@ public class CriarUsuarioBean implements Serializable{
 
 	
 	public String criarUsuario() throws Exception{
+		try{
 		UUID idOne = UUID.randomUUID();
 		servicoUsuarioEscrita.cadastrarUsuario(new CadastrarUsuarioComando(idOne,usuarioDTO));
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario cadastrado com sucesso"));
-		return "loginUsuario.xhtml";
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getCurrentInstance().addMessage(null, new FacesMessage("Usuario cadastrado com sucesso"));
+		context.getExternalContext().getFlash().setKeepMessages(true);
+		return "/xhtml/loginUsuarioCPF.xhtml?faces-redirect=true";
+		}catch (Exception e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+		} 
+		return "";
 		
 	}
 	

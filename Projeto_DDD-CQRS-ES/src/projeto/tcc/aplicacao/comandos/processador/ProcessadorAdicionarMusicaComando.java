@@ -25,12 +25,12 @@ public class ProcessadorAdicionarMusicaComando implements ProcessadorComandos{
 		valores.put("nomeMusica", adicionarMusicaComando.getMusica().getNome());
 		
 		
-		if(adicionarMusicaComando.aggregateId() == null){ //Se for null, é por que ele ainda não possui uma playlist.
+//		if(adicionarMusicaComando.aggregateId() == null){ //Se for null, é por que ele ainda não possui uma playlist.
 //			UUID agregadoRand = UUID.randomUUID();
-			throw new RuntimeException("Você não possui uma playlist");
+//			throw new RuntimeException("Você não possui uma playlist");
 //			adicionarMusicaComando.setPlaylistID(agregadoRand);
 //			new PlayList().criarPlayList(new CriarPlayListComando((UUID.fromString(String.valueOf(adicionarMusicaComando.getAggregateIDObject()))),(UUID.fromString(String.valueOf(agregadoRand))), "Default"));
-		}
+//		}
 		
 		
 //		new Usuario().adicionarMusicaNaPlayList(valores);// Acho que é assim que deveria ser feito.

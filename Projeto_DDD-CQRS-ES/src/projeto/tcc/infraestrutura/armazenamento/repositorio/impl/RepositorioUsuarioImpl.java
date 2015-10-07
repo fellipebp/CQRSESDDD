@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -146,7 +147,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 
 	//Ainda sendo construido
 	@Override
-	public List<PlayList> getAggregatePlayList(String aggregateID) {
+	public List<PlayList> getPlayListsPorEventos(String aggregateID) {
 		Method method;
 		RestauradorAtributosUsuario restauradorAtributosUsuario = new RestauradorAtributosUsuario();
 		try {
@@ -167,6 +168,28 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		
 		//FIXME AVERIGUAR ISSO ARQUI
 		return restauradorAtributosUsuario.getUsuario().getPlayLists();
+	}
+	
+	@Override
+	public List<PlayList> getListaPlayList(String aggregateID) {
+		List<PlayList>playlists = null;
+		PlayList playlist = null;
+		try {
+			playlists = new ArrayList<PlayList>();
+			PreparedStatement pstmt =  (PreparedStatement)Conexao.getConectionReader().prepareStatement("SELECT aggregateIDPlayList, nome from baseleitura.playlistsusuario where aggregateIDUsuario = ?");
+			pstmt.setString(1, aggregateID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				playlist = new PlayList();
+				playlist.setAggregateID(rs.getString("aggregateIDPlayList"));
+				playlist.setNome(rs.getString("nome"));
+				playlists.add(playlist);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return playlists;
 	}
 
 }

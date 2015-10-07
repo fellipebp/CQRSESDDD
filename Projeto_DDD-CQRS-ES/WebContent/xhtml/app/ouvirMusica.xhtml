@@ -113,9 +113,10 @@
 			</h:selectOneListbox>
 			<br />
 			<br />
-			<h:commandButton
+			<p:commandButton
 				actionListener="#{ouvirMusicaBean.adicionarMusica()}"
-				value="Adicionar música" />
+				value="Adicionar música" oncomplete="PF('checkBoxPlayList').hide()"
+				update=":menu:listarMusicas"/>
 		</h:form>
 
 	</p:dialog>

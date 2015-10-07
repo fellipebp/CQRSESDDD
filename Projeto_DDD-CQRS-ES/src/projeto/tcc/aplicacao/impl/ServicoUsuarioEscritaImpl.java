@@ -66,7 +66,7 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 		
 		
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 		
 	}
@@ -76,7 +76,7 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 		try {
 			new ProcessadorEditarUsuarioComando().execute(editarUsuarioComando);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	

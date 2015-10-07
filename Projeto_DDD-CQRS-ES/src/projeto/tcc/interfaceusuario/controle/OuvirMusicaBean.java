@@ -76,7 +76,7 @@ public class OuvirMusicaBean implements Serializable {
 	}
 	
 	public String listarMinhasPlayList() {
-		minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
+		minhasPlayLists = servicoPlayListLeitura.buscarPlayLists(aggregateIDObject.toString());
 		setMinhasMusicasPlayListStatus(true);
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
@@ -88,7 +88,7 @@ public class OuvirMusicaBean implements Serializable {
 		try{
 		UUID agregado = UUID.randomUUID();
 		servicoPlayListEscrita.criarPlayList(new CriarPlayListComando(UUID.fromString(String.valueOf(aggregateIDObject)),agregado, nomePlayList, minhasPlayLists));
-		minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
+		minhasPlayLists = servicoPlayListLeitura.buscarPlayListsPorEventos(aggregateIDObject.toString());
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("PlayList adicionada com sucesso"));
 		}catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
@@ -149,7 +149,7 @@ public class OuvirMusicaBean implements Serializable {
 	public void atualizarModalAdicionarMusica(Musica musica){
 		try{
 	
-		minhasPlayLists = servicoPlayListLeitura.buscarAgregadoPlayList(aggregateIDObject.toString());
+		minhasPlayLists = servicoPlayListLeitura.buscarPlayLists(aggregateIDObject.toString());
 		this.musicaSelecionada = musica;
 		
 		}catch (Exception e) {
