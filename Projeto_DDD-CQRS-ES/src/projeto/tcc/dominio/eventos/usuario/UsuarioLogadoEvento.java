@@ -18,14 +18,16 @@ public class UsuarioLogadoEvento implements  Evento, Serializable{
 	private UUID aggregateId;
 	private Date dtLogin;
 	private Long version;
+	private Long groupVersion;
 	
 	public UsuarioLogadoEvento() {
 	}
 	
-	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin, Long version){
+	public UsuarioLogadoEvento(UUID aggregateId,String login, String senha, Date dtLogin, Long version, Long groupVersion){
 		this.aggregateId = aggregateId;
 		this.dtLogin = dtLogin;
 		this.version = version;
+		this.groupVersion = groupVersion;
 	}
 
 
@@ -53,6 +55,11 @@ public class UsuarioLogadoEvento implements  Evento, Serializable{
 	@Override
 	public Class<?> getClazz() {
 		return Usuario.class;
+	}
+
+	@Override
+	public Long getGroupVersion() {
+		return this.groupVersion;
 	}
 
 

@@ -32,4 +32,9 @@ public class PerfilAdicionadoEvento implements Evento, Serializable{
 		return PerfilUsuario.class;
 	}
 
+	@Override
+	public Long getGroupVersion() {
+		return null;
+	}
+
 }

@@ -17,12 +17,14 @@ public class PlayListAdicionadaEvento implements Evento, Serializable{
 	private UUID aggregateId;
 	private UUID playListId;
 	private Long version;
+	private Long groupVersion;
 	
-	public PlayListAdicionadaEvento(UUID aggregateId, UUID playListId, String nomePlayList, Long version) {
+	public PlayListAdicionadaEvento(UUID aggregateId, UUID playListId, String nomePlayList, Long version, Long groupVersion) {
 		this.aggregateId = aggregateId;
 		this.playListId = playListId;
 		this.nomePlayList = nomePlayList;
 		this.version = version;
+		this.groupVersion = groupVersion;
 	}
 	
 
@@ -58,6 +60,12 @@ public class PlayListAdicionadaEvento implements Evento, Serializable{
 	@Override
 	public Class<?> getClazz() {
 		return PlayList.class;
+	}
+
+
+	@Override
+	public Long getGroupVersion() {
+		return this.groupVersion;
 	}
 
 }

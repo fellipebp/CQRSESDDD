@@ -22,8 +22,9 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 	private Integer cdPerfil;
 	
 	private Long version;
+	private Long groupVersion;
 	
-	public UsuarioCadastradoEvento(UUID aggregateId,Long version, Usuario usuario) {
+	public UsuarioCadastradoEvento(UUID aggregateId,Long version, Usuario usuario, Long groupVersion) {
 		this.aggregateId = aggregateId;
 		this.login = usuario.getLogin();
 		this.senha = usuario.getSenha();
@@ -32,6 +33,7 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 		this.email = usuario.getEmail();
 		this.version = version;
 		this.cdPerfil = usuario.getCdPerfil();
+		this.groupVersion = groupVersion;
 	}
 	
 	public String getLogin() {
@@ -127,6 +129,11 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 	@Override
 	public Class<?> getClazz() {
 		return Usuario.class;
+	}
+
+	@Override
+	public Long getGroupVersion() {
+		return this.groupVersion;
 	}
 
 

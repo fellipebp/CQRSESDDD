@@ -31,4 +31,10 @@ public class PerfilAlteradoEvento   implements Evento, Serializable{
 		return PerfilUsuario.class;
 	}
 
+	@Override
+	public Long getGroupVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
