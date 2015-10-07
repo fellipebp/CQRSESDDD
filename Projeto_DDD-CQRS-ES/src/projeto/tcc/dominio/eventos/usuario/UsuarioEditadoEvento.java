@@ -20,9 +20,11 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 	private String email;
 	private Date dtAlteracao;
 	private Integer cdPerfil;
+
 	private Long version;
+	private Long groupVersion;
 	
-	public UsuarioEditadoEvento(UUID aggregateID, Usuario usuario) {
+	public UsuarioEditadoEvento(UUID aggregateID, Usuario usuario, Long version, Long groupVersion) {
 		this.aggregateId = aggregateID;
 		this.dtAlteracao = new Date();
 		this.senha = usuario.getSenha();
@@ -30,6 +32,8 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 		this.nome = usuario.getNome();
 		this.email = usuario.getEmail();
 		this.cdPerfil = usuario.getCdPerfil();
+		this.version = version;
+		this.groupVersion = groupVersion;
 	}
 
 	@Override
@@ -99,6 +103,11 @@ public class UsuarioEditadoEvento implements Evento, Serializable {
 	@Override
 	public Class<?> getClazz() {
 		return Usuario.class;
+	}
+
+	@Override
+	public Long getGroupVersion() {
+		return this.groupVersion;
 	}
 
 }

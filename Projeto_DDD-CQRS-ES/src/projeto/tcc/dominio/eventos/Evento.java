@@ -7,6 +7,7 @@ public interface Evento  {
 
 	UUID getAggregateId();
 	Long getVersion();
+	Long getGroupVersion();
 	Class<?> getClazz();
 	
 }

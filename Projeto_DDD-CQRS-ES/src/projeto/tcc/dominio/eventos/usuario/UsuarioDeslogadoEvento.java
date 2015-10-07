@@ -13,6 +13,7 @@ public class UsuarioDeslogadoEvento implements Evento, Serializable{
 	private String login;
 	private Date dtDeslogin;
 	private Long version;
+	private Long groupVersion;
 
 	public UsuarioDeslogadoEvento(UUID aggregateID, Date data) {
 		this.aggregateID = aggregateID;
@@ -53,6 +54,11 @@ public class UsuarioDeslogadoEvento implements Evento, Serializable{
 	@Override
 	public Class<?> getClazz() {
 		return Usuario.class;
+	}
+
+	@Override
+	public Long getGroupVersion() {
+		return this.groupVersion;
 	}
 
 }

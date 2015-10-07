@@ -51,12 +51,12 @@ public class PlayList implements Serializable {
 //			criarPlayList(new CriarPlayListComando((UUID.fromString(String.valueOf(adicionarMusicaComando.getAggregateIDObject()))),(UUID.fromString(String.valueOf(agregadoRand))), "Default"));
 //		}
 //		
-		new EventoProcessador().processarEvento((new MusicaAdicionadaEvento((UUID)valores.get("aggregateIDPlayList"), (String)valores.get("nomeMusica"), 0L)));
+		new EventoProcessador().processarEvento((new MusicaAdicionadaEvento((UUID)valores.get("aggregateIDPlayList"), (String)valores.get("nomeMusica"), 0L, 0L)));
 		return playList;
 	}
 	
 	public void tocarMusica(TocarMusicaComando tocarMusicaComando) throws Exception {
-		new EventoProcessador().processarEvento((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica(),  0L)));
+		new EventoProcessador().processarEvento((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica(),  0L, 0L)));
 		
 	}
 	

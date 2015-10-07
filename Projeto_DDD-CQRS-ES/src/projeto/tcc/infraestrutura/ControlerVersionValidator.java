@@ -1,6 +1,8 @@
 package projeto.tcc.infraestrutura;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import projeto.tcc.infraestrutura.armazenamento.ArmazenadorEventos;
@@ -23,5 +25,9 @@ public class ControlerVersionValidator {
 	
 	public static Long getUltimaVersaoAgregado(String aggregateID){
 		return ArmazenadorEventos.getUltimaVersaoAgregado(aggregateID);
+	}
+	
+	public static Long getProximaVersao(){
+		return new Timestamp(new Date().getTime()).getTime();
 	}
 }

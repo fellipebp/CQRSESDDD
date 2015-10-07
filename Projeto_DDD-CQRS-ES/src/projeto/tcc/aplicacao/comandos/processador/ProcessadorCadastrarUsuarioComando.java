@@ -15,6 +15,7 @@ import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
+import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.Comando;
@@ -42,8 +43,9 @@ public class ProcessadorCadastrarUsuarioComando implements ProcessadorComandos{
 		
 		List<Evento> eventos = new ArrayList<>();
 		EventoProcessador eventoProcessador = new EventoProcessador();
-		UsuarioCadastradoEvento usuarioCadastradoEvento = new UsuarioCadastradoEvento(cadastrarUsuarioComando.aggregateId(),new Timestamp(new Date().getTime()).getTime(), usuario);
-		PlayListAdicionadaEvento playListAdicionadaEvento = new PlayListAdicionadaEvento(cadastrarUsuarioComando.aggregateId(),idOne, "Default", new Timestamp(new Date().getTime()).getTime());	
+		Long version = ControlerVersionValidator.getProximaVersao();
+		UsuarioCadastradoEvento usuarioCadastradoEvento = new UsuarioCadastradoEvento(cadastrarUsuarioComando.aggregateId(),version, usuario, version);
+		PlayListAdicionadaEvento playListAdicionadaEvento = new PlayListAdicionadaEvento(cadastrarUsuarioComando.aggregateId(),idOne, "Default", ControlerVersionValidator.getProximaVersao(), version);	
 		eventos.add(usuarioCadastradoEvento);
 		eventos.add(playListAdicionadaEvento);
 		eventoProcessador.processarEventos(eventos);

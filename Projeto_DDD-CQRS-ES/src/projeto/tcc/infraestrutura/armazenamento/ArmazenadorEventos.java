@@ -56,7 +56,7 @@ public class ArmazenadorEventos {
 			try {
 				PreparedStatement pstmt1 = null;
 				pstmt1 = (PreparedStatement) connection
-						.prepareStatement("insert into eventstore(agregateid,events, version) values(?,?,?)",
+						.prepareStatement("insert into eventstore(agregateid,events, version, groupVersion) values(?,?,?,?)",
 								PreparedStatement.RETURN_GENERATED_KEYS);
 				ByteArrayOutputStream bos = new ByteArrayOutputStream();
 				ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -68,6 +68,7 @@ public class ArmazenadorEventos {
 				pstmt1.setString(1, evento.getAggregateId().toString());
 				pstmt1.setObject(2, dadosEvento);
 				pstmt1.setLong(3, evento.getVersion());
+				pstmt1.setLong(4, evento.getGroupVersion());
 				pstmt1.executeUpdate();
 				pstmt1.close();
 				
@@ -201,7 +202,7 @@ public class ArmazenadorEventos {
 		try {
 			connection.setAutoCommit(false);
 			pstmt1 = (PreparedStatement) connection
-					.prepareStatement("insert into eventstore(agregateid,events, version) values(?,?,?)",
+					.prepareStatement("insert into eventstore(agregateid,events, version, groupVersion) values(?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS);
 			for (Evento evento : evs) {
 				if (evento.getAggregateId() != null
@@ -217,6 +218,7 @@ public class ArmazenadorEventos {
 						pstmt1.setString(1, evento.getAggregateId().toString());
 						pstmt1.setObject(2, dadosEvento);
 						pstmt1.setLong(3, evento.getVersion());
+						pstmt1.setLong(4, evento.getGroupVersion());
 //						pstmt1.setTimestamp(4, new Timestamp(Calendar
 //								.getInstance().getTimeInMillis()));
 						pstmt1.executeUpdate();

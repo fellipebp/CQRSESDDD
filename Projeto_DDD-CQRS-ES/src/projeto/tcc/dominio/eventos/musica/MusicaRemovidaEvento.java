@@ -24,4 +24,10 @@ public class MusicaRemovidaEvento implements Evento {
 		return Musica.class;
 	}
 
+	@Override
+	public Long getGroupVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
