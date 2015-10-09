@@ -10,4 +10,5 @@ public interface ServicoMusicaLeitura {
 	List<Musica> listarTodasMusicas();
 	
 	Set<Musica> listarMinhasMusicas(String aggregateID);
+	Set<Musica> listarMinhasMusicasFavorito(String aggregateID);
 }

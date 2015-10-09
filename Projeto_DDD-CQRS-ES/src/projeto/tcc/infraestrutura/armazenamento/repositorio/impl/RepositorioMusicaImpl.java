@@ -92,5 +92,29 @@ public class RepositorioMusicaImpl implements RepositorioMusica, Serializable {
 		return minhasMusicas;
 	}
 	
+	public Set<Musica> recuperarMinhasMusicasFavorito(String aggregateID) {
+		Set<Musica> minhasMusicas = null;
+		try {
+			
+			PreparedStatement pstmt = (PreparedStatement) Conexao
+					.getConectionReader()
+					.prepareStatement(
+							"SELECT * from baseleitura.musicasfavoritousuario where aggregateId = ?");
+			pstmt.setString(1, aggregateID);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.isBeforeFirst())
+				minhasMusicas = new HashSet<Musica>();
+			while (rs.next()) {
+				Musica musica = new Musica();
+				musica.setNome(rs.getString("nome"));
+				minhasMusicas.add(musica);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return minhasMusicas;
+	}
+	
 	
 }

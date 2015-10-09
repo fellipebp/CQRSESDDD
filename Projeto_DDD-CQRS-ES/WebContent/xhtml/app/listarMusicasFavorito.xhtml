@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:s="http://jboss.com/products/seam/taglib">
+
+<ui:composition>
+			<div id="listaFavorito" style="float:right; width:70%" >
+				<h:panelGroup rendered="#{ouvirMusicaBean.minhasMusicasFavorito != null and ouvirMusicaBean.minhasMusicasFavoritoStatus}">
+				<div>
+						<ul class="playlist" >
+							<ui:repeat var="musica"
+								value="#{ouvirMusicaBean.minhasMusicasFavorito.toArray()}">
+								<li class="active" style='list-style: none;'><a
+									style='text-decoration: none'
+									href="#{request.contextPath}/resources/music/#{musica.nome}">
+										<h:outputText value="#{musica.nome}" />
+								</a></li>
+							</ui:repeat>
+						</ul>
+				</div>
+					</h:panelGroup>
+			</div>
+
+
+
+	
+</ui:composition>
+</html>

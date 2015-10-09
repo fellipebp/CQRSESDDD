@@ -33,11 +33,13 @@
 						</a></li>
 					</p:column>
 					<p:column>
-						<p:commandButton id="adicionarMusica" value="adicionar musica"
-							style="font-size:0.8em"
+					<p:menuButton value="Adicionar música" style="font-size:0.7em" >
+     				   <p:menuitem id="adicionarMusica" value="Adicionar em Playlist"
 							actionListener="#{ouvirMusicaBean.atualizarModalAdicionarMusica(musica)}"
 							oncomplete="PF('checkBoxPlayList').show()"
-							update=":checkBoxPlayListDialog" />
+							update=":checkBoxPlayListDialog"  />
+    			  	   <p:menuitem value="Adicionar em Favoritos" actionListener="#{ouvirMusicaBean.adicionarMusicaFavoritos(musica)}" />
+    			  	 </p:menuButton>						
 						<p:commandButton id="fakeButtonPlay"
 							actionListener="#{ouvirMusicaBean.playMusicaPublica(musica)}"
 							value="fake button" style="display:none" />

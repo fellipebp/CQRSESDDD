@@ -5,12 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +15,7 @@ import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.ControlerVersionValidator;
 import projeto.tcc.infraestrutura.Publicador;
+import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaFavoritoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.PlayListAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioCadastradoManipulador;
@@ -40,6 +38,7 @@ public class ArmazenadorEventos {
 	
 	private static void carregaSubscribers() {
 		publicador.subscriber(new MusicaAdicionadaManipulador());
+		publicador.subscriber(new MusicaAdicionadaFavoritoManipulador());
 		publicador.subscriber(new UsuarioCadastradoManipulador());
 		publicador.subscriber(new UsuarioDeslogadoManipulador());
 		publicador.subscriber(new UsuarioEditadoManipulador());

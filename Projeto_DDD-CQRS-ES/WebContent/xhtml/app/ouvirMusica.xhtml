@@ -21,8 +21,10 @@
 					<p:submenu
 						label="Usuário - #{loginUsuarioBean.fazerLoginDTO.login}">
 						<p:menuitem value="Meus favoritos"
-							actionListener="#{ouvirMusicaBean.listarFavoritos}"
-							icon="ui-icon-arrowrefresh-1-w" />
+							action="#{ouvirMusicaBean.listarMinhasMusicasFavorito}"
+							oncomplete="minhaFuncao()"
+							icon="ui-icon-arrowrefresh-1-w"
+							update="@form" />
 						<p:menuitem value="Playlists"
 							action="#{ouvirMusicaBean.listarMinhasPlayList}"
 							icon="ui-icon-arrowrefresh-1-w" oncomplete="minhaFuncao()"
@@ -61,6 +63,8 @@
 						</p:submenu>
 					</p:submenu>
 				</p:panelMenu>
+				<p:commandButton value="Deslogar" action="#{loginUsuarioBean.deslogar()}" 
+					icon="ui-icon-extlink" ajax=""></p:commandButton>
 
 
 			</div>
@@ -68,6 +72,7 @@
 
 
 			<ui:include src="listarMusicas.xhtml" />
+			<ui:include src="listarMusicasFavorito.xhtml" />
 			<ui:include src="musicasPlayList.xhtml" />
 		</div>
 		<div>
@@ -91,10 +96,7 @@
 				</div>
 			</div>
 
-			<div style="vertical-align: top; align: right">
-				<p:commandButton value="Deslogar" action="#{loginUsuarioBean.deslogar()}" 
-					icon="ui-icon-extlink" ajax=""></p:commandButton>
-			</div>
+
 		</div>
 
 	</h:form>
@@ -147,7 +149,7 @@
 		function init() {
 		    current = 0;
 		    audio = jQuery('#audio');
-		    playlist = jQuery('#playlist');
+		    playlist = jQuery('.playlist');
 		    tracks = playlist.find('li a');
 		    len = tracks.length - 1;
 		    audio[0].volume = .10;

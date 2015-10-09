@@ -33,4 +33,9 @@ public class ServicoMusicaLeituraImpl implements ServicoMusicaLeitura, Serializa
 		return repositorioMusica.recuperarMinhasMusicas(aggregateID);
 	}
 
+	@Override
+	public Set<Musica> listarMinhasMusicasFavorito(String aggregateID) {
+		return repositorioMusica.recuperarMinhasMusicasFavorito(aggregateID);
+	}
+
 }

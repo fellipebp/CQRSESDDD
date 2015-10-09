@@ -14,12 +14,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import projeto.tcc.aplicacao.ServicoMusicaEscrita;
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoPlayListEscrita;
 import projeto.tcc.aplicacao.ServicoPlayListLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
+import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaFavoritosComando;
 import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;
 import projeto.tcc.interfaceusuario.comandos.TocarMusicaComando;
 import projeto.tcc.interfaceusuario.servico.ServicoMusicaFacade;
@@ -35,13 +37,16 @@ public class OuvirMusicaBean implements Serializable {
 	@Inject	private ServicoPlayListEscrita servicoPlayListEscrita;
 	@Inject	private ServicoPlayListLeitura servicoPlayListLeitura;
 	@Inject	private ServicoMusicaLeitura servicoMusicaLeitura;
+	@Inject	private ServicoMusicaEscrita servicoMusicaEscrita;
 	private List<Musica> listaMusicas;
 	private Set<Musica> minhasMusicas;
+	private Set<Musica> minhasMusicasFavorito;
 	private Musica musicaSelecionada;
 	private HttpSession sessao;
 	private boolean todasMusicasStatus;
 	private boolean minhasMusicasStatus;
 	private boolean minhasMusicasPlayListStatus;
+	private boolean minhasMusicasFavoritoStatus;
 	private Object aggregateIDObject;
 	private List<PlayList> minhasPlayLists;
 	private String agregadoPlayListSelecionada;
@@ -56,6 +61,7 @@ public class OuvirMusicaBean implements Serializable {
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
 		setMinhasMusicasPlayListStatus(false);
+		setMinhasMusicasFavoritoStatus(false);
 		
 	}
 
@@ -64,6 +70,7 @@ public class OuvirMusicaBean implements Serializable {
 		setTodasMusicasStatus(true);
 		setMinhasMusicasStatus(false);
 		setMinhasMusicasPlayListStatus(false);
+		setMinhasMusicasFavoritoStatus(false);
 		return null;
 
 	}
@@ -73,6 +80,7 @@ public class OuvirMusicaBean implements Serializable {
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
 		setMinhasMusicasPlayListStatus(true);
+		setMinhasMusicasFavoritoStatus(false);
 	}
 	
 	public String listarMinhasPlayList() {
@@ -80,6 +88,16 @@ public class OuvirMusicaBean implements Serializable {
 		setMinhasMusicasPlayListStatus(true);
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
+		setMinhasMusicasFavoritoStatus(false);
+		return null;
+	}
+	
+	public String listarMinhasMusicasFavorito(){
+		minhasMusicasFavorito = servicoMusicaLeitura.listarMinhasMusicasFavorito(aggregateIDObject.toString());
+		setTodasMusicasStatus(false);
+		setMinhasMusicasStatus(false);
+		setMinhasMusicasPlayListStatus(false);
+		setMinhasMusicasFavoritoStatus(true);
 		return null;
 	}
 	
@@ -97,7 +115,15 @@ public class OuvirMusicaBean implements Serializable {
 		
 	}
 
-	public void listarFavoritos() {
+	public void adicionarMusicaFavoritos(Musica musica) {
+		try{
+		
+		servicoMusicaEscrita.adicionarMusicaFavoritos(new AdicionarMusicaFavoritosComando(UUID.fromString(String.valueOf(aggregateIDObject)), musica));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Música adicionada com sucesso"));
+		}catch (Exception e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, e.getMessage(), null));
+		} 
 	}
 
 	public void alterarSenha() {
@@ -244,6 +270,22 @@ public class OuvirMusicaBean implements Serializable {
 
 	public void setNomePlayList(String nomePlayList) {
 		this.nomePlayList = nomePlayList;
+	}
+
+	public Set<Musica> getMinhasMusicasFavorito() {
+		return minhasMusicasFavorito;
+	}
+
+	public void setMinhasMusicasFavorito(Set<Musica> minhasMusicasFavorito) {
+		this.minhasMusicasFavorito = minhasMusicasFavorito;
+	}
+
+	public boolean isMinhasMusicasFavoritoStatus() {
+		return minhasMusicasFavoritoStatus;
+	}
+
+	public void setMinhasMusicasFavoritoStatus(boolean minhasMusicasFavoritoStatus) {
+		this.minhasMusicasFavoritoStatus = minhasMusicasFavoritoStatus;
 	}
 
 }
