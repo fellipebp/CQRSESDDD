@@ -1,4 +1,4 @@
-package projeto.tcc;
+package projeto.tcc.interfaceusuario;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import projeto.tcc.interfaceusuario.controle.LoginUsuarioBean;
 
 @WebFilter("/xhtml/app/*")
-public class FiltroTeste implements Filter {
+public class FiltroLogin implements Filter {
 
 	@Inject
     private Instance<LoginUsuarioBean> userInstance;

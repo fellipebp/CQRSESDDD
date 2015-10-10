@@ -142,7 +142,6 @@ public class Usuario  implements Serializable {
 				throw new RuntimeException("Já existe um usuário com esse cpf");
 			}
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date dtNascimento = new Date(Long.parseLong(valores.get("dtNascimento").toString()));
 			Calendar dtNascimentoC = Calendar.getInstance();
 			dtNascimentoC.setTime(dtNascimento);

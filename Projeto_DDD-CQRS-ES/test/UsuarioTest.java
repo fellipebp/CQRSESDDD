@@ -1,13 +1,14 @@
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.junit.Test;
 
 import projeto.tcc.dominio.entidades.usuario.Usuario;
-import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
-import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
-import static org.junit.Assert.*;
 
 public class UsuarioTest {
 
@@ -22,6 +23,10 @@ public class UsuarioTest {
 			valores.put("nome", "teste");
 			valores.put("cpf", "9999999999");
 			valores.put("email", "teste@gmail.com");
+			Calendar dtNascimento = Calendar.getInstance();
+			dtNascimento.set(1980, 2, 25);
+			valores.put("dtNascimento",dtNascimento.getTime().getTime());
+			valores.put("cdPerfil", 1);
 			
 			usuario = new Usuario().criarCadastro(valores);
 			assertTrue(true);
@@ -30,6 +35,32 @@ public class UsuarioTest {
 		}
 
 	}
+	
+	
+	@Test
+	public void NaoDeveCriarUsuarioPorSerMenorIdade() {
+		try {
+			Map<String, Object> valores = new HashMap<String, Object>();
+			valores.put("login","teste");
+			valores.put("senha", "teste");
+			valores.put("nome", "teste");
+			valores.put("cpf", "9999999999");
+			valores.put("email", "teste@gmail.com");
+			Calendar dtNascimento = Calendar.getInstance();
+			dtNascimento.set(2010, 2, 25);
+			valores.put("dtNascimento",dtNascimento.getTime().getTime());
+			valores.put("cdPerfil", 1);
+			
+			usuario = new Usuario().criarCadastro(valores);
+			fail("Não deveria ter passado aqui");
+		} catch (Exception e) {
+			assertTrue(true);
+		}
+
+	}
+	
+	
+	
 	
 //	@Test
 //	public void deveFalharCriarUsuarioDuplicado() {
