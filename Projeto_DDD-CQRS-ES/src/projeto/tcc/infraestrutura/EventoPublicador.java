@@ -16,16 +16,15 @@ import javax.enterprise.context.ApplicationScoped;
 import projeto.tcc.dominio.eventos.Evento;
 
 @ApplicationScoped
-public class Publicador implements Publisher<Evento> {
+public class EventoPublicador implements IPublicador<Evento> {
 
 	private static Queue<Evento> filaEventos = new LinkedList<>();
 	private final ExecutorService pool = Executors.newFixedThreadPool(10);
 	private Calendar dataUltimaPublicacao;
-	//private ManipuladorEventos manipuladorEventos= new ManipuladorEventos();
-	private List<Subscriber<Evento>> subscribers;
+	private List<IAssinante<Evento>> assinantes;
 	
-	public Publicador() {
-		subscribers = new ArrayList<>();
+	public EventoPublicador() {
+		assinantes = new ArrayList<>();
 	}
 	
 	@PostConstruct
@@ -83,15 +82,15 @@ public class Publicador implements Publisher<Evento> {
 	}
 
 	@Override
-	public void subscriber(Subscriber<Evento> sub) {
-			subscribers.add(sub);
+	public void subscriber(IAssinante<Evento> sub) {
+			assinantes.add(sub);
 		
 	}
 
 	@Override
 	public void publish(Evento arg) {
-		for (Subscriber<Evento> subscriber : subscribers) {
-			subscriber.getPublication(arg);
+		for (IAssinante<Evento> subscriber : assinantes) {
+			subscriber.getPublicacao(arg);
 		}
 	}
 

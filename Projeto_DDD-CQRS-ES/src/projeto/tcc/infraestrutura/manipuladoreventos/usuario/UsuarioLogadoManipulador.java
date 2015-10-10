@@ -9,9 +9,9 @@ import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioLogadoEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.Subscriber;
+import projeto.tcc.infraestrutura.IAssinante;
 
-public class UsuarioLogadoManipulador implements Subscriber<Evento> {
+public class UsuarioLogadoManipulador implements IAssinante<Evento> {
 
 	
 	public UsuarioLogadoManipulador() {
@@ -45,7 +45,7 @@ public class UsuarioLogadoManipulador implements Subscriber<Evento> {
 	}
 
 	@Override
-	public void getPublication(Evento arg) {
+	public void getPublicacao(Evento arg) {
 		if (arg instanceof UsuarioLogadoEvento) {
 			insereViews((UsuarioLogadoEvento) arg);
 		}

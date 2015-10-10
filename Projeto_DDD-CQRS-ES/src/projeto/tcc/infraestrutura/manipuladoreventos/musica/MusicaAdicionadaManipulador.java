@@ -7,11 +7,11 @@ import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.Subscriber;
+import projeto.tcc.infraestrutura.IAssinante;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class MusicaAdicionadaManipulador implements Subscriber<Evento>{
+public class MusicaAdicionadaManipulador implements IAssinante<Evento>{
 
 	
 	public MusicaAdicionadaManipulador() {
@@ -49,7 +49,7 @@ public class MusicaAdicionadaManipulador implements Subscriber<Evento>{
 	}
 
 	@Override
-	public void getPublication(Evento arg) {
+	public void getPublicacao(Evento arg) {
 		if (arg instanceof MusicaAdicionadaEvento) {
 			insereViews((MusicaAdicionadaEvento) arg);
 		}

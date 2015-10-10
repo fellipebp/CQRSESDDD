@@ -6,11 +6,11 @@ import java.sql.Connection;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaFavoritosEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.Subscriber;
+import projeto.tcc.infraestrutura.IAssinante;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class MusicaAdicionadaFavoritoManipulador implements Subscriber<Evento>{
+public class MusicaAdicionadaFavoritoManipulador implements IAssinante<Evento>{
 
 	
 	public MusicaAdicionadaFavoritoManipulador() {
@@ -48,7 +48,7 @@ public class MusicaAdicionadaFavoritoManipulador implements Subscriber<Evento>{
 	}
 
 	@Override
-	public void getPublication(Evento arg) {
+	public void getPublicacao(Evento arg) {
 		if (arg instanceof MusicaAdicionadaFavoritosEvento) {
 			insereViews((MusicaAdicionadaFavoritosEvento) arg);
 		}

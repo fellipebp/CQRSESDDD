@@ -14,7 +14,7 @@ import java.util.UUID;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.infraestrutura.Conexao;
 import projeto.tcc.infraestrutura.ControlerVersionValidator;
-import projeto.tcc.infraestrutura.Publicador;
+import projeto.tcc.infraestrutura.EventoPublicador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaFavoritoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.PlayListAdicionadaManipulador;
@@ -27,11 +27,11 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class ArmazenadorEventos {
 	
-	private static Publicador publicador;
+	private static EventoPublicador publicador;
 	private static Connection connection;
 
 	  static {
-	      publicador = new Publicador();
+	      publicador = new EventoPublicador();
 	      carregaSubscribers();
 	  }
 	  

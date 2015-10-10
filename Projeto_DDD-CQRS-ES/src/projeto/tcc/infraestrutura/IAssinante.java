@@ -1,7 +1,7 @@
 package projeto.tcc.infraestrutura;
 
-public interface Subscriber<E>{
+public interface IAssinante<E>{
 	
-	public void getPublication(E arg);
+	public void getPublicacao(E argumento);
 
 }

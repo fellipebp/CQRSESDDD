@@ -6,11 +6,11 @@ import java.sql.Date;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioDeslogadoEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.Subscriber;
+import projeto.tcc.infraestrutura.IAssinante;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class UsuarioDeslogadoManipulador implements Subscriber<Evento> {
+public class UsuarioDeslogadoManipulador implements IAssinante<Evento> {
 	public UsuarioDeslogadoManipulador() {
 		// TODO Auto-generated constructor stub
 	}
@@ -47,7 +47,7 @@ public class UsuarioDeslogadoManipulador implements Subscriber<Evento> {
 	}
 
 	@Override
-	public void getPublication(Evento arg) {
+	public void getPublicacao(Evento arg) {
 		if (arg instanceof UsuarioDeslogadoEvento) {
 			insereViews((UsuarioDeslogadoEvento) arg);
 		}

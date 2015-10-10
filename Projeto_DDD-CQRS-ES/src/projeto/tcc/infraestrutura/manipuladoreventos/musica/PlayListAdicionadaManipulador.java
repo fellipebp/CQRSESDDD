@@ -5,11 +5,11 @@ import java.sql.Connection;
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.dominio.eventos.musica.PlayListAdicionadaEvento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.Subscriber;
+import projeto.tcc.infraestrutura.IAssinante;
 
 import com.mysql.jdbc.PreparedStatement;
 
-public class PlayListAdicionadaManipulador implements Subscriber<Evento>{
+public class PlayListAdicionadaManipulador implements IAssinante<Evento>{
 
 	
 	public PlayListAdicionadaManipulador() {
@@ -47,7 +47,7 @@ public class PlayListAdicionadaManipulador implements Subscriber<Evento>{
 	}
 
 	@Override
-	public void getPublication(Evento arg) {
+	public void getPublicacao(Evento arg) {
 		if (arg instanceof PlayListAdicionadaEvento) {
 			insereViews((PlayListAdicionadaEvento) arg);
 		}
