@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import projeto.tcc.MusicasEnum;
 import projeto.tcc.aplicacao.ServicoMusicaEscrita;
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoPlayListEscrita;
@@ -146,7 +147,8 @@ public class OuvirMusicaBean implements Serializable {
 	}
 	
 	public void playMusicaPublica(Musica musica){
-		  System.out.println("música tocando:"+ musica.getNome());
+	    System.out.println("música tocando:"+ musica.getNome());
+	    System.out.println("música tocando:"+ MusicasEnum.getNome(musica.getNome()));
 		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
 		
 	}
