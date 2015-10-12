@@ -3,8 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Música</title>
 	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
@@ -24,7 +23,8 @@
 							action="#{ouvirMusicaBean.listarMinhasMusicasFavorito}"
 							oncomplete="minhaFuncao()"
 							icon="ui-icon-arrowrefresh-1-w"
-							update="@form" />
+							update="@form"
+							rendered="#{ouvirMusicaBean.nivelAcesso > 1}" />
 						<p:menuitem value="Playlists"
 							action="#{ouvirMusicaBean.listarMinhasPlayList}"
 							icon="ui-icon-arrowrefresh-1-w" oncomplete="minhaFuncao()"

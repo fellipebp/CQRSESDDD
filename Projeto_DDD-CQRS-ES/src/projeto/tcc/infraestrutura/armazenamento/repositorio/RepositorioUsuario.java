@@ -13,6 +13,8 @@ public interface RepositorioUsuario {
 	
 	Usuario getUsuarioPorAggregateID(String aggregateID);
 	
+	int getNivelAcessoUsuario(String aggregateID);
+	
 	String existeUsuarioComEsseLogin(String login); 
 
 	List<PlayList> getPlayListsPorEventos(String aggregateID); 

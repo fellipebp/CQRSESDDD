@@ -55,11 +55,11 @@ public class PlayList implements Serializable {
 		return playList;
 	}
 	
-	public void tocarMusica(TocarMusicaComando tocarMusicaComando) throws Exception {
-		new EventoProcessador().processarEvento((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica(),  0L, 0L)));
-		
-	}
-	
+//	public void tocarMusica(TocarMusicaComando tocarMusicaComando) throws Exception {
+//		new EventoProcessador().processarEvento((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica(),  0L, 0L)));
+//		
+//	}
+//	
 	public void criarPlayList(Map<String, Object> valores)throws Exception {
 		
 		List<PlayList> minhasPlayLists = (List<PlayList>)valores.get("listaPlayList");
