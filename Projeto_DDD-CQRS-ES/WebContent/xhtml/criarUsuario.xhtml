@@ -30,6 +30,11 @@
 				indicateRequired="true" styleClass="alignRight" />
 			<p:inputText id="email" value="#{criarUsuarioBean.usuarioDTO.email}"
 				required="true" />
+			<p:outputLabel for="sexo" value="Sexo"  indicateRequired="true" styleClass="alignRight"/>
+	        <p:selectOneRadio id="sexo" value="#{criarUsuarioBean.usuarioDTO.sgSexo}" required="true">
+	        	<f:selectItems  value="#{criarUsuarioBean.sexos}" var="sexo" itemLabel="#{sexo.deSexo}" itemValue="#{sexo.sgSexo}"/>
+	        </p:selectOneRadio>
+        
 			<p:outputLabel value="Digite o usuário:" for="login"
 				indicateRequired="true" styleClass="alignRight" />
 			<p:inputText id="login" value="#{criarUsuarioBean.usuarioDTO.login}"
@@ -45,8 +50,11 @@
 			<p:calendar id="dtNascimento" navigator="true" yearRange="c-100:c" value="#{criarUsuarioBean.usuarioDTO.dtNascimento}" 
 			required="true"  requiredMessage="Campo data de nascimento não preenchido"  />	
 			
+			<p:outputLabel value="Selecione seu perfil de uso" for="cdPerfil"
+			indicateRequired="true" styleClass="alignRight" />
+	
 			
-			<p:selectOneMenu value="#{criarUsuarioBean.usuarioDTO.cdPerfil}">
+			<p:selectOneMenu id="cdPerfil" value="#{criarUsuarioBean.usuarioDTO.cdPerfil}" required="true">
 			    <f:selectItem itemLabel="Selecione" />
 			    <f:selectItems var="perfil" value="#{criarUsuarioBean.perfis}"
 			                    itemValue="#{perfil.cdPerfil}" itemLabel="#{perfil.descricao} - #{perfil.valor}" />

@@ -16,6 +16,7 @@ public class CadastrarUsuarioComando implements Comando {
 	private String nome;
 	private String email;
 	private Date dtNascimento;
+	private String sgSexo;
 	private Integer cdPerfil;
 	
 	private Long version;
@@ -24,11 +25,12 @@ public class CadastrarUsuarioComando implements Comando {
 		this.usuarioUID = usuarioUID;
 		this.login = usuarioDTO.getLogin();
 		this.senha = usuarioDTO.getSenha();
-		this.setCpf(usuarioDTO.getCpf());
+		this.cpf = usuarioDTO.getCpf();
 		this.nome = usuarioDTO.getNome();
 		this.email = usuarioDTO.getEmail();
 		this.cdPerfil = usuarioDTO.getCdPerfil();
 		this.dtNascimento = usuarioDTO.getDtNascimento();
+		this.sgSexo = usuarioDTO.getSgSexo();
 		this.version = 0L;
 	}
 	
@@ -112,6 +114,16 @@ public class CadastrarUsuarioComando implements Comando {
 
 	public void setDtNascimento(Date dtNascimento) {
 		this.dtNascimento = dtNascimento;
+	}
+
+
+	public String getSgSexo() {
+		return sgSexo;
+	}
+
+
+	public void setSgSexo(String sgSexo) {
+		this.sgSexo = sgSexo;
 	}
 
 }

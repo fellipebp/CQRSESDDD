@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 
 import javax.swing.text.MaskFormatter;
 
-import projeto.tcc.dominio.PerfilEnums;
 import projeto.tcc.dominio.entidades.musica.PlayList;
+import projeto.tcc.dominio.enums.PerfilEnums;
 import projeto.tcc.dominio.exception.UsuarioJaRegistradoException;
 import projeto.tcc.dominio.exception.UsuarioMenorIdadeException;
 import projeto.tcc.dominio.exception.UsuarioNaoRegistradoException;
@@ -128,6 +128,8 @@ public class Usuario  implements Serializable {
 			usuario.setNome(String.valueOf(valores.get("nome")));
 			usuario.setCPF( String.valueOf(valores.get("cpf")));
 			usuario.setEmail(String.valueOf(valores.get("email")));
+			usuario.setSexo(String.valueOf(valores.get("sgSexo")));
+			usuario.setDataNascimento(dtNascimento);
 			usuario.setPerfil(Integer.parseInt(valores.get("cdPerfil").toString()));
 			return usuario;
 		}

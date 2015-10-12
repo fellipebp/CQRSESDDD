@@ -1,4 +1,4 @@
-package projeto.tcc.dominio;
+package projeto.tcc.dominio.enums;
 
 public enum PerfilEnums {
 	

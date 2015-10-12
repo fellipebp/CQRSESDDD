@@ -47,6 +47,8 @@ public class RestauradorAtributosUsuario {
 			this.usuario.nome = usuarioCadastradoEvento.getNome();
 			this.usuario.CPF = usuarioCadastradoEvento.getCPF();
 			this.usuario.email = usuarioCadastradoEvento.getEmail();
+			this.usuario.dataNascimento = usuarioCadastradoEvento.getDtNascimento();
+			this.usuario.sexo = usuarioCadastradoEvento.getSgSexo();
 			this.usuario.aggregateID = usuarioCadastradoEvento.getAggregateId().toString();
 			this.usuario.setPerfil(usuarioCadastradoEvento.getCdPerfil());
 		} catch (Exception e) {

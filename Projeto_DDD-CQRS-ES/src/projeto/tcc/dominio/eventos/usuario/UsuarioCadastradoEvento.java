@@ -1,6 +1,7 @@
 package projeto.tcc.dominio.eventos.usuario;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 import projeto.tcc.dominio.entidades.usuario.Usuario;
@@ -19,6 +20,8 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 	private String CPF;
 	private String nome;
 	private String email;
+	private Date dtNascimento;
+	private String sgSexo;
 	private Integer cdPerfil;
 	
 	private Long version;
@@ -31,6 +34,8 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 		this.CPF = usuario.getCPF();
 		this.nome = usuario.getNome();
 		this.email = usuario.getEmail();
+		this.dtNascimento = usuario.getDataNascimento();
+		this.sgSexo =  usuario.getSexo();
 		this.version = version;
 		this.cdPerfil = usuario.getCdPerfil();
 		this.groupVersion = groupVersion;
@@ -134,6 +139,22 @@ public class UsuarioCadastradoEvento implements  Evento, Serializable {
 	@Override
 	public Long getGroupVersion() {
 		return this.groupVersion;
+	}
+
+	public Date getDtNascimento() {
+		return dtNascimento;
+	}
+
+	public void setDtNascimento(Date dtNascimento) {
+		this.dtNascimento = dtNascimento;
+	}
+
+	public String getSgSexo() {
+		return sgSexo;
+	}
+
+	public void setSgSexo(String sgSexo) {
+		this.sgSexo = sgSexo;
 	}
 
 

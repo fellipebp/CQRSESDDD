@@ -1,4 +1,4 @@
-package projeto.tcc;
+package projeto.tcc.dominio.enums;
 
 public enum MusicasEnum {
 	

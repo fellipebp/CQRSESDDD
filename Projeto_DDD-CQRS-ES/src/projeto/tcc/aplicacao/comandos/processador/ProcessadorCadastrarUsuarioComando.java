@@ -34,6 +34,7 @@ public class ProcessadorCadastrarUsuarioComando implements ProcessadorComandos{
 		valores.put("cpf", cadastrarUsuarioComando.getCpf());
 		valores.put("email", cadastrarUsuarioComando.getEmail());
 		valores.put("dtNascimento", cadastrarUsuarioComando.getDtNascimento().getTime());
+		valores.put("sgSexo", cadastrarUsuarioComando.getSgSexo());
 		valores.put("cdPerfil", cadastrarUsuarioComando.getCdPerfil());
 		
 		Usuario usuario = new Usuario().criarCadastro(valores);

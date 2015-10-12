@@ -12,7 +12,8 @@ import javax.inject.Named;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
-import projeto.tcc.dominio.PerfilEnums;
+import projeto.tcc.dominio.enums.PerfilEnums;
+import projeto.tcc.dominio.enums.SexoEnum;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.CriarUsuarioDTO;
 
@@ -54,6 +55,10 @@ public class CriarUsuarioBean implements Serializable{
 	
 	public PerfilEnums[] getPerfis(){
 		return PerfilEnums.values();
+	}
+	
+	public SexoEnum[] getSexos(){
+		return SexoEnum.values();
 	}
 
 

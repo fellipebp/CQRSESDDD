@@ -14,13 +14,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import projeto.tcc.MusicasEnum;
 import projeto.tcc.aplicacao.ServicoMusicaEscrita;
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoPlayListEscrita;
 import projeto.tcc.aplicacao.ServicoPlayListLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.musica.PlayList;
+import projeto.tcc.dominio.enums.MusicasEnum;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaFavoritosComando;
 import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;

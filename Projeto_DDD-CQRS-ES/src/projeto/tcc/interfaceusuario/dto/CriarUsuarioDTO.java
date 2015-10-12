@@ -15,6 +15,7 @@ public class CriarUsuarioDTO implements Serializable {
 	private String senha;
 	private String email;
 	private Date dtNascimento;
+	private String sgSexo;
 	private Integer cdPerfil;
 	
 	private Long version;
@@ -84,6 +85,14 @@ public class CriarUsuarioDTO implements Serializable {
 
 	public void setDtNascimento(Date dtNascimento) {
 		this.dtNascimento = dtNascimento;
+	}
+
+	public String getSgSexo() {
+		return sgSexo;
+	}
+
+	public void setSgSexo(String sgSexo) {
+		this.sgSexo = sgSexo;
 	}
 	
 	

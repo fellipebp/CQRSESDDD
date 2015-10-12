@@ -1,4 +1,4 @@
-import projeto.tcc.dominio.PerfilEnums;
+import projeto.tcc.dominio.enums.PerfilEnums;
 import static org.junit.Assert.*;
 
 public class PerfilUsuarioTest {
