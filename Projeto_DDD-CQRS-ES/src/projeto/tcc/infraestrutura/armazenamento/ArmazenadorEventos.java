@@ -55,7 +55,7 @@ public class ArmazenadorEventos {
 			try {
 				PreparedStatement pstmt1 = null;
 				pstmt1 = (PreparedStatement) connection
-						.prepareStatement("insert into eventstore(agregateid,events, version, groupVersion) values(?,?,?,?)",
+						.prepareStatement("insert into eventstore(aggregate_id,events, version, groupVersion) values(?,?,?,?)",
 								PreparedStatement.RETURN_GENERATED_KEYS);
 				ByteArrayOutputStream bos = new ByteArrayOutputStream();
 				ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -145,12 +145,9 @@ public class ArmazenadorEventos {
 		connection = Conexao.getConectionEventSource();
 		try {
 			PreparedStatement pstmt = (PreparedStatement) connection
-					.prepareStatement("select events from eventstore where agregateid = ?");
+					.prepareStatement("select events from eventstore where aggregate_id = ? order by version");
 			pstmt.setString(1, id);
 			
-//			PreparedStatement pstmt = (PreparedStatement) connection
-//					.prepareStatement("select events from eventstore where agregateid = ? order by version");
-//			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -201,7 +198,7 @@ public class ArmazenadorEventos {
 		try {
 			connection.setAutoCommit(false);
 			pstmt1 = (PreparedStatement) connection
-					.prepareStatement("insert into eventstore(agregateid,events, version, groupVersion) values(?,?,?,?)",
+					.prepareStatement("insert into eventstore(aggregate_id,events, version, groupVersion) values(?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS);
 			for (Evento evento : evs) {
 				if (evento.getAggregateId() != null
