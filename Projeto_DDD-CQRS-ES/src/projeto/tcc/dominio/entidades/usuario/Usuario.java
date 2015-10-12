@@ -2,7 +2,6 @@ package projeto.tcc.dominio.entidades.usuario;
 
 import java.io.Serializable;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -13,8 +12,11 @@ import javax.swing.text.MaskFormatter;
 
 import projeto.tcc.dominio.PerfilEnums;
 import projeto.tcc.dominio.entidades.musica.PlayList;
+import projeto.tcc.dominio.exception.UsuarioJaRegistradoException;
+import projeto.tcc.dominio.exception.UsuarioMenorIdadeException;
+import projeto.tcc.dominio.exception.UsuarioNaoRegistradoException;
+import projeto.tcc.dominio.exception.UsuarioOuSenhaInvalidosException;
 import projeto.tcc.infraestrutura.armazenamento.repositorio.impl.RepositorioUsuarioImpl;
-import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 
 
@@ -40,8 +42,6 @@ public class Usuario  implements Serializable {
 	protected List<PlayList> playlists;
 	protected PerfilUsuario perfilUsuario;
 	
-	//private listaEventos (mudancas)
-
 	public String getEmail() {
 		return email;
 	}
@@ -106,40 +106,12 @@ public class Usuario  implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public void criarCadastro(CadastrarUsuarioComando usuarioComando) throws Exception {
-		
-		//REPOSITORIO FICA RESPONSAVEL POR TRATAR A CACHE
-		//PEDE O REPOSITORIO PARA CARREGAR O OBJETO, PROCESSO O NEGOCIO E ANTES DE GERAR O EVENTO VERIFICA SE A VERSAO DO OBJETO EM QUESTAO ESTÁ IGUAL AO QUE ESTÁ NA CACHE
-		//SE NAO ESTIVER, SIGNIFICA QUE ALGUEM PROCESSOU E GEROU A VERSAO ANTES
-//		Usuario usuario = new RepositorioUsuarioImpl().getUsuarioPorCPF(usuarioComando.getCpf());
-//		if (ControlerVersionValidator.jaExisteIDAgregadoNaCache(usuarioComando.aggregateId().toString())) {
-//			throw new RuntimeException("Ocorreram alterações durante o processamento da sua operação. Tente novamente.");
-//		}
-//		ControlerVersionValidator.adicionaIDAgregagadoNaCache(usuarioComando.aggregateId().toString());
-//		
-//		if(usuario != null){
-//			throw new RuntimeException("Já existe um usuário com esse cpf");
-//		}
-//		usuario = new Usuario();
-//		usuario.setLogin(usuarioComando.getLogin());
-//		usuario.setSenha(usuarioComando.getSenha());
-//		usuario.setNome(usuarioComando.getNome());
-//		usuario.setCPF( usuarioComando.getCpf());
-//		usuario.setEmail( usuarioComando.getEmail());
-//		EventoProcessador eventoProcessador = new EventoProcessador();
-//		eventoProcessador.processarEvento((new UsuarioCadastradoEvento(usuarioComando.aggregateId(),usuarioComando.getVersion(), usuario)));
-//		eventoProcessador.processarAggregado(usuarioComando.aggregateId(), Usuario.class, usuarioComando.getVersion());
-	}
-	
 	
 	public Usuario criarCadastro(Map<String, Object> valores) throws Exception {
 			
-			//REPOSITORIO FICA RESPONSAVEL POR TRATAR A CACHE
-			//PEDE O REPOSITORIO PARA CARREGAR O OBJETO, PROCESSO O NEGOCIO E ANTES DE GERAR O EVENTO VERIFICA SE A VERSAO DO OBJETO EM QUESTAO ESTÁ IGUAL AO QUE ESTÁ NA CACHE
-			//SE NAO ESTIVER, SIGNIFICA QUE ALGUEM PROCESSOU E GEROU A VERSAO ANTES
 			Usuario usuario = new RepositorioUsuarioImpl().getUsuarioPorCPF(String.valueOf(valores.get("cpf")));
 			if(usuario != null){
-				throw new RuntimeException("Já existe um usuário com esse cpf");
+				throw new UsuarioJaRegistradoException("Já existe um usuário cadastrado com esse cpf.");
 			}
 			
 			Date dtNascimento = new Date(Long.parseLong(valores.get("dtNascimento").toString()));
@@ -147,7 +119,7 @@ public class Usuario  implements Serializable {
 			dtNascimentoC.setTime(dtNascimento);
 			Calendar dtAtual = Calendar.getInstance();
 			if(dtAtual.get(Calendar.YEAR) - dtNascimentoC.get(Calendar.YEAR) < 18){
-				throw new RuntimeException("É necessário ter mais de 18 anos para utilizar o aplicativo");
+				throw new UsuarioMenorIdadeException("É necessário ter mais de 18 anos para utilizar o aplicativo.");
 			}
 			
 			usuario = new Usuario();
@@ -166,8 +138,7 @@ public class Usuario  implements Serializable {
 		Usuario usuarioBase = repositorioUsuarioImpl.getUsuarioPorAggregateID(String.valueOf(valores.get("aggregateID")));
 		
 		if (usuarioBase ==null || !	String.valueOf(valores.get("senha")).equals(usuarioBase.getSenha())) {
-			//TODO criar exceção especifica
-			throw new RuntimeException("Usuário ou senha inválidos");
+			throw new UsuarioOuSenhaInvalidosException("Usuário ou senha inválidos.");
 		}
 	}
 	
@@ -176,18 +147,10 @@ public class Usuario  implements Serializable {
 		 RepositorioUsuarioImpl repositorioUsuarioImpl = new RepositorioUsuarioImpl();
 		 String aggregateID = repositorioUsuarioImpl.existeUsuarioComEsseLogin(fazerLoginComando.getLogin());
 		 if (aggregateID == null || aggregateID =="") {
-			throw new RuntimeException("Não existe nenhum usuário registrado com este CPF.");
+			throw new UsuarioNaoRegistradoException("Não existe nenhum usuário registrado com este login.");
 		 }
 		 return aggregateID;
 	}
-	
-	public void deslogar(Map<String, Object> valores) throws Exception{
-		if (valores.get("aggregateID") ==null) {
-			throw new RuntimeException("Não existe nenhum usuário registrado com este CPF.");
-		}
-	}
-	
-
 	public int getId() {
 		return id;
 	}
