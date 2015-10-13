@@ -198,11 +198,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		PreparedStatement pstmt;
 		int nivelAcesso = 0;
 		try {
-			pstmt = (PreparedStatement)Conexao.getConectionReader().prepareStatement("SELECT cdperfil from baseleitura.dadosusuario where aggregateID = ?");
+			pstmt = (PreparedStatement)Conexao.getConectionReader().prepareStatement("SELECT cdPerfil from baseleitura.dadosusuario where aggregateID = ?");
 			pstmt.setString(1, aggregateID);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				nivelAcesso = rs.getInt("cdperfil");
+				nivelAcesso = rs.getInt("cdPerfil");
 			}
 			
 		} catch (SQLException e) {
