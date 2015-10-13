@@ -10,7 +10,7 @@ import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.dominio.eventos.EventoProcessador;
 import projeto.tcc.dominio.eventos.musica.MusicaAdicionadaEvento;
 import projeto.tcc.dominio.eventos.usuario.UsuarioCadastradoEvento;
-import projeto.tcc.infraestrutura.ControlerVersionValidator;
+import projeto.tcc.infraestrutura.ControladorVersao;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
 import projeto.tcc.interfaceusuario.comandos.Comando;
 import projeto.tcc.interfaceusuario.comandos.CriarPlayListComando;
@@ -38,7 +38,7 @@ public class ProcessadorAdicionarMusicaComando implements ProcessadorComandos{
 // 		PlayList playlist = new PlayList().adicionarMusica(valores);
 		
 //		PosProcessadorComandos.validaVersaoComando(comando);
-		Long version = ControlerVersionValidator.getProximaVersao();
+		Long version = ControladorVersao.getProximaVersao();
 		EventoProcessador eventoProcessador = new EventoProcessador();
 		eventoProcessador.processarEvento((new MusicaAdicionadaEvento((UUID)valores.get("aggregateIDPlayList"), (String)valores.get("nomeMusica"), version,version)));
 		//eventoProcessador.processarAggregado(adicionarMusicaComando.aggregateId(), PlayList.class, adicionarMusicaComando.getVersion());

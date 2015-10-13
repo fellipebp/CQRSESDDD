@@ -2,6 +2,7 @@ package projeto.tcc.infraestrutura.armazenamento;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 import projeto.tcc.dominio.eventos.Evento;
 import projeto.tcc.infraestrutura.Conexao;
-import projeto.tcc.infraestrutura.ControlerVersionValidator;
+import projeto.tcc.infraestrutura.ControladorVersao;
 import projeto.tcc.infraestrutura.EventoPublicador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaFavoritoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaManipulador;
@@ -57,17 +58,7 @@ public class ArmazenadorEventos {
 				pstmt1 = (PreparedStatement) connection
 						.prepareStatement("insert into eventstore(aggregate_id,events, version, groupVersion) values(?,?,?,?)",
 								PreparedStatement.RETURN_GENERATED_KEYS);
-				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-				ObjectOutputStream oos = new ObjectOutputStream(bos);
-				oos.writeObject(evento);
-				oos.flush();
-				oos.close();
-				bos.close();
-				byte[] dadosEvento = bos.toByteArray();
-				pstmt1.setString(1, evento.getAggregateId().toString());
-				pstmt1.setObject(2, dadosEvento);
-				pstmt1.setLong(3, evento.getVersion());
-				pstmt1.setLong(4, evento.getGroupVersion());
+				insereValoresInsert(pstmt1, evento);
 				pstmt1.executeUpdate();
 				pstmt1.close();
 				
@@ -75,7 +66,7 @@ public class ArmazenadorEventos {
 
 				publicador.publicaEvento(evento);
 				
-				ControlerVersionValidator.removeIDAgregadoCache(evento.getAggregateId().toString());
+				ControladorVersao.removeIDAgregadoCache(evento.getAggregateId().toString());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -144,12 +135,11 @@ public class ArmazenadorEventos {
 		ObjectInputStream objectIn = null;
 		connection = Conexao.getConectionEventSource();
 		try {
-			PreparedStatement pstmt = (PreparedStatement) connection
-					.prepareStatement("select events from eventstore where aggregate_id = ? order by version");
-			pstmt.setString(1, id);
+			PreparedStatement pstmt = (PreparedStatement) connection.
+			prepareStatement("select events from eventstore where aggregate_id = ? order by version");
 			
+			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
-
 			while (rs.next()) {
 				byte[] buf = rs.getBytes("events");
 				if (buf != null) {
@@ -157,7 +147,6 @@ public class ArmazenadorEventos {
 					evento = (Evento) objectIn.readObject();
 					eventos.add(evento);
 				}
-				
 			}
 			return eventos;
 		} catch (Exception e) {
@@ -167,6 +156,7 @@ public class ArmazenadorEventos {
 		}
 		return null;
 	}
+	
 	
 	
 	public static Long getUltimaVersaoAgregado(String aggregateID) {
@@ -187,11 +177,12 @@ public class ArmazenadorEventos {
 		return 0L;
 	}
 
-	public static void salvarEventos(List<Evento> evs) {
-		if (evs == null || evs.isEmpty()) {
-			//FIXME
-			throw new RuntimeException();
-		}
+	
+	
+	
+	
+	public static void salvarEventos(List<Evento> evs) throws EventosNulosExceptions {
+		validaListaEventosNulasOuVazias(evs);
 		
 		connection = Conexao.getConectionEventSource();
 		PreparedStatement pstmt1 = null;
@@ -200,45 +191,67 @@ public class ArmazenadorEventos {
 			pstmt1 = (PreparedStatement) connection
 					.prepareStatement("insert into eventstore(aggregate_id,events, version, groupVersion) values(?,?,?,?)",
 							PreparedStatement.RETURN_GENERATED_KEYS);
-			for (Evento evento : evs) {
-				if (evento.getAggregateId() != null
-						&& evento.getVersion() != null) {
-						
-						ByteArrayOutputStream bos = new ByteArrayOutputStream();
-						ObjectOutputStream oos = new ObjectOutputStream(bos);
-						oos.writeObject(evento);
-						oos.flush();
-						oos.close();
-						bos.close();
-						byte[] dadosEvento = bos.toByteArray();
-						pstmt1.setString(1, evento.getAggregateId().toString());
-						pstmt1.setObject(2, dadosEvento);
-						pstmt1.setLong(3, evento.getVersion());
-						pstmt1.setLong(4, evento.getGroupVersion());
-//						pstmt1.setTimestamp(4, new Timestamp(Calendar
-//								.getInstance().getTimeInMillis()));
-						pstmt1.executeUpdate();
-					
-
-						salvaOuAtualizaAgregado(evento.getAggregateId(), evento.getClazz(), evento.getVersion());
-
-				}
-			}
+			processaEventos(evs, pstmt1);
+			
 			connection.commit();
 			pstmt1.close();
+			
 			publicador.publicaEventos(evs);
-			ControlerVersionValidator.removeIDAgregadoCache(evs.get(0).getAggregateId().toString());
+			ControladorVersao.removeIDAgregadoCache(evs.get(0).getAggregateId().toString());
 		} catch (Exception e) {
-			  try{
-				 if(connection!=null){
-					 connection.rollback();
-				 }	
-			  }catch(SQLException se2){
-			         se2.printStackTrace();
-		      }
+			  trataExcecao();
 		} finally {
 			Conexao.fechaConexao();
 		}
+	}
+
+
+	private static void processaEventos(List<Evento> evs,
+			PreparedStatement pstmt1) throws IOException, SQLException {
+		for (Evento evento : evs) {
+			if (evento.getAggregateId() != null && evento.getVersion() != null) {
+					insereValoresInsert(pstmt1, evento);
+					pstmt1.executeUpdate();
+
+					salvaOuAtualizaAgregado(evento.getAggregateId(), evento.getClazz(), evento.getVersion());
+
+			}
+		}
+	}
+
+
+	private static void validaListaEventosNulasOuVazias(List<Evento> evs)
+			throws EventosNulosExceptions {
+		if (evs == null || evs.isEmpty()) {
+			throw new EventosNulosExceptions();
+		}
+	}
+
+
+	private static void insereValoresInsert(PreparedStatement pstmt1,
+			Evento evento) throws IOException, SQLException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+		oos.writeObject(evento);
+		oos.flush();
+		oos.close();
+		bos.close();
+		byte[] dadosEvento = bos.toByteArray();
+		pstmt1.setString(1, evento.getAggregateId().toString());
+		pstmt1.setObject(2, dadosEvento);
+		pstmt1.setLong(3, evento.getVersion());
+		pstmt1.setLong(4, evento.getGroupVersion());
+	}
+
+
+	private static void trataExcecao() {
+		try{
+			 if(connection!=null){
+				 connection.rollback();
+			 }	
+		  }catch(SQLException se2){
+		         se2.printStackTrace();
+		  }
 	}
 	
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 import projeto.tcc.infraestrutura.armazenamento.ArmazenadorEventos;
 
-public class ControlerVersionValidator {
+public class ControladorVersao {
 	
 	private static List<String> cacheAggreados = new ArrayList<>();
 

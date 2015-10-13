@@ -11,7 +11,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
-import projeto.tcc.infraestrutura.ControlerVersionValidator;
+import projeto.tcc.infraestrutura.ControladorVersao;
 import projeto.tcc.interfaceusuario.comandos.FazerLoginComando;
 import projeto.tcc.interfaceusuario.dto.FazerLoginDTO;
 
@@ -44,7 +44,7 @@ public class LoginUsuarioBean implements Serializable {
 			FazerLoginComando fazerLoginComando = new FazerLoginComando(fazerLoginDTO);
 			String aggregateID = servicoUsuarioEscrita.existeUsuarioComEsseLogin(fazerLoginComando);
 			salvaAggregateIDNaSessao(aggregateID);
-			this.fazerLoginDTO.setVersion(ControlerVersionValidator.getUltimaVersaoAgregado(aggregateID));
+			this.fazerLoginDTO.setVersion(ControladorVersao.getUltimaVersaoAgregado(aggregateID));
 			return "loginUsuarioSenha.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
