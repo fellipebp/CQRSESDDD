@@ -7,10 +7,12 @@ public class TocarMusicaComando implements Comando {
 	
 	private UUID usuarioUID;
 	private String nomeMusica;
+	private int idMusica;
 	
-	public TocarMusicaComando(UUID usuarioUID, String nomeMusica) {
+	public TocarMusicaComando(UUID usuarioUID, String nomeMusica, int idMusica) {
 		this.usuarioUID = usuarioUID;
 		this.nomeMusica = nomeMusica;
+		this.idMusica = idMusica;
 	}
 	
 
@@ -46,6 +48,16 @@ public class TocarMusicaComando implements Comando {
 	public Long getVersion() {
 		// TODO Auto-generated method stub
 		return 0l;
+	}
+
+
+	public int getIdMusica() {
+		return idMusica;
+	}
+
+
+	public void setIdMusica(int idMusica) {
+		this.idMusica = idMusica;
 	}
 
 

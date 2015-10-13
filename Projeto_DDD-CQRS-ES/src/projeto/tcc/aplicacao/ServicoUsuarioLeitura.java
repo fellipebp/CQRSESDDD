@@ -6,5 +6,6 @@ import projeto.tcc.dominio.entidades.usuario.Usuario;
 public interface ServicoUsuarioLeitura {
 
 	Usuario getUsuarioPorAggregateID(String aggregateID);
+	int getNivelAcessoUsuario(String aggregateID);
 
 }

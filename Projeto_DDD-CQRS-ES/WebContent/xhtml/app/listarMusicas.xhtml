@@ -4,8 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:s="http://jboss.com/products/seam/taglib">
+>
 
 <ui:composition>
 	<div>
@@ -38,7 +37,8 @@
 							actionListener="#{ouvirMusicaBean.atualizarModalAdicionarMusica(musica)}"
 							oncomplete="PF('checkBoxPlayList').show()"
 							update=":checkBoxPlayListDialog"  />
-    			  	   <p:menuitem value="Adicionar em Favoritos" actionListener="#{ouvirMusicaBean.adicionarMusicaFavoritos(musica)}" />
+    			  	   <p:menuitem value="Adicionar em Favoritos" actionListener="#{ouvirMusicaBean.adicionarMusicaFavoritos(musica)}" 
+    			  	   rendered="#{ouvirMusicaBean.nivelAcesso > 1}" />
     			  	 </p:menuButton>						
 						<p:commandButton id="fakeButtonPlay"
 							actionListener="#{ouvirMusicaBean.playMusicaPublica(musica)}"

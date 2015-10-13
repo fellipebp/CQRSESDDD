@@ -19,5 +19,10 @@ public class ServicoUsuarioLeituraImpl implements ServicoUsuarioLeitura, Seriali
 		return new RepositorioUsuarioImpl().getUsuarioPorAggregateID(aggregateID);
 	}
 
+	@Override
+	public int getNivelAcessoUsuario(String aggregateID) {
+		return new RepositorioUsuarioImpl().getNivelAcessoUsuario(aggregateID);
+	}
+
 
 }

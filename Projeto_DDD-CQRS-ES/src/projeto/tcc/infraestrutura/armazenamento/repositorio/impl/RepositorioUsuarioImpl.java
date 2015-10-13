@@ -192,4 +192,24 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		return playlists;
 	}
 
+
+	@Override
+	public int getNivelAcessoUsuario(String aggregateID) {
+		PreparedStatement pstmt;
+		int nivelAcesso = 0;
+		try {
+			pstmt = (PreparedStatement)Conexao.getConectionReader().prepareStatement("SELECT cdperfil from baseleitura.dadosusuario where aggregateID = ?");
+			pstmt.setString(1, aggregateID);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				nivelAcesso = rs.getInt("cdperfil");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nivelAcesso;
+	}
+
 }

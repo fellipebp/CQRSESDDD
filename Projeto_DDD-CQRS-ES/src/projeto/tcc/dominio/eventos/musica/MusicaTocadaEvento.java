@@ -17,13 +17,15 @@ public class MusicaTocadaEvento implements Evento, Serializable {
 	private static final long serialVersionUID = 6204840125591633059L;
 	private UUID aggregateId;
 	private String nomeMusica;
+	private int idMusica;
 	private Long version;
 	private Long groupVersion;
 
 	
-	public MusicaTocadaEvento(UUID aggregateId, String nomeMusica, Long version, Long groupVersion) {
+	public MusicaTocadaEvento(UUID aggregateId, String nomeMusica,int idMusica, Long version, Long groupVersion) {
 		this.aggregateId = aggregateId;
 		this.nomeMusica = nomeMusica;
+		this.idMusica = idMusica;
 		this.version = version;
 		this.groupVersion =groupVersion;
 	}
@@ -71,6 +73,18 @@ public class MusicaTocadaEvento implements Evento, Serializable {
 	@Override
 	public Long getGroupVersion() {
 		return this.groupVersion;
+	}
+
+
+
+	public int getIdMusica() {
+		return idMusica;
+	}
+
+
+
+	public void setIdMusica(int idMusica) {
+		this.idMusica = idMusica;
 	}
 
 

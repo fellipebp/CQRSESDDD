@@ -18,6 +18,7 @@ import projeto.tcc.aplicacao.ServicoMusicaEscrita;
 import projeto.tcc.aplicacao.ServicoMusicaLeitura;
 import projeto.tcc.aplicacao.ServicoPlayListEscrita;
 import projeto.tcc.aplicacao.ServicoPlayListLeitura;
+import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.dominio.enums.MusicasEnum;
@@ -39,6 +40,7 @@ public class OuvirMusicaBean implements Serializable {
 	@Inject	private ServicoPlayListLeitura servicoPlayListLeitura;
 	@Inject	private ServicoMusicaLeitura servicoMusicaLeitura;
 	@Inject	private ServicoMusicaEscrita servicoMusicaEscrita;
+	@Inject	private ServicoUsuarioLeitura servicoUsuarioLeitura;
 	private List<Musica> listaMusicas;
 	private Set<Musica> minhasMusicas;
 	private Set<Musica> minhasMusicasFavorito;
@@ -52,6 +54,7 @@ public class OuvirMusicaBean implements Serializable {
 	private List<PlayList> minhasPlayLists;
 	private String agregadoPlayListSelecionada;
 	private String nomePlayList;
+	private int nivelAcesso;
 	
 
 	@PostConstruct
@@ -59,6 +62,7 @@ public class OuvirMusicaBean implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 	    sessao = (HttpSession) facesContext.getExternalContext().getSession(true);     
 	    aggregateIDObject = sessao.getAttribute("aggregateID");
+	    nivelAcesso = servicoUsuarioLeitura.getNivelAcessoUsuario(aggregateIDObject.toString());
 		setTodasMusicasStatus(false);
 		setMinhasMusicasStatus(false);
 		setMinhasMusicasPlayListStatus(false);
@@ -140,16 +144,19 @@ public class OuvirMusicaBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 	    Map<String,String> params = context.getExternalContext().getRequestParameterMap();
 	    String[] parts = params.get("param1").split("/");
+	    parts[6] = parts[6].replace("%20", " ");
 	    System.out.println("música tocando:"+ parts[6]);
-		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),parts[6]));
+	    Musica musica = new Musica();
+	    musica.setNome(parts[6]);
+		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome(), MusicasEnum.getNome(musica.getNome()).getId()));
 		
 		
 	}
 	
 	public void playMusicaPublica(Musica musica){
 	    System.out.println("música tocando:"+ musica.getNome());
-	    System.out.println("música tocando:"+ MusicasEnum.getNome(musica.getNome()));
-		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
+	    System.out.println("música tocando:"+ MusicasEnum.getNome(musica.getNome()).getId());
+		servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome(), MusicasEnum.getNome(musica.getNome()).getId()));
 		
 	}
 	
@@ -288,6 +295,14 @@ public class OuvirMusicaBean implements Serializable {
 
 	public void setMinhasMusicasFavoritoStatus(boolean minhasMusicasFavoritoStatus) {
 		this.minhasMusicasFavoritoStatus = minhasMusicasFavoritoStatus;
+	}
+
+	public int getNivelAcesso() {
+		return nivelAcesso;
+	}
+
+	public void setNivelAcesso(int nivelAcesso) {
+		this.nivelAcesso = nivelAcesso;
 	}
 
 }
