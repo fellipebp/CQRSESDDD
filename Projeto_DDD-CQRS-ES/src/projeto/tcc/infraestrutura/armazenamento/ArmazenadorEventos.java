@@ -20,7 +20,6 @@ import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaFavo
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.MusicaAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.musica.PlayListAdicionadaManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioCadastradoManipulador;
-import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioDeslogadoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioEditadoManipulador;
 import projeto.tcc.infraestrutura.manipuladoreventos.usuario.UsuarioLogadoManipulador;
 
@@ -33,19 +32,18 @@ public class ArmazenadorEventos {
 
 	  static {
 	      publicador = new EventoPublicador();
-	      carregaSubscribers();
+	      carregaAssinantes();
 	  }
 	  
 	
-	private static void carregaSubscribers() {
-		publicador.subscriber(new MusicaAdicionadaManipulador());
-		publicador.subscriber(new MusicaAdicionadaFavoritoManipulador());
-		publicador.subscriber(new UsuarioCadastradoManipulador());
-		publicador.subscriber(new UsuarioDeslogadoManipulador());
-		publicador.subscriber(new UsuarioEditadoManipulador());
-		publicador.subscriber(new MusicaAdicionadaManipulador());
-		publicador.subscriber(new UsuarioLogadoManipulador());
-		publicador.subscriber(new PlayListAdicionadaManipulador());
+	private static void carregaAssinantes() {
+		publicador.assina(new MusicaAdicionadaManipulador());
+		publicador.assina(new MusicaAdicionadaFavoritoManipulador());
+		publicador.assina(new UsuarioCadastradoManipulador());
+		publicador.assina(new UsuarioEditadoManipulador());
+		publicador.assina(new MusicaAdicionadaManipulador());
+		publicador.assina(new UsuarioLogadoManipulador());
+		publicador.assina(new PlayListAdicionadaManipulador());
 	}
 
 
@@ -63,8 +61,9 @@ public class ArmazenadorEventos {
 				pstmt1.close();
 				
 				salvaOuAtualizaAgregado(evento.getAggregateId(),evento.getClazz(), evento.getVersion());
-
-				publicador.publicaEvento(evento);
+				List<Evento> eventos = new ArrayList<>();
+				eventos.add(evento);
+				publicador.publicaEventos(eventos);
 				
 				ControladorVersao.removeIDAgregadoCache(evento.getAggregateId().toString());
 			} catch (Exception e) {
@@ -113,7 +112,6 @@ public class ArmazenadorEventos {
 	
 	
 	public static void atualizaUltimaVersaoAgregado(UUID aggregateID, Long version) {
-//		connection = Conexao.getConectionEventSource();
 		PreparedStatement pstmt2 = null;
 		try {
 			pstmt2 = (PreparedStatement) connection.prepareStatement(
@@ -123,8 +121,6 @@ public class ArmazenadorEventos {
 			pstmt2.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			//FIXME
-			throw new RuntimeException();
 		}
 		
 	}
@@ -195,7 +191,6 @@ public class ArmazenadorEventos {
 			
 			connection.commit();
 			pstmt1.close();
-			
 			publicador.publicaEventos(evs);
 			ControladorVersao.removeIDAgregadoCache(evs.get(0).getAggregateId().toString());
 		} catch (Exception e) {
@@ -210,14 +205,14 @@ public class ArmazenadorEventos {
 			PreparedStatement pstmt1) throws IOException, SQLException {
 		for (Evento evento : evs) {
 			if (evento.getAggregateId() != null && evento.getVersion() != null) {
-					insereValoresInsert(pstmt1, evento);
-					pstmt1.executeUpdate();
-
-					salvaOuAtualizaAgregado(evento.getAggregateId(), evento.getClazz(), evento.getVersion());
+				insereValoresInsert(pstmt1, evento);
+				pstmt1.executeUpdate();
+				salvaOuAtualizaAgregado(evento.getAggregateId(), evento.getClazz(), evento.getVersion());
 
 			}
 		}
 	}
+	
 
 
 	private static void validaListaEventosNulasOuVazias(List<Evento> evs)

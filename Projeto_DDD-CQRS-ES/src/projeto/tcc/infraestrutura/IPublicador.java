@@ -2,8 +2,8 @@ package projeto.tcc.infraestrutura;
 
 public interface IPublicador<E> {
 	
-	public void subscriber(IAssinante<E> sub);
+	public void assina(IAssinante<E> assinante);
 	
-	public void publish(E arg);
+	public void publica(E arg);
 
 }

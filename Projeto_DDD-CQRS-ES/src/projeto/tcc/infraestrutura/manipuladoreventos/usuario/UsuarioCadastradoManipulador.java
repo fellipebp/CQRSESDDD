@@ -12,19 +12,7 @@ import projeto.tcc.infraestrutura.IAssinante;
 import com.mysql.jdbc.PreparedStatement;
 
 public class UsuarioCadastradoManipulador implements IAssinante<Evento>{
-
-	public UsuarioCadastradoManipulador() {
-		// TODO Auto-generated constructor stub
-	}
-	public UsuarioCadastradoManipulador(UsuarioCadastradoEvento evento) {
-		trata(evento);
-	}
 	
-	public void trata(UsuarioCadastradoEvento evento) {
-		insereViews(evento);
-	
-	}
-
 	private void insereViews(UsuarioCadastradoEvento usuarioCadastradoEvento) {
 		Connection conexao = Conexao.getConectionReader();
 		try {

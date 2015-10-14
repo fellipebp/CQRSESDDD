@@ -13,19 +13,6 @@ import com.mysql.jdbc.PreparedStatement;
 public class MusicaAdicionadaFavoritoManipulador implements IAssinante<Evento>{
 
 	
-	public MusicaAdicionadaFavoritoManipulador() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public MusicaAdicionadaFavoritoManipulador(MusicaAdicionadaFavoritosEvento evento) {
-		trata(evento);
-	}
-	
-	public void trata(MusicaAdicionadaFavoritosEvento evento) {
-		insereViews(evento);
-	
-	}
-
 	private void insereViews(MusicaAdicionadaFavoritosEvento musicaAdicionadaFavoritoEvento) {
 		Connection conexao = Conexao.getConectionReader();
 		try {

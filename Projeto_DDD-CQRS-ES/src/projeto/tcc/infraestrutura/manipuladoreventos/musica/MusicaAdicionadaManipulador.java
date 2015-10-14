@@ -14,19 +14,6 @@ import com.mysql.jdbc.PreparedStatement;
 public class MusicaAdicionadaManipulador implements IAssinante<Evento>{
 
 	
-	public MusicaAdicionadaManipulador() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public MusicaAdicionadaManipulador(MusicaAdicionadaEvento evento) {
-		trata(evento);
-	}
-	
-	public void trata(MusicaAdicionadaEvento evento) {
-		insereViews(evento);
-	
-	}
-
 	private void insereViews(MusicaAdicionadaEvento musicaAdicionadaEvento) {
 		Connection conexao = Conexao.getConectionReader();
 		try {

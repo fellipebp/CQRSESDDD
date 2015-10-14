@@ -20,52 +20,29 @@ public class EventoPublicador implements IPublicador<Evento> {
 
 	private static Queue<Evento> filaEventos = new LinkedList<>();
 	private final ExecutorService pool = Executors.newFixedThreadPool(10);
-	private Calendar dataUltimaPublicacao;
 	private List<IAssinante<Evento>> assinantes;
 	
 	public EventoPublicador() {
 		assinantes = new ArrayList<>();
 	}
 	
-	@PostConstruct
-	public void init(){
-	
-		teste(); // esta em faze de testes usando essa tecnologia FUTURE
-	
-	}
-	
-
-	public boolean tempoUltPublicaoMaiorQue30Segundos() {
-		return (((Calendar.getInstance().getTimeInMillis() - dataUltimaPublicacao.getTimeInMillis()) / 1000) > 30);
-	}
-	
-	public Future<String> teste(){
+		
+	public Future<String> inicializaPublicacao(){
 		
 		 return pool.submit(new Callable<String>() {
 		        @Override
 		        public String call() throws Exception {
-		                publicar2(filaEventos);
+		                publicar(filaEventos);
 						return "Processado";
 		        }
 		    });
 		
 	}
 	
-	public void publicar2(Queue<Evento> filaEventos){
+	public void publicar(Queue<Evento> filaEventos){
 		
 		for (Evento evento : filaEventos) {
-		//	manipuladorEventos.trata(evento);
-			publish(evento);
-		}
-		filaEventos.clear();
-
-	}
-
-	public void publicar() {
-		dataUltimaPublicacao = Calendar.getInstance();
-		for (Evento evento : filaEventos) {
-			publish(evento);
-			//manipuladorEventos.trata(evento);
+			publica(evento);
 		}
 		filaEventos.clear();
 
@@ -77,31 +54,22 @@ public class EventoPublicador implements IPublicador<Evento> {
 		}
 	}
 
-	public static void adicionaEvento(Evento evento) {
-		filaEventos.add(evento);
-	}
-
 	@Override
-	public void subscriber(IAssinante<Evento> sub) {
+	public void assina(IAssinante<Evento> sub) {
 			assinantes.add(sub);
 		
 	}
 
 	@Override
-	public void publish(Evento arg) {
-		for (IAssinante<Evento> subscriber : assinantes) {
-			subscriber.getPublicacao(arg);
+	public void publica(Evento arg) {
+		for (IAssinante<Evento> assinante : assinantes) {
+			assinante.getPublicacao(arg);
 		}
 	}
 
-	public void publicaEvento(Evento evento) {
-		adicionaEvento(evento);
-		init();
-	}
-	
 	public void publicaEventos(List<Evento> eventos) {
 		adicionaEventos(eventos);
-		init();
+		inicializaPublicacao();
 	}
 
 }

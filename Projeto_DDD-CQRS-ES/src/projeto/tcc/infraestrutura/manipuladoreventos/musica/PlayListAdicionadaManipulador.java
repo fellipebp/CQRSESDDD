@@ -13,18 +13,8 @@ public class PlayListAdicionadaManipulador implements IAssinante<Evento>{
 
 	
 	public PlayListAdicionadaManipulador() {
-		// TODO Auto-generated constructor stub
 	}
 	
-	public PlayListAdicionadaManipulador(PlayListAdicionadaEvento evento) {
-		trata(evento);
-	}
-	
-	public void trata(PlayListAdicionadaEvento evento) {
-		insereViews(evento);
-	
-	}
-
 	private void insereViews(PlayListAdicionadaEvento playListAdicionadaEvento) {
 		Connection conexao = Conexao.getConectionReader();
 		try {
