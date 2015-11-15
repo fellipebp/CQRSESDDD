@@ -11,8 +11,9 @@ public class EditarUsuarioDTO implements Serializable{
 	private static final long serialVersionUID = 6142650016392378500L;
 	private String nome;
 	private String cpf;
-	private String senha;
 	private String email;
+	private Integer cdPerfil;
+	
 	private Long version;
 	
 	public EditarUsuarioDTO() {
@@ -35,14 +36,6 @@ public class EditarUsuarioDTO implements Serializable{
 	}
 
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -57,6 +50,14 @@ public class EditarUsuarioDTO implements Serializable{
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public Integer getCdPerfil() {
+		return cdPerfil;
+	}
+
+	public void setCdPerfil(Integer cdPerfil) {
+		this.cdPerfil = cdPerfil;
 	}
 
 }

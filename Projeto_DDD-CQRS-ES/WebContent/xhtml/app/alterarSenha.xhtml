@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet library="css" name="utilitarios.css" target="head" />
+	<title>Alterar senha</title>
+</h:head>
+<h:body styleClass="grad2">
+	<h:form>
+		<p:messages/>
+		<h:outputText value="Alterar senha"/>
+			<h:inputHidden value="#{alterarSenhaBean.alterarSenhaDTO.version}" />
+		<h:panelGrid columns="2" cellpadding="5">
+			
+			<p:outputLabel value="Senha atual: " for="senhaAtual" indicateRequired="true"
+				styleClass="alignRight" />
+			<p:inputText id="senhaAtual" value="#{alterarSenhaBean.alterarSenhaDTO.senhaAtual}"
+				required="true" />
+			<p:outputLabel value="Senha nova: " for="senhaNova" indicateRequired="true"
+				styleClass="alignRight" />
+			<p:inputText id="senhaNova"
+				value="#{alterarSenhaBean.alterarSenhaDTO.senhaNova}"
+				mask="999.999.999-99"
+				requiredMessage="Campo cpf não preenchido" required="true"/>
+			<f:facet name="footer">
+				<p:commandButton action="#{alterarSenhaBean.alterarSenha()}"
+					value="Alterar senha"  ajax="false"/>
+				<p:commandButton value="Voltar" action="#{alterarSenhaBean.voltar()}" immediate="true" />
+			</f:facet>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

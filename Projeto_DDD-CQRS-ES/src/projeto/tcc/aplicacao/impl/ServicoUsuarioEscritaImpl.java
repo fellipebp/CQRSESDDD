@@ -10,6 +10,7 @@ import projeto.tcc.aplicacao.comandos.processador.ProcessadorLoginUsuarioComando
 import projeto.tcc.dominio.entidades.musica.Musica;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
 import projeto.tcc.interfaceusuario.comandos.AdicionarMusicaComando;
+import projeto.tcc.interfaceusuario.comandos.AlterarSenhaComando;
 import projeto.tcc.interfaceusuario.comandos.CadastrarUsuarioComando;
 import projeto.tcc.interfaceusuario.comandos.DeslogarComando;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
@@ -62,5 +63,16 @@ public class ServicoUsuarioEscritaImpl implements ServicoUsuarioEscrita, Seriali
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+	
+	@Override
+	public void alterarSenha(AlterarSenhaComando alterarSenhaComando)
+			throws Exception {
+		try {
+			new ProcessadorLoginUsuarioComando().execute(alterarSenhaComando);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
+
 
 }

@@ -12,6 +12,7 @@ import javax.swing.text.MaskFormatter;
 
 import projeto.tcc.dominio.entidades.musica.PlayList;
 import projeto.tcc.dominio.enums.PerfilEnums;
+import projeto.tcc.dominio.exception.SenhaAtualInvalidaException;
 import projeto.tcc.dominio.exception.UsuarioJaRegistradoException;
 import projeto.tcc.dominio.exception.UsuarioMenorIdadeException;
 import projeto.tcc.dominio.exception.UsuarioNaoRegistradoException;
@@ -171,8 +172,6 @@ public class Usuario  implements Serializable {
 		
 
 	public void editarInformacoes(Map<String, Object> valores) throws Exception {
-		this.setLogin(String.valueOf(valores.get("login")));
-		this.setSenha(String.valueOf(valores.get("senha")));
 		this.setNome(String.valueOf(valores.get("nome")));
 		this.setCPF( String.valueOf(valores.get("cpf")));
 		this.setEmail(String.valueOf(valores.get("email")));
@@ -197,6 +196,19 @@ public class Usuario  implements Serializable {
 	public void setPerfil(Integer cdPerfil){
 		PerfilEnums perfil = PerfilEnums.getEnumByCdPerfil(cdPerfil);
 		this.perfilUsuario = new PerfilUsuario(this.aggregateID, perfil.getCdPerfil(), perfil.getDescricao(),perfil.getValor());
+	}
+
+	public void alterarSenha(Map<String, Object> valores) throws Exception{
+		
+		String senhaAtual = String.valueOf(valores.get("senhaAtual"));
+		String senhaNova = String.valueOf(valores.get("senhaNova"));
+		if (this.senha.equals(senhaAtual)) {
+			this.senha = senhaNova;
+		}else{
+			throw new SenhaAtualInvalidaException("A senha atual está incorreta. Tente novamente.");
+		}
+		
+		
 	}
 
 }

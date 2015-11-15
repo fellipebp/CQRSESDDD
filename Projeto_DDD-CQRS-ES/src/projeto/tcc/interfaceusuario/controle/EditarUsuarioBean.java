@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import projeto.tcc.aplicacao.ServicoUsuarioEscrita;
 import projeto.tcc.aplicacao.ServicoUsuarioLeitura;
 import projeto.tcc.dominio.entidades.usuario.Usuario;
+import projeto.tcc.dominio.enums.PerfilEnums;
+import projeto.tcc.infraestrutura.ControladorVersao;
 import projeto.tcc.interfaceusuario.comandos.EditarUsuarioComando;
 import projeto.tcc.interfaceusuario.dto.EditarUsuarioDTO;
 
@@ -45,7 +47,8 @@ public class EditarUsuarioBean implements Serializable{
 		// usuarioDTO.setDataNascimento(usuario.getDataNascimento());
 		getUsuarioDTO().setEmail(usuario.getEmail());
 		getUsuarioDTO().setNome(usuario.getNome());
-		getUsuarioDTO().setSenha(usuario.getSenha());
+		getUsuarioDTO().setCdPerfil(usuario.getCdPerfil());
+		getUsuarioDTO().setVersion(ControladorVersao.getUltimaVersaoAgregado(usuario.getAggregateID()));
 		//getUsuarioDTO().setSenha(usuario.getSenha());
 	}
 
@@ -77,4 +80,8 @@ public class EditarUsuarioBean implements Serializable{
 		this.usuarioDTO = usuarioDTO;
 	}
 		
+	public PerfilEnums[] getPerfis(){
+		return PerfilEnums.values();
+	}
+	
 }

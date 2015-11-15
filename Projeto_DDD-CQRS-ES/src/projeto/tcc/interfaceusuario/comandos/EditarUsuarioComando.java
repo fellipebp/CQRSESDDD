@@ -8,8 +8,6 @@ public class EditarUsuarioComando implements Comando {
 
 	
 	private UUID usuarioUID;
-	private String login;
-	private String senha;
 	private String cpf;
 	private String nome;
 	private String email;
@@ -19,11 +17,11 @@ public class EditarUsuarioComando implements Comando {
 	private Long version;
 	
 	public EditarUsuarioComando(UUID usuarioUID, EditarUsuarioDTO editarUsuarioDTO) {
-		this.senha =  editarUsuarioDTO.getSenha();
 		this.cpf = editarUsuarioDTO.getCpf();
 		this.nome = editarUsuarioDTO.getNome();
 		this.email  = editarUsuarioDTO.getEmail();
 		this.usuarioUID = usuarioUID;
+		this.cdPerfil = editarUsuarioDTO.getCdPerfil();
 		this.version = editarUsuarioDTO.getVersion();
 	}
 	
@@ -38,22 +36,6 @@ public class EditarUsuarioComando implements Comando {
 
 	public void setUsuarioUID(UUID usuarioUID) {
 		this.usuarioUID = usuarioUID;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public String getCpf() {
