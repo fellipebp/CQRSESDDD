@@ -131,14 +131,6 @@ public class OuvirMusicaBean implements Serializable {
 		} 
 	}
 
-	public void alterarSenha() {
-
-	}
-
-	public void sair() {
-
-	}
-
 	
 	public void playMusicaPlayList(){
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -166,21 +158,6 @@ public class OuvirMusicaBean implements Serializable {
 		System.out.println("musica pausada: " + musica.getNome());
 	}
 	
-//	public void tocarMusica(Musica musica) {
-//		if (musica.getNome().equals(nomeMusicaTemp) && tocando == true) {
-//			System.out.println("musica pausada: " + musica.getNome());
-//			this.tocando = false;
-//		} else {
-//			this.tocando = true;
-//			System.out.println("musica tocando: " + musica.getNome());
-//			servicoPlayListEscrita.tocarMusica(new TocarMusicaComando((UUID.fromString(String.valueOf(aggregateIDObject))),musica.getNome()));
-//			this.nomeMusicaTemp = musica.getNome();
-//		}
-//	}
-	
-	/**
-	 * @param musica
-	 */
 	public void atualizarModalAdicionarMusica(Musica musica){
 		try{
 	
