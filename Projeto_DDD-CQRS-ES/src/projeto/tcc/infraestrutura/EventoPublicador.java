@@ -1,7 +1,6 @@
 package projeto.tcc.infraestrutura;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -10,7 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
 import projeto.tcc.dominio.eventos.Evento;
@@ -48,7 +46,7 @@ public class EventoPublicador implements IPublicador<Evento> {
 
 	}
 
-	public static void adicionaEventos(List<Evento> eventos) {
+	public void adicionaEventos(List<Evento> eventos) {
 		for (Evento evento : eventos) {
 			filaEventos.add(evento);
 		}
