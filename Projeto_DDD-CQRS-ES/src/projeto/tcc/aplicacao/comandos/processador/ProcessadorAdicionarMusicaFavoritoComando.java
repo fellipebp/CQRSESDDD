@@ -25,7 +25,6 @@ public class ProcessadorAdicionarMusicaFavoritoComando implements ProcessadorCom
 		Long version = ControladorVersao.getProximaVersao();
 		EventoProcessador eventoProcessador = new EventoProcessador();
 		eventoProcessador.processarEvento((new MusicaAdicionadaFavoritosEvento((UUID)valores.get("aggregateID"), (String)valores.get("nomeMusica"), version,version)));
-		//eventoProcessador.processarAggregado(adicionarMusicaComando.aggregateId(), PlayList.class, adicionarMusicaComando.getVersion());
 	}
 
 }

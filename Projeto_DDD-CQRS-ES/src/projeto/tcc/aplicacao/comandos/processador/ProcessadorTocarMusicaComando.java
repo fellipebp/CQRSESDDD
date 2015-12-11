@@ -13,11 +13,9 @@ public class ProcessadorTocarMusicaComando implements ProcessadorComandos{
 	@Override
 	public void execute(Comando comando) throws Exception {
 		TocarMusicaComando tocarMusicaComando = (TocarMusicaComando) comando; 
-//		PosProcessadorComandos.validaVersaoComando(comando);
 		Long version = ControladorVersao.getProximaVersao();
 		EventoProcessador eventoProcessador = new EventoProcessador();
 		eventoProcessador.processarEvento((new MusicaTocadaEvento(tocarMusicaComando.aggregateId(), tocarMusicaComando.getNomeMusica(),tocarMusicaComando.getIdMusica(),version, version)));
-	//	eventoProcessador.processarAggregado(tocarMusicaComando.aggregateId(), PlayList.class, tocarMusicaComando.getVersion());
 		
 	}
 

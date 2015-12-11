@@ -18,8 +18,6 @@ public class ServicoUsuarioImplFacade  implements ServicoUsuarioFacade, Serializ
 	 * 
 	 */
 	private static final long serialVersionUID = 6927806326900858283L;
-	//@Inject
-	//private ServicoUsuario servicoUsuario;
 	private ServicoUsuarioLeituraImpl servicoUsuario = new ServicoUsuarioLeituraImpl();
 
 	@Override

@@ -14,8 +14,6 @@ public class ServicoMusicaFacadeImpl implements ServicoMusicaFacade, Serializabl
 	 * 
 	 */
 	private static final long serialVersionUID = -4264297695373742679L;
-	//@Inject
-	//private ServicoMusica servicoMusica;
 	private ServicoMusicaLeituraImpl servicoMusica = new ServicoMusicaLeituraImpl();
 	@Override
 	public List<Musica> listarTodasMusicas() {

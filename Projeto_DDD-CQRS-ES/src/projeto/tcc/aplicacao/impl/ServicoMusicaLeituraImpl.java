@@ -14,8 +14,6 @@ public class ServicoMusicaLeituraImpl implements ServicoMusicaLeitura, Serializa
 	 * 
 	 */
 	private static final long serialVersionUID = -5992327488947705463L;
-	//@Inject
-	//private RepositorioMusica repositorioMusica
 	private RepositorioMusicaImpl repositorioMusica = new RepositorioMusicaImpl();
 
 	@Override

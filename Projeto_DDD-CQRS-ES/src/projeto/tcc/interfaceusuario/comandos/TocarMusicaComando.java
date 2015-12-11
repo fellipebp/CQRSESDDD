@@ -22,8 +22,6 @@ public class TocarMusicaComando implements Comando {
 	}
 
 	
-	//getters e setter omitidos
-
 	public UUID getLoginID() {
 		return usuarioUID;
 	}

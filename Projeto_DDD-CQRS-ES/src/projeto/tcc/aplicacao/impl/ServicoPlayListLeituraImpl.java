@@ -19,11 +19,7 @@ public class ServicoPlayListLeituraImpl implements ServicoPlayListLeitura{
 		return new RepositorioUsuarioImpl().getPlayListsPorEventos(aggregateID);
 	}
 
-//	@Override
-//	public PlayList buscarPlayList(String aggregateID) {
-//		return new RepositorioUsuarioImpl().getPlayList(aggregateID);
-//	}
-	
+
 
 
 

@@ -32,12 +32,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 	public Usuario getUsuario(String id) {
 		return null;
 	}
-	
-	
-//	public void processarUsuarioCadastradoEvento(UsuarioCadastradoEvento e) throws Exception{
-//		ArmazenadorEventos.salvarEvento(e);
-//	}
-
 
 	@Override
 	public Usuario getUsuarioPorCPF(String CPF) {
@@ -118,34 +112,8 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 		}
 		return restauradorAtributosUsuario.getUsuario();
 	}
-	
-	//@Override
-	//	public PlayList getPlayList(String aggregateID) {
-	//		List<Musica> musicas = new ArrayList<Musica>();
-	//		Musica musica = null;
-	//		PlayList playlist = null;
-	//		try {
-	////			RestauradorAtributosUsuario restauradorAtributosUsuario = new RestauradorAtributosUsuario();
-	//			PreparedStatement pstmt =  (PreparedStatement)Conexao.getConectionReader().prepareStatement("SELECT * from baseleitura.musicasusuario where aggregateId = ?");
-	//			pstmt.setString(1,aggregateID);
-	//			ResultSet rs = pstmt.executeQuery();
-	//			if (rs.next()) {
-	//				musica = new Musica();
-	//				musica.setNome( rs.getString("nome")); 
-	//				musicas.add(musica);
-	//			}
-	//			
-	//			List<PlayList> playlists = getAggregatePlayList(aggregateID);
-	//			playlist = playlists.get(0);
-	//			playlist.setMusicas(musicas);
-	//		} catch (SQLException e) {
-	//			e.printStackTrace();
-	//		}
-	//		
-	//		return playlist;
-	//	}
 
-	//Ainda sendo construido
+
 	@Override
 	public List<PlayList> getPlayListsPorEventos(String aggregateID) {
 		Method method;
@@ -166,7 +134,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario{
 			e.printStackTrace();
 		}
 		
-		//FIXME AVERIGUAR ISSO ARQUI
 		return restauradorAtributosUsuario.getUsuario().getPlayLists();
 	}
 	

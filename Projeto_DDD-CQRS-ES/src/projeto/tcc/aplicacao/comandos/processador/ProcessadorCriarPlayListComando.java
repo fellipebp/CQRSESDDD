@@ -17,7 +17,6 @@ public class ProcessadorCriarPlayListComando implements ProcessadorComandos{
 	@Override
 	public void execute(Comando comando) throws Exception {
 		CriarPlayListComando criarPlayListComando = (CriarPlayListComando) comando; 
-//		PosProcessadorComandos.validaVersaoComando(comando);
 		Map<String, Object> valores = new HashMap<String, Object>();
 		valores.put("nomePlayList", criarPlayListComando.getNome());
 		valores.put("listaPlayList", criarPlayListComando.getMinhasPlayList());
@@ -25,7 +24,6 @@ public class ProcessadorCriarPlayListComando implements ProcessadorComandos{
 		EventoProcessador eventoProcessador = new EventoProcessador();
 		Long version = ControladorVersao.getProximaVersao();
 		eventoProcessador.processarEvento((new PlayListAdicionadaEvento(criarPlayListComando.aggregateId(),criarPlayListComando.getPlayListUID(), criarPlayListComando.getNome(),version,version)));
-		//eventoProcessador.processarAggregado(criarPlayListComando.aggregateId(), PlayList.class, criarPlayListComando.getVersion());
 	}
 
 }

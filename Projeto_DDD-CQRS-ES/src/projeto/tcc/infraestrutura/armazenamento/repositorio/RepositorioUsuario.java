@@ -9,8 +9,6 @@ public interface RepositorioUsuario {
 	
 	Usuario getUsuarioPorAggregateID(String aggregateID);
 	
-	//outros métodos omitidos
-	
 	Usuario getUsuario(String id); 
 	
 	Usuario getUsuarioPorCPF(String CPF); 
